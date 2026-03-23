@@ -1,0 +1,99 @@
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using RestaurantManagement.Application.Common.Interfaces;
+using RestaurantManagement.Application.DTOs.Shifts;
+using RestaurantManagement.Application.Services;
+using RestaurantManagement.Domain.Entities;
+using RestaurantManagement.Web.Controllers.Base;
+
+namespace RestaurantManagement.Web.Controllers;
+
+public sealed class ShiftController : BranchScopedController
+{
+    private readonly IShiftService _shiftService;
+    private readonly ICurrentUserService _currentUserService;
+
+    public ShiftController(
+        IShiftService shiftService,
+        ICurrentUserService currentUserService,
+        IRepository<Branch> branchRepository) : base(branchRepository)
+    {
+        _shiftService = shiftService;
+        _currentUserService = currentUserService;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    {
+        var branchId = await GetBranchIdAsync(cancellationToken);
+        var current = branchId == Guid.Empty
+            ? null
+            : await _shiftService.GetCurrentAsync(branchId, cancellationToken);
+
+        return View(current);
+    }
+
+    [HttpGet]
+    public IActionResult Open()
+    {
+        return View(new OpenShiftRequestDto());
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Open(OpenShiftRequestDto request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            request.BranchId = await GetBranchIdAsync(cancellationToken);
+            request.OpenedByUserId = _currentUserService.UserId;
+            request.OpenedByUserName = _currentUserService.UserName ?? "System";
+            await _shiftService.OpenAsync(request, cancellationToken);
+            TempData["Success"] = "Shift opened successfully.";
+            return RedirectToAction(nameof(Index));
+        }
+        catch (ValidationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(request);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Close(CancellationToken cancellationToken)
+    {
+        var branchId = await GetBranchIdAsync(cancellationToken);
+        var current = await _shiftService.GetCurrentAsync(branchId, cancellationToken);
+        if (current is null)
+        {
+            TempData["Error"] = "No open shift available.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        var model = new CloseShiftRequestDto();
+        ViewBag.CurrentShift = current;
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Close(CloseShiftRequestDto request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            request.BranchId = await GetBranchIdAsync(cancellationToken);
+            request.ClosedByUserId = _currentUserService.UserId;
+            request.ClosedByUserName = _currentUserService.UserName ?? "System";
+            await _shiftService.CloseAsync(request, cancellationToken);
+            TempData["Success"] = "Shift closed successfully.";
+            return RedirectToAction(nameof(Index));
+        }
+        catch (ValidationException ex)
+        {
+            var current = await _shiftService.GetCurrentAsync(request.BranchId, cancellationToken);
+            ViewBag.CurrentShift = current;
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(request);
+        }
+    }
+}

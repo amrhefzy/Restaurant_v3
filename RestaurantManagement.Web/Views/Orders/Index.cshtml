@@ -1,0 +1,55 @@
+@model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Orders.OrderDto>
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="widget-card">
+    <div class="widget-head d-flex align-items-center justify-content-between">
+        <div>
+            <h5 class="mb-1">Orders Foundation</h5>
+            <small class="text-muted">Recent @Model.Count order records</small>
+        </div>
+        <a class="btn btn-primary" asp-action="Create">Create Order</a>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <table class="table shell-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Date (UTC)</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th class="text-end">Subtotal</th>
+                    <th class="text-end">Tax</th>
+                    <th class="text-end">Total</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Any())
+            {
+                foreach (var row in Model)
+                {
+                    <tr>
+                        <td>@row.OrderNumber</td>
+                        <td>@row.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@row.OrderType</td>
+                        <td>@row.Status</td>
+                        <td class="text-end">@row.Subtotal.ToString("N2")</td>
+                        <td class="text-end">@row.TaxAmount.ToString("N2")</td>
+                        <td class="text-end">@row.Total.ToString("N2")</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="8" class="empty-state">No orders created yet.</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

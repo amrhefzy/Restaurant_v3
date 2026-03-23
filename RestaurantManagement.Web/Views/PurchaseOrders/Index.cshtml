@@ -1,0 +1,24 @@
+@model IReadOnlyCollection<RestaurantManagement.Application.DTOs.PurchaseOrders.PurchaseOrderListItemDto>
+@{
+    ViewData["Title"] = "Purchase Orders";
+}
+
+<div class="widget-card">
+    <div class="widget-head"><h5>Purchase Orders Foundation</h5><span>Recent 50</span></div>
+    <table class="table shell-table mb-0">
+        <thead><tr><th>PO #</th><th>Date (UTC)</th><th>Status</th><th class="text-end">Total</th></tr></thead>
+        <tbody>
+        @if (Model.Any())
+        {
+            foreach (var row in Model)
+            {
+                <tr><td>@row.PurchaseOrderNumber</td><td>@row.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td><td>@row.Status</td><td class="text-end">@row.Total.ToString("N2")</td></tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="4" class="empty-state">No purchase orders yet.</td></tr>
+        }
+        </tbody>
+    </table>
+</div>

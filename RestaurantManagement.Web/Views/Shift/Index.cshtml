@@ -1,0 +1,69 @@
+@model RestaurantManagement.Application.DTOs.Shifts.ShiftSummaryDto?
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    ViewData["Title"] = L["Shift"];
+}
+
+<div class="page-header-shell">
+    <div>
+        <h2 class="page-header-title">@L["ShiftManagement"]</h2>
+        <p class="page-header-subtitle">@L["TrackCashierSession"]</p>
+    </div>
+    <div class="d-flex gap-2">
+        @if (Model is null)
+        {
+            <a asp-action="Open" class="btn btn-primary">@L["OpenShift"]</a>
+        }
+        else
+        {
+            <a asp-action="Close" class="btn btn-outline-danger">@L["CloseShift"]</a>
+        }
+    </div>
+</div>
+
+@if (Model is null)
+{
+    <div class="widget-card">
+        <div class="empty-state">@L["NoOpenShift"]</div>
+    </div>
+}
+else
+{
+    <div class="widget-card">
+        <div class="widget-head">
+            <h5>@Model.ShiftNumber</h5>
+            <span>@Model.Status</span>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <h6>@L["OpeningCash"]</h6>
+                    <strong>@Model.OpeningCash.ToString("N2")</strong>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <h6>@L["TotalSales"]</h6>
+                    <strong>@Model.TotalSales.ToString("N2")</strong>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <h6>@L["TotalCash"]</h6>
+                    <strong>@Model.TotalCash.ToString("N2")</strong>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <h6>@L["TotalCard"]</h6>
+                    <strong>@Model.TotalCard.ToString("N2")</strong>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="d-flex flex-wrap gap-4">
+            <div><strong>@L["OpenedOn"]:</strong> @Model.OpenedOnUtc.ToString("yyyy-MM-dd HH:mm") UTC</div>
+            <div><strong>@L["ExpectedCash"]:</strong> @Model.ExpectedCash.ToString("N2")</div>
+        </div>
+    </div>
+}

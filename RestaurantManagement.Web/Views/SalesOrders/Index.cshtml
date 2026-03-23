@@ -1,0 +1,60 @@
+@model IReadOnlyCollection<RestaurantManagement.Application.DTOs.SalesOrders.SalesOrderListItemDto>
+@{
+    ViewData["Title"] = "Sales Orders";
+}
+
+<div class="widget-card">
+    <div class="widget-head"><h5>Sales Orders Foundation</h5><span>Recent 50</span></div>
+    @Html.AntiForgeryToken()
+    <table class="table shell-table mb-0">
+        <thead><tr><th>Order #</th><th>Date (UTC)</th><th>Type</th><th>Status</th><th>Payment</th><th class="text-end">Total</th><th class="text-end">Actions</th></tr></thead>
+        <tbody>
+        @if (Model.Any())
+        {
+            foreach (var row in Model)
+            {
+                <tr>
+                    <td>@row.OrderNumber</td>
+                    <td>@row.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@row.OrderType</td>
+                    <td>@row.Status</td>
+                    <td>@row.PaymentStatus @(row.PaymentType.HasValue ? $"({row.PaymentType})" : string.Empty)</td>
+                    <td class="text-end">@row.Total.ToString("N2")</td>
+                    <td class="text-end">
+                        <div class="d-inline-flex gap-1">
+                            @if (row.PaymentStatus != RestaurantManagement.Domain.Enums.PaymentStatus.Paid)
+                            {
+                                <form asp-action="MarkPaid" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@row.Id" />
+                                    <input type="hidden" name="paymentType" value="@RestaurantManagement.Domain.Enums.PaymentType.Cash" />
+                                    <button type="submit" class="btn btn-sm btn-outline-success">Pay Cash</button>
+                                </form>
+                                <form asp-action="MarkPaid" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@row.Id" />
+                                    <input type="hidden" name="paymentType" value="@RestaurantManagement.Domain.Enums.PaymentType.Card" />
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Pay Card</button>
+                                </form>
+                            }
+
+                            @if (row.Status != RestaurantManagement.Domain.Enums.OrderStatus.Closed)
+                            {
+                                <form asp-action="Close" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@row.Id" />
+                                    <button type="submit" class="btn btn-sm btn-dark">Close</button>
+                                </form>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="7" class="empty-state">No sales orders yet.</td></tr>
+        }
+        </tbody>
+    </table>
+</div>

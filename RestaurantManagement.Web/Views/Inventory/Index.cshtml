@@ -1,0 +1,46 @@
+@model RestaurantManagement.Web.ViewModels.Inventory.InventoryOverviewViewModel
+@{
+    ViewData["Title"] = "Inventory";
+}
+
+<section class="widget-grid">
+    <article class="widget-card">
+        <div class="widget-head"><h5>Low Stock Items</h5><span>@Model.LowStockItems.Count item(s)</span></div>
+        <table class="table shell-table mb-0">
+            <thead><tr><th>Product</th><th class="text-end">On Hand</th><th class="text-end">Reorder</th></tr></thead>
+            <tbody>
+            @if (Model.LowStockItems.Any())
+            {
+                foreach (var row in Model.LowStockItems)
+                {
+                    <tr><td>@row.ProductName</td><td class="text-end">@row.OnHandQuantity</td><td class="text-end">@row.ReorderLevel</td></tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="3" class="empty-state">No low stock alerts.</td></tr>
+            }
+            </tbody>
+        </table>
+    </article>
+
+    <article class="widget-card">
+        <div class="widget-head"><h5>Recent Inventory Movements</h5><span>@Model.RecentMovements.Count move(s)</span></div>
+        <table class="table shell-table mb-0">
+            <thead><tr><th>When (UTC)</th><th>Product</th><th>Type</th><th class="text-end">Qty</th><th>Ref</th></tr></thead>
+            <tbody>
+            @if (Model.RecentMovements.Any())
+            {
+                foreach (var row in Model.RecentMovements)
+                {
+                    <tr><td>@row.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td><td>@row.ProductName</td><td>@row.MovementType</td><td class="text-end">@row.QuantityChange</td><td>@row.ReferenceNumber</td></tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5" class="empty-state">No inventory movements yet.</td></tr>
+            }
+            </tbody>
+        </table>
+    </article>
+</section>

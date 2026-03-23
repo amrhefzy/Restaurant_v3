@@ -1,0 +1,53 @@
+@model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Tables.TableDto>
+@{
+    ViewData["Title"] = "Tables";
+}
+
+<div class="widget-card">
+    <div class="widget-head d-flex align-items-center justify-content-between">
+        <div>
+            <h5 class="mb-1">Restaurant Tables</h5>
+            <small class="text-muted">@Model.Count table records</small>
+        </div>
+        <a class="btn btn-primary" asp-action="Create">Create Table</a>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <table class="table shell-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Table Number</th>
+                    <th>Capacity</th>
+                    <th>Status</th>
+                    <th>Active</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Any())
+            {
+                foreach (var row in Model)
+                {
+                    <tr>
+                        <td>@row.TableNumber</td>
+                        <td>@row.Capacity</td>
+                        <td>@row.Status</td>
+                        <td>
+                            <span class="badge @(row.IsActive ? "text-bg-success" : "text-bg-secondary")">
+                                @(row.IsActive ? "Yes" : "No")
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5" class="empty-state">No tables configured yet.</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

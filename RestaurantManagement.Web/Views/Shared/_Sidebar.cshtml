@@ -1,0 +1,36 @@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
+}
+
+<div class="brand-zone">
+    <div class="brand-mark">R3</div>
+    <div>
+        <div class="brand-title">Restaurant_v3</div>
+        <div class="brand-subtitle">@L["OperationsPlatform"]</div>
+    </div>
+</div>
+
+<nav class="menu-nav" aria-label="Primary navigation">
+    <a class="menu-link @(controller == "Dashboard" ? "active" : string.Empty)" asp-controller="Dashboard" asp-action="Index">@L["Dashboard"]</a>
+    <a class="menu-link @(controller == "POS" ? "active" : string.Empty)" asp-controller="POS" asp-action="Index">@L["Pos"]</a>
+    <a class="menu-link @(controller == "Shift" ? "active" : string.Empty)" asp-controller="Shift" asp-action="Index">@L["Shift"]</a>
+    <a class="menu-link @(controller == "Kitchen" ? "active" : string.Empty)" asp-controller="Kitchen" asp-action="Index">@L["Kitchen"]</a>
+    <a class="menu-link @(controller == "Categories" ? "active" : string.Empty)" asp-controller="Categories" asp-action="Index">@L["Categories"]</a>
+    <a class="menu-link @(controller == "Products" ? "active" : string.Empty)" asp-controller="Products" asp-action="Index">@L["Products"]</a>
+    <a class="menu-link @(controller == "Suppliers" ? "active" : string.Empty)" asp-controller="Suppliers" asp-action="Index">@L["Suppliers"]</a>
+    <a class="menu-link @(controller == "Customers" ? "active" : string.Empty)" asp-controller="Customers" asp-action="Index">@L["Customers"]</a>
+    <a class="menu-link @(controller == "Tables" ? "active" : string.Empty)" asp-controller="Tables" asp-action="Index">@L["Tables"]</a>
+    <a class="menu-link @(controller == "Reservations" ? "active" : string.Empty)" asp-controller="Reservations" asp-action="Index">@L["Reservations"]</a>
+    <a class="menu-link @(controller == "Orders" ? "active" : string.Empty)" asp-controller="Orders" asp-action="Index">@L["Orders"]</a>
+    <a class="menu-link @(controller == "PurchaseOrders" ? "active" : string.Empty)" asp-controller="PurchaseOrders" asp-action="Index">@L["Purchases"]</a>
+    <a class="menu-link @(controller == "Returns" ? "active" : string.Empty)" asp-controller="Returns" asp-action="Index">@L["Returns"]</a>
+    <a class="menu-link @(controller == "Reports" ? "active" : string.Empty)" asp-controller="Reports" asp-action="Index">@L["Reports"]</a>
+    <a class="menu-link disabled" href="#" aria-disabled="true">@L["UsersRoles"]</a>
+    <a class="menu-link disabled" href="#" aria-disabled="true">@L["Settings"]</a>
+</nav>
+
+<div class="sidebar-footer">
+    <span class="status-dot"></span>
+    <span>@L["SystemReady"]</span>
+</div>

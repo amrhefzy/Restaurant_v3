@@ -1,0 +1,51 @@
+﻿@using System.Globalization
+@{
+    var isRtl = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar";
+    var languageCode = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var bootstrapCss = isRtl
+        ? Url.Content("~/lib/bootstrap/dist/css/bootstrap.rtl.min.css")
+        : Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css");
+}
+<!DOCTYPE html>
+<html lang="@languageCode" dir="@(isRtl ? "rtl" : "ltr")">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Restaurant_v3</title>
+    <link rel="stylesheet" href="@bootstrapCss" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RestaurantManagement.Web.styles.css" asp-append-version="true" />
+</head>
+<body class="shell-body">
+    <div class="shell-grid">
+        <aside class="shell-sidebar">
+            <partial name="_Sidebar" />
+        </aside>
+        <div class="shell-main">
+            <header class="shell-topbar">
+                <partial name="_Topbar" />
+            </header>
+            <main class="shell-content">
+                <partial name="_Alerts" />
+                <partial name="_PageHeader" />
+                @RenderBody()
+            </main>
+            <footer class="shell-footer">
+                <span>Restaurant_v3</span>
+                <span class="footer-dot"></span>
+                <span>@DateTime.UtcNow.Year</span>
+            </footer>
+        </div>
+    </div>
+    <partial name="_Toasts" />
+
+    <div id="app-loader" class="app-loader d-none">
+        <div class="loader-orb"></div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

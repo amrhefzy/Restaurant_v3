@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <data name="OperationsPlatform" xml:space="preserve"><value>Operations Platform</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Pos" xml:space="preserve"><value>POS</value></data>
+  <data name="Products" xml:space="preserve"><value>Products</value></data>
+  <data name="Inventory" xml:space="preserve"><value>Inventory</value></data>
+  <data name="Reservations" xml:space="preserve"><value>Reservations</value></data>
+  <data name="Reports" xml:space="preserve"><value>Reports</value></data>
+  <data name="Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="SystemReady" xml:space="preserve"><value>System ready</value></data>
+  <data name="OperationalControlCenter" xml:space="preserve"><value>Operational Control Center</value></data>
+  <data name="QuickActionExecuted" xml:space="preserve"><value>Quick action executed.</value></data>
+  <data name="QuickAction" xml:space="preserve"><value>Quick Action</value></data>
+  <data name="TodaySales" xml:space="preserve"><value>Today Sales</value></data>
+  <data name="OrdersToday" xml:space="preserve"><value>Orders Today</value></data>
+  <data name="ActiveReservations" xml:space="preserve"><value>Active Reservations</value></data>
+  <data name="LowStockAlerts" xml:space="preserve"><value>Low Stock Alerts</value></data>
+  <data name="CurrencyHint" xml:space="preserve"><value>Gross amount</value></data>
+  <data name="LiveOperations" xml:space="preserve"><value>Live operations</value></data>
+  <data name="ServiceFlow" xml:space="preserve"><value>Service flow</value></data>
+  <data name="InventoryAttention" xml:space="preserve"><value>Needs inventory attention</value></data>
+  <data name="RevenueTrend" xml:space="preserve"><value>Revenue Trend</value></data>
+  <data name="TopSellingProducts" xml:space="preserve"><value>Top Selling Products</value></data>
+  <data name="Today" xml:space="preserve"><value>Today</value></data>
+  <data name="Product" xml:space="preserve"><value>Product</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Qty</value></data>
+  <data name="NoDataYet" xml:space="preserve"><value>No data available yet.</value></data>
+  <data name="CashierPerformance" xml:space="preserve"><value>Cashier Performance</value></data>
+  <data name="ShiftView" xml:space="preserve"><value>Current Shift</value></data>
+  <data name="Categories" xml:space="preserve"><value>Categories</value></data>
+  <data name="Suppliers" xml:space="preserve"><value>Suppliers</value></data>
+  <data name="Customers" xml:space="preserve"><value>Customers</value></data>
+  <data name="Tables" xml:space="preserve"><value>Tables</value></data>
+  <data name="SalesOrders" xml:space="preserve"><value>Sales Orders</value></data>
+  <data name="PurchaseOrders" xml:space="preserve"><value>Purchase Orders</value></data>
+  <data name="Returns" xml:space="preserve"><value>Returns</value></data>
+  <data name="GrossSales" xml:space="preserve"><value>Gross Sales</value></data>
+  <data name="OrdersCount" xml:space="preserve"><value>Orders Count</value></data>
+  <data name="AverageTicket" xml:space="preserve"><value>Average Ticket</value></data>
+  <data name="SalesTrend" xml:space="preserve"><value>Sales Trend</value></data>
+  <data name="TopCategorySales" xml:space="preserve"><value>Top Category Sales</value></data>
+  <data name="Category" xml:space="preserve"><value>Category</value></data>
+  <data name="Amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="Orders" xml:space="preserve"><value>Orders</value></data>
+  <data name="Purchases" xml:space="preserve"><value>Purchases</value></data>
+  <data name="UsersRoles" xml:space="preserve"><value>Users / Roles</value></data>
+  <data name="BusinessWorkspace" xml:space="preserve"><value>Business workspace</value></data>
+  <data name="RestaurantOperations" xml:space="preserve"><value>Restaurant Operations</value></data>
+  <data name="ActionNeeded" xml:space="preserve"><value>Action needed</value></data>
+  <data name="RecentOrders" xml:space="preserve"><value>Recent Orders</value></data>
+  <data name="RecentReservations" xml:space="preserve"><value>Recent Reservations</value></data>
+  <data name="Placeholder" xml:space="preserve"><value>Placeholder</value></data>
+  <data name="DataIntegrationPending" xml:space="preserve"><value>Live data integration pending.</value></data>
+  <data name="Order" xml:space="preserve"><value>Order</value></data>
+  <data name="Type" xml:space="preserve"><value>Type</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="WeeklySales" xml:space="preserve"><value>Weekly Sales</value></data>
+  <data name="Last7Days" xml:space="preserve"><value>Last 7 days</value></data>
+  <data name="AveragePerOrder" xml:space="preserve"><value>Average per order</value></data>
+  <data name="NoRecentOrders" xml:space="preserve"><value>No recent orders.</value></data>
+  <data name="NoRecentReservations" xml:space="preserve"><value>No recent reservations.</value></data>
+  <data name="PointOfSale" xml:space="preserve"><value>Point of Sale</value></data>
+  <data name="FastCashierFlow" xml:space="preserve"><value>Fast cashier flow with instant cart updates</value></data>
+  <data name="SearchProductsPlaceholder" xml:space="preserve"><value>Search products by name or SKU...</value></data>
+  <data name="CurrentTicket" xml:space="preserve"><value>Current Ticket</value></data>
+  <data name="Clear" xml:space="preserve"><value>Clear</value></data>
+  <data name="OrderType" xml:space="preserve"><value>Order Type</value></data>
+  <data name="DineIn" xml:space="preserve"><value>Dine-In</value></data>
+  <data name="Takeaway" xml:space="preserve"><value>Takeaway</value></data>
+  <data name="Delivery" xml:space="preserve"><value>Delivery</value></data>
+  <data name="TableDineIn" xml:space="preserve"><value>Table (Dine-In)</value></data>
+  <data name="NoTable" xml:space="preserve"><value>No table</value></data>
+  <data name="TableRequiredHint" xml:space="preserve"><value>Table is required for dine-in orders.</value></data>
+  <data name="Notes" xml:space="preserve"><value>Notes</value></data>
+  <data name="KitchenNotesPlaceholder" xml:space="preserve"><value>Kitchen or service notes...</value></data>
+  <data name="Subtotal" xml:space="preserve"><value>Subtotal</value></data>
+  <data name="Tax" xml:space="preserve"><value>Tax</value></data>
+  <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="HoldOrder" xml:space="preserve"><value>Hold Order</value></data>
+  <data name="Checkout" xml:space="preserve"><value>Checkout</value></data>
+  <data name="HeldOrders" xml:space="preserve"><value>Held Orders</value></data>
+  <data name="LoadMore" xml:space="preserve"><value>Load More</value></data>
+  <data name="SelectTableForDineIn" xml:space="preserve"><value>Please select a table for dine-in.</value></data>
+  <data name="CartEmptyValidation" xml:space="preserve"><value>Cart cannot be empty.</value></data>
+  <data name="AddAtLeastOneItem" xml:space="preserve"><value>Add at least one item to the cart.</value></data>
+  <data name="Kitchen" xml:space="preserve"><value>Kitchen</value></data>
+  <data name="KitchenStatusFeed" xml:space="preserve"><value>Kitchen Status</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="MarkReady" xml:space="preserve"><value>Mark Ready</value></data>
+  <data name="NoActiveOrders" xml:space="preserve"><value>No active orders.</value></data>
+  <data name="Shift" xml:space="preserve"><value>Shift</value></data>
+  <data name="ShiftManagement" xml:space="preserve"><value>Shift Management</value></data>
+  <data name="TrackCashierSession" xml:space="preserve"><value>Track cashier session, payments, and cash movement.</value></data>
+  <data name="OpenShift" xml:space="preserve"><value>Open Shift</value></data>
+  <data name="CloseShift" xml:space="preserve"><value>Close Shift</value></data>
+  <data name="NoOpenShift" xml:space="preserve"><value>No open shift. Open a shift to start checkout transactions.</value></data>
+  <data name="StartCashierSession" xml:space="preserve"><value>Start cashier session</value></data>
+  <data name="OpeningCash" xml:space="preserve"><value>Opening Cash</value></data>
+  <data name="TotalCash" xml:space="preserve"><value>Total Cash</value></data>
+  <data name="TotalCard" xml:space="preserve"><value>Total Card</value></data>
+  <data name="ExpectedCash" xml:space="preserve"><value>Expected Cash</value></data>
+  <data name="ActualCash" xml:space="preserve"><value>Actual Cash</value></data>
+  <data name="OpenedOn" xml:space="preserve"><value>Opened On</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="PaymentType" xml:space="preserve"><value>Payment Type</value></data>
+  <data name="Cash" xml:space="preserve"><value>Cash</value></data>
+  <data name="Card" xml:space="preserve"><value>Card</value></data>
+  <data name="SelectPaymentType" xml:space="preserve"><value>Please select a payment type.</value></data>
+</root>

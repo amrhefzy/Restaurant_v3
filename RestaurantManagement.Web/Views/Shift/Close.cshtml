@@ -1,0 +1,39 @@
+@model RestaurantManagement.Application.DTOs.Shifts.CloseShiftRequestDto
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    ViewData["Title"] = L["CloseShift"];
+    var currentShift = ViewBag.CurrentShift as RestaurantManagement.Application.DTOs.Shifts.ShiftSummaryDto;
+}
+
+<div class="widget-card">
+    <div class="widget-head">
+        <h5>@L["CloseShift"]</h5>
+        <span>@(currentShift?.ShiftNumber ?? "-")</span>
+    </div>
+
+    @if (currentShift is not null)
+    {
+        <div class="row g-3 mb-3">
+            <div class="col-md-3"><strong>@L["OpeningCash"]:</strong> @currentShift.OpeningCash.ToString("N2")</div>
+            <div class="col-md-3"><strong>@L["TotalCash"]:</strong> @currentShift.TotalCash.ToString("N2")</div>
+            <div class="col-md-3"><strong>@L["TotalCard"]:</strong> @currentShift.TotalCard.ToString("N2")</div>
+            <div class="col-md-3"><strong>@L["ExpectedCash"]:</strong> @currentShift.ExpectedCash.ToString("N2")</div>
+        </div>
+    }
+
+    <form asp-action="Close" method="post" class="row g-3">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-md-4">
+            <label asp-for="ClosingCashActual" class="form-label">@L["ActualCash"]</label>
+            <input asp-for="ClosingCashActual" type="number" step="0.01" class="form-control" min="0" />
+            <span asp-validation-for="ClosingCashActual" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-danger">@L["CloseShift"]</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">@L["Cancel"]</a>
+        </div>
+    </form>
+</div>

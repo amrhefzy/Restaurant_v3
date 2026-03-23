@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <data name="OperationsPlatform" xml:space="preserve"><value>منصة التشغيل</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>لوحة التحكم</value></data>
+  <data name="Pos" xml:space="preserve"><value>نقطة البيع</value></data>
+  <data name="Products" xml:space="preserve"><value>المنتجات</value></data>
+  <data name="Inventory" xml:space="preserve"><value>المخزون</value></data>
+  <data name="Reservations" xml:space="preserve"><value>الحجوزات</value></data>
+  <data name="Reports" xml:space="preserve"><value>التقارير</value></data>
+  <data name="Settings" xml:space="preserve"><value>الإعدادات</value></data>
+  <data name="SystemReady" xml:space="preserve"><value>النظام جاهز</value></data>
+  <data name="OperationalControlCenter" xml:space="preserve"><value>مركز التحكم التشغيلي</value></data>
+  <data name="QuickActionExecuted" xml:space="preserve"><value>تم تنفيذ الإجراء السريع.</value></data>
+  <data name="QuickAction" xml:space="preserve"><value>إجراء سريع</value></data>
+  <data name="TodaySales" xml:space="preserve"><value>مبيعات اليوم</value></data>
+  <data name="OrdersToday" xml:space="preserve"><value>طلبات اليوم</value></data>
+  <data name="ActiveReservations" xml:space="preserve"><value>الحجوزات النشطة</value></data>
+  <data name="LowStockAlerts" xml:space="preserve"><value>تنبيهات انخفاض المخزون</value></data>
+  <data name="CurrencyHint" xml:space="preserve"><value>إجمالي المبلغ</value></data>
+  <data name="LiveOperations" xml:space="preserve"><value>تشغيل مباشر</value></data>
+  <data name="ServiceFlow" xml:space="preserve"><value>تدفق الخدمة</value></data>
+  <data name="InventoryAttention" xml:space="preserve"><value>يحتاج متابعة المخزون</value></data>
+  <data name="RevenueTrend" xml:space="preserve"><value>اتجاه الإيرادات</value></data>
+  <data name="TopSellingProducts" xml:space="preserve"><value>الأكثر مبيعًا</value></data>
+  <data name="Today" xml:space="preserve"><value>اليوم</value></data>
+  <data name="Product" xml:space="preserve"><value>المنتج</value></data>
+  <data name="Quantity" xml:space="preserve"><value>الكمية</value></data>
+  <data name="NoDataYet" xml:space="preserve"><value>لا توجد بيانات بعد.</value></data>
+  <data name="CashierPerformance" xml:space="preserve"><value>أداء الكاشير</value></data>
+  <data name="ShiftView" xml:space="preserve"><value>الوردية الحالية</value></data>
+  <data name="Categories" xml:space="preserve"><value>التصنيفات</value></data>
+  <data name="Suppliers" xml:space="preserve"><value>الموردون</value></data>
+  <data name="Customers" xml:space="preserve"><value>العملاء</value></data>
+  <data name="Tables" xml:space="preserve"><value>الطاولات</value></data>
+  <data name="SalesOrders" xml:space="preserve"><value>طلبات البيع</value></data>
+  <data name="PurchaseOrders" xml:space="preserve"><value>طلبات الشراء</value></data>
+  <data name="Returns" xml:space="preserve"><value>المرتجعات</value></data>
+  <data name="GrossSales" xml:space="preserve"><value>إجمالي المبيعات</value></data>
+  <data name="OrdersCount" xml:space="preserve"><value>عدد الطلبات</value></data>
+  <data name="AverageTicket" xml:space="preserve"><value>متوسط قيمة الطلب</value></data>
+  <data name="SalesTrend" xml:space="preserve"><value>اتجاه المبيعات</value></data>
+  <data name="TopCategorySales" xml:space="preserve"><value>أعلى مبيعات حسب التصنيف</value></data>
+  <data name="Category" xml:space="preserve"><value>التصنيف</value></data>
+  <data name="Amount" xml:space="preserve"><value>القيمة</value></data>
+  <data name="Orders" xml:space="preserve"><value>الطلبات</value></data>
+  <data name="Purchases" xml:space="preserve"><value>المشتريات</value></data>
+  <data name="UsersRoles" xml:space="preserve"><value>المستخدمون / الصلاحيات</value></data>
+  <data name="BusinessWorkspace" xml:space="preserve"><value>مساحة العمل التشغيلية</value></data>
+  <data name="RestaurantOperations" xml:space="preserve"><value>عمليات المطعم</value></data>
+  <data name="ActionNeeded" xml:space="preserve"><value>يتطلب متابعة</value></data>
+  <data name="RecentOrders" xml:space="preserve"><value>أحدث الطلبات</value></data>
+  <data name="RecentReservations" xml:space="preserve"><value>أحدث الحجوزات</value></data>
+  <data name="Placeholder" xml:space="preserve"><value>عنصر تمهيدي</value></data>
+  <data name="DataIntegrationPending" xml:space="preserve"><value>ربط البيانات المباشرة قيد التنفيذ.</value></data>
+  <data name="Order" xml:space="preserve"><value>طلب</value></data>
+  <data name="Type" xml:space="preserve"><value>النوع</value></data>
+  <data name="Status" xml:space="preserve"><value>الحالة</value></data>
+  <data name="WeeklySales" xml:space="preserve"><value>مبيعات الأسبوع</value></data>
+  <data name="Last7Days" xml:space="preserve"><value>آخر 7 أيام</value></data>
+  <data name="AveragePerOrder" xml:space="preserve"><value>متوسط لكل طلب</value></data>
+  <data name="NoRecentOrders" xml:space="preserve"><value>لا توجد طلبات حديثة.</value></data>
+  <data name="NoRecentReservations" xml:space="preserve"><value>لا توجد حجوزات حديثة.</value></data>
+  <data name="PointOfSale" xml:space="preserve"><value>نقطة البيع</value></data>
+  <data name="FastCashierFlow" xml:space="preserve"><value>تدفق كاشير سريع مع تحديث فوري للسلة</value></data>
+  <data name="SearchProductsPlaceholder" xml:space="preserve"><value>ابحث في المنتجات بالاسم أو رمز المنتج...</value></data>
+  <data name="CurrentTicket" xml:space="preserve"><value>الطلب الحالي</value></data>
+  <data name="Clear" xml:space="preserve"><value>مسح</value></data>
+  <data name="OrderType" xml:space="preserve"><value>نوع الطلب</value></data>
+  <data name="DineIn" xml:space="preserve"><value>داخل المطعم</value></data>
+  <data name="Takeaway" xml:space="preserve"><value>استلام خارجي</value></data>
+  <data name="Delivery" xml:space="preserve"><value>توصيل</value></data>
+  <data name="TableDineIn" xml:space="preserve"><value>الطاولة (داخل المطعم)</value></data>
+  <data name="NoTable" xml:space="preserve"><value>بدون طاولة</value></data>
+  <data name="TableRequiredHint" xml:space="preserve"><value>اختيار الطاولة إلزامي للطلبات داخل المطعم.</value></data>
+  <data name="Notes" xml:space="preserve"><value>ملاحظات</value></data>
+  <data name="KitchenNotesPlaceholder" xml:space="preserve"><value>ملاحظات للمطبخ أو الخدمة...</value></data>
+  <data name="Subtotal" xml:space="preserve"><value>الإجمالي الفرعي</value></data>
+  <data name="Tax" xml:space="preserve"><value>الضريبة</value></data>
+  <data name="Total" xml:space="preserve"><value>الإجمالي</value></data>
+  <data name="HoldOrder" xml:space="preserve"><value>تعليق الطلب</value></data>
+  <data name="Checkout" xml:space="preserve"><value>إتمام الطلب</value></data>
+  <data name="HeldOrders" xml:space="preserve"><value>الطلبات المعلقة</value></data>
+  <data name="LoadMore" xml:space="preserve"><value>تحميل المزيد</value></data>
+  <data name="SelectTableForDineIn" xml:space="preserve"><value>يرجى اختيار طاولة للطلبات داخل المطعم.</value></data>
+  <data name="CartEmptyValidation" xml:space="preserve"><value>لا يمكن أن تكون السلة فارغة.</value></data>
+  <data name="AddAtLeastOneItem" xml:space="preserve"><value>أضف عنصرًا واحدًا على الأقل إلى السلة.</value></data>
+  <data name="Kitchen" xml:space="preserve"><value>المطبخ</value></data>
+  <data name="KitchenStatusFeed" xml:space="preserve"><value>حالة المطبخ</value></data>
+  <data name="Start" xml:space="preserve"><value>بدء</value></data>
+  <data name="MarkReady" xml:space="preserve"><value>جاهز</value></data>
+  <data name="NoActiveOrders" xml:space="preserve"><value>لا توجد طلبات نشطة.</value></data>
+  <data name="Shift" xml:space="preserve"><value>الوردية</value></data>
+  <data name="ShiftManagement" xml:space="preserve"><value>إدارة الوردية</value></data>
+  <data name="TrackCashierSession" xml:space="preserve"><value>متابعة جلسة الكاشير وحركة المدفوعات والنقدية.</value></data>
+  <data name="OpenShift" xml:space="preserve"><value>فتح وردية</value></data>
+  <data name="CloseShift" xml:space="preserve"><value>إغلاق وردية</value></data>
+  <data name="NoOpenShift" xml:space="preserve"><value>لا توجد وردية مفتوحة. افتح وردية لبدء عمليات الدفع.</value></data>
+  <data name="StartCashierSession" xml:space="preserve"><value>بدء جلسة الكاشير</value></data>
+  <data name="OpeningCash" xml:space="preserve"><value>رصيد البداية</value></data>
+  <data name="TotalCash" xml:space="preserve"><value>إجمالي النقدي</value></data>
+  <data name="TotalCard" xml:space="preserve"><value>إجمالي البطاقة</value></data>
+  <data name="ExpectedCash" xml:space="preserve"><value>النقدي المتوقع</value></data>
+  <data name="ActualCash" xml:space="preserve"><value>النقدي الفعلي</value></data>
+  <data name="OpenedOn" xml:space="preserve"><value>وقت الفتح</value></data>
+  <data name="Cancel" xml:space="preserve"><value>إلغاء</value></data>
+  <data name="PaymentType" xml:space="preserve"><value>نوع الدفع</value></data>
+  <data name="Cash" xml:space="preserve"><value>نقدي</value></data>
+  <data name="Card" xml:space="preserve"><value>بطاقة</value></data>
+  <data name="SelectPaymentType" xml:space="preserve"><value>يرجى اختيار نوع الدفع.</value></data>
+</root>

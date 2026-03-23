@@ -1,0 +1,57 @@
+@model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Products.ProductDto>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="widget-card">
+    <div class="widget-head d-flex align-items-center justify-content-between">
+        <div>
+            <h5 class="mb-1">Products and Pricing</h5>
+            <small class="text-muted">@Model.Count product records</small>
+        </div>
+        <a class="btn btn-primary" asp-action="Create">Create Product</a>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <table class="table shell-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Name (EN)</th>
+                    <th>SKU</th>
+                    <th class="text-end">Sale Price</th>
+                    <th class="text-end">Cost Price</th>
+                    <th>Stock Tracking</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Any())
+            {
+                foreach (var row in Model)
+                {
+                    <tr>
+                        <td>@row.NameEn</td>
+                        <td>@row.Sku</td>
+                        <td class="text-end">@row.SalePrice.ToString("N2")</td>
+                        <td class="text-end">@row.CostPrice.ToString("N2")</td>
+                        <td>@(row.IsStockTracked ? "Tracked" : "Not tracked")</td>
+                        <td>
+                            <span class="badge @(row.IsActive ? "text-bg-success" : "text-bg-secondary")">
+                                @(row.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="7" class="empty-state">No products created yet.</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

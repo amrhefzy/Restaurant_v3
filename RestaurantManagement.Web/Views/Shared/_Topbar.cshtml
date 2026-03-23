@@ -1,0 +1,25 @@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@using System.Globalization
+@{
+    var current = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+
+<div class="topbar-content">
+    <div>
+        <div class="page-title">@L["RestaurantOperations"]</div>
+        <div class="page-subtitle">@L["OperationalControlCenter"]</div>
+    </div>
+
+    <div class="topbar-actions">
+        <form asp-controller="Culture" asp-action="Set" method="post" class="culture-form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
+            <select name="culture" class="form-select form-select-sm" onchange="this.form.submit()">
+                <option value="en" selected="@(current == "en")">English</option>
+                <option value="ar" selected="@(current == "ar")">العربية</option>
+            </select>
+        </form>
+        <button type="button" class="btn btn-sm shell-btn" data-toast="@L["QuickActionExecuted"]">@L["QuickAction"]</button>
+    </div>
+</div>

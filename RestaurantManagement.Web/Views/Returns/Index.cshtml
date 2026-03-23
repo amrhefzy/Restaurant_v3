@@ -1,0 +1,23 @@
+@model RestaurantManagement.Application.DTOs.Returns.ReturnSummaryDto
+@{
+    ViewData["Title"] = "Returns";
+}
+
+<section class="dashboard-grid">
+    <article class="metric-card">
+        <p class="metric-label">Sales Returns Count</p>
+        <h3>@Model.SalesReturnsCount</h3>
+    </article>
+    <article class="metric-card warning">
+        <p class="metric-label">Sales Returns Total</p>
+        <h3>@Model.SalesReturnsTotal.ToString("N2")</h3>
+    </article>
+    <article class="metric-card">
+        <p class="metric-label">Purchase Returns Count</p>
+        <h3>@Model.PurchaseReturnsCount</h3>
+    </article>
+    <article class="metric-card warning">
+        <p class="metric-label">Purchase Returns Total</p>
+        <h3>@Model.PurchaseReturnsTotal.ToString("N2")</h3>
+    </article>
+</section>

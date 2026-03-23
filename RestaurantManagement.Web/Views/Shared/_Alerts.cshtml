@@ -1,0 +1,13 @@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+
+@if (TempData["Success"] is string success)
+{
+    <div class="alert alert-success shell-alert" role="alert">@success</div>
+}
+
+@if (TempData["Error"] is string error)
+{
+    <div class="alert alert-danger shell-alert" role="alert">@error</div>
+}
+
+<div id="inline-info" class="alert alert-info shell-alert d-none" role="alert"></div>

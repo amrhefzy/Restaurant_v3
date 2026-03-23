@@ -1,0 +1,53 @@
+@model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Categories.CategoryDto>
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="widget-card">
+    <div class="widget-head d-flex align-items-center justify-content-between">
+        <div>
+            <h5 class="mb-1">Category Catalog</h5>
+            <small class="text-muted">@Model.Count category records</small>
+        </div>
+        <a class="btn btn-primary" asp-action="Create">Create Category</a>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <table class="table shell-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Name (EN)</th>
+                    <th>Name (AR)</th>
+                    <th>Display Order</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Any())
+            {
+                foreach (var row in Model)
+                {
+                    <tr>
+                        <td>@row.NameEn</td>
+                        <td>@row.NameAr</td>
+                        <td>@row.DisplayOrder</td>
+                        <td>
+                            <span class="badge @(row.IsActive ? "text-bg-success" : "text-bg-secondary")">
+                                @(row.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5" class="empty-state">No categories created yet.</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

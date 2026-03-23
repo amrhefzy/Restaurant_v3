@@ -1,0 +1,153 @@
+@model RestaurantManagement.Web.ViewModels.Dashboard.DashboardPageViewModel
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    ViewData["Title"] = L["Dashboard"];
+}
+
+<section class="dashboard-grid mb-3">
+    <article class="metric-card">
+        <p class="metric-label">@L["TodaySales"]</p>
+        <h3>@Model.Summary.TodaySales.ToString("N2")</h3>
+        <small>@L["CurrencyHint"]</small>
+    </article>
+    <article class="metric-card">
+        <p class="metric-label">@L["WeeklySales"]</p>
+        <h3>@Model.Summary.WeeklySales.ToString("N2")</h3>
+        <small>@L["Last7Days"]</small>
+    </article>
+    <article class="metric-card">
+        <p class="metric-label">@L["OrdersToday"]</p>
+        <h3>@Model.Summary.TotalOrdersToday</h3>
+        <small>@L["LiveOperations"]</small>
+    </article>
+    <article class="metric-card">
+        <p class="metric-label">@L["AverageTicket"]</p>
+        <h3>@Model.Summary.AverageTicket.ToString("N2")</h3>
+        <small>@L["AveragePerOrder"]</small>
+    </article>
+    <article class="metric-card">
+        <p class="metric-label">@L["ActiveReservations"]</p>
+        <h3>@Model.Summary.ActiveReservations</h3>
+        <small>@L["ServiceFlow"]</small>
+    </article>
+    <article class="metric-card warning">
+        <p class="metric-label">@L["LowStockAlerts"]</p>
+        <h3>@Model.Summary.LowStockItems</h3>
+        <small>@L["InventoryAttention"]</small>
+    </article>
+</section>
+
+<section class="widget-grid">
+    <article class="widget-card">
+        <div class="widget-head">
+            <h5>@L["RevenueTrend"]</h5>
+            <span>@Model.BusinessDateUtc.ToString("yyyy-MM-dd")</span>
+        </div>
+        <div class="trend-bars" aria-label="Revenue trend placeholder">
+            <span style="height: 25%"></span>
+            <span style="height: 42%"></span>
+            <span style="height: 60%"></span>
+            <span style="height: 48%"></span>
+            <span style="height: 76%"></span>
+            <span style="height: 62%"></span>
+            <span style="height: 85%"></span>
+        </div>
+    </article>
+
+    <article class="widget-card">
+        <div class="widget-head">
+            <h5>@L["LowStockAlerts"]</h5>
+            <span>@L["ActionNeeded"]</span>
+        </div>
+        <div class="alert-grid">
+            <article class="alert-chip warning">@L["LowStockAlerts"]: @Model.Summary.LowStockItems</article>
+            <article class="alert-chip neutral">@L["Reservations"]: @Model.Summary.ActiveReservations</article>
+            <article class="alert-chip neutral">@L["OrdersCount"]: @Model.Summary.TotalOrdersToday</article>
+        </div>
+    </article>
+
+    <article class="widget-card">
+        <div class="widget-head">
+            <h5>@L["TopSellingProducts"]</h5>
+            <span>@L["Today"]</span>
+        </div>
+        <ul class="performance-list">
+            @if (Model.Summary.TopProducts.Any())
+            {
+                foreach (var top in Model.Summary.TopProducts)
+                {
+                    <li>
+                        <span>@top.ProductName</span>
+                        <strong>@top.QuantitySold</strong>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="empty-state">@L["NoDataYet"]</li>
+            }
+        </ul>
+    </article>
+</section>
+
+<section class="widget-grid mt-3">
+    <article class="widget-card">
+        <div class="widget-head">
+            <h5>@L["RecentOrders"]</h5>
+            <span>@L["LiveOperations"]</span>
+        </div>
+        <div class="table-responsive table-wrapper">
+            <table class="table shell-table mb-0">
+                <thead>
+                    <tr>
+                        <th>@L["Order"] #</th>
+                        <th>@L["Type"]</th>
+                        <th>@L["Status"]</th>
+                        <th class="text-end">@L["Amount"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Summary.RecentOrders.Any())
+                    {
+                        foreach (var order in Model.Summary.RecentOrders)
+                        {
+                            <tr>
+                                <td>@order.OrderNumber</td>
+                                <td>@order.OrderType</td>
+                                <td>@order.Status</td>
+                                <td class="text-end">@order.Total.ToString("N2")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="4" class="empty-state">@L["NoRecentOrders"]</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </article>
+
+    <article class="widget-card">
+        <div class="widget-head">
+            <h5>@L["RecentReservations"]</h5>
+            <span>@L["LiveOperations"]</span>
+        </div>
+        <ul class="performance-list">
+            @if (Model.Summary.RecentReservations.Any())
+            {
+                foreach (var reservation in Model.Summary.RecentReservations)
+                {
+                    <li>
+                        <span>@reservation.CustomerName (@reservation.TableNumber)</span>
+                        <strong>@reservation.ReservationAtUtc.ToString("HH:mm")</strong>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="empty-state">@L["NoRecentReservations"]</li>
+            }
+        </ul>
+    </article>
+</section>

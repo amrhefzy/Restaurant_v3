@@ -1,0 +1,25 @@
+@model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Kitchen.KitchenOrderCardDto>
+@using System.Text.Json
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    ViewData["Title"] = L["Kitchen"];
+    var dataJson = JsonSerializer.Serialize(Model);
+}
+
+<div id="kitchenApp"
+     class="kitchen-shell"
+     data-seed='@Html.Raw(dataJson)'
+     data-no-active='@L["NoActiveOrders"]'
+     data-start='@L["Start"]'
+     data-ready='@L["MarkReady"]'>
+    @Html.AntiForgeryToken()
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h4 class="mb-0">@L["Kitchen"]</h4>
+        <small class="text-muted">@L["LiveOperations"]</small>
+    </div>
+    <div id="kitchenBoard" class="kitchen-board"></div>
+</div>
+
+@section Scripts {
+    <script src="~/js/kitchen.js" asp-append-version="true"></script>
+}
