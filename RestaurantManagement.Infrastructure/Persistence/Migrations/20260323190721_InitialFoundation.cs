@@ -399,18 +399,19 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         column: x => x.BranchId,
                         principalTable: "Branches",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reservations_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reservations_RestaurantTables_TableId",
                         column: x => x.TableId,
                         principalTable: "RestaurantTables",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

@@ -566,7 +566,7 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                 column: "BranchId",
                 principalTable: "Branches",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Reservations_Customers_CustomerId",
@@ -574,14 +574,15 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                 column: "CustomerId",
                 principalTable: "Customers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Reservations_RestaurantTables_TableId",
                 table: "Reservations",
                 column: "TableId",
                 principalTable: "RestaurantTables",
-                principalColumn: "Id");
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_RestaurantTables_Branches_BranchId",
