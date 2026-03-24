@@ -17,6 +17,27 @@ public sealed class InventoryService : IInventoryService
         _productRepository = productRepository;
     }
 
+    public async Task<IReadOnlyCollection<StockOnHandItemDto>> GetStockOnHandAsync(Guid branchId, CancellationToken cancellationToken = default)
+    {
+        return await _productRepository.Query()
+            .AsNoTracking()
+            .Where(x => x.BranchId == branchId && x.IsStockTracked && x.IsActive)
+            .Select(x => new StockOnHandItemDto
+            {
+                ProductId = x.Id,
+                ProductName = x.NameEn,
+                Sku = x.Sku,
+                ReorderLevel = x.ReorderLevel,
+                OnHandQuantity = _movementRepository.Query()
+                    .Where(m => m.BranchId == branchId && m.ProductId == x.Id)
+                    .Select(m => m.QuantityChange)
+                    .DefaultIfEmpty(0)
+                    .Sum()
+            })
+            .OrderBy(x => x.ProductName)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<IReadOnlyCollection<InventoryMovementDto>> GetRecentMovementsAsync(Guid branchId, int take = 100, CancellationToken cancellationToken = default)
     {
         return await _movementRepository.Query()
@@ -46,7 +67,7 @@ public sealed class InventoryService : IInventoryService
                 ProductName = x.NameEn,
                 ReorderLevel = x.ReorderLevel,
                 OnHandQuantity = _movementRepository.Query()
-                    .Where(m => m.ProductId == x.Id)
+                    .Where(m => m.BranchId == branchId && m.ProductId == x.Id)
                     .Select(m => m.QuantityChange)
                     .DefaultIfEmpty(0)
                     .Sum()

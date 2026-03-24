@@ -23,5 +23,10 @@ public sealed class PaymentTransactionConfiguration : IEntityTypeConfiguration<P
             .WithMany(x => x.PaymentTransactions)
             .HasForeignKey(x => x.CashierShiftId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.Branch)
+            .WithMany(x => x.PaymentTransactions)
+            .HasForeignKey(x => x.BranchId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

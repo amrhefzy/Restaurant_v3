@@ -521,7 +521,6 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HeldReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BranchId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -540,11 +539,6 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         principalTable: "Branches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_SalesOrders_Branches_BranchId1",
-                        column: x => x.BranchId1,
-                        principalTable: "Branches",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesOrders_CashierShifts_CashierShiftId",
                         column: x => x.CashierShiftId,
@@ -626,7 +620,7 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         column: x => x.BranchId,
                         principalTable: "Branches",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_InventoryMovements_Products_ProductId",
                         column: x => x.ProductId,
@@ -764,13 +758,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         column: x => x.BranchId,
                         principalTable: "Branches",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SalesReturns_SalesOrders_SalesOrderId",
                         column: x => x.SalesOrderId,
                         principalTable: "SalesOrders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -828,13 +822,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         column: x => x.BranchId,
                         principalTable: "Branches",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PurchaseReturns_PurchaseOrders_PurchaseOrderId",
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1099,11 +1093,6 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                 table: "SalesOrders",
                 columns: new[] { "BranchId", "OrderNumber" },
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SalesOrders_BranchId1",
-                table: "SalesOrders",
-                column: "BranchId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SalesOrders_CashierShiftId",

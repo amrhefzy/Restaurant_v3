@@ -17,13 +17,24 @@ public sealed class SalesOrderConfiguration : IEntityTypeConfiguration<SalesOrde
 
         builder.HasIndex(x => new { x.BranchId, x.OrderNumber }).IsUnique();
 
+        builder.HasOne(x => x.Branch)
+            .WithMany(x => x.SalesOrders)
+            .HasForeignKey(x => x.BranchId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.Customer)
+            .WithMany(x => x.SalesOrders)
+            .HasForeignKey(x => x.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.Table)
+            .WithMany(x => x.SalesOrders)
+            .HasForeignKey(x => x.TableId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         builder.HasOne(x => x.CashierShift)
             .WithMany(x => x.SalesOrders)
             .HasForeignKey(x => x.CashierShiftId)
             .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(x => x.Branch)
-    .WithMany()
-    .HasForeignKey(x => x.BranchId)
-    .OnDelete(DeleteBehavior.Restrict); 
     }
 }

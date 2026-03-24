@@ -218,32 +218,47 @@ public sealed class PurchaseOrderService : IPurchaseOrderService
             : request.ReceiptReferenceNumber.Trim();
         var reason = string.IsNullOrWhiteSpace(request.Notes) ? "Purchase order receiving" : request.Notes.Trim();
 
-        foreach (var line in receiptLines)
+        var duplicateReceiptExists = await _inventoryMovementRepository.Query()
+            .AnyAsync(x =>
+                x.BranchId == request.BranchId
+                && x.MovementType == InventoryMovementType.PurchaseReceipt
+                && x.ReferenceNumber == referenceNumber,
+                cancellationToken);
+
+        if (duplicateReceiptExists)
         {
-            var orderItem = orderItemsById[line.PurchaseOrderItemId];
-            if (line.ReceivedQuantity <= 0)
-            {
-                continue;
-            }
-
-            orderItem.ReceivedQuantity = decimal.Round(orderItem.ReceivedQuantity + line.ReceivedQuantity, 3, MidpointRounding.AwayFromZero);
-
-            await _inventoryMovementRepository.AddAsync(new InventoryMovement
-            {
-                BranchId = request.BranchId,
-                ProductId = orderItem.ProductId,
-                MovementType = InventoryMovementType.PurchaseReceipt,
-                QuantityChange = line.ReceivedQuantity,
-                ReferenceNumber = referenceNumber,
-                Reason = reason
-            }, cancellationToken);
+            throw new ValidationException("Receipt reference already exists. Please use a unique reference.");
         }
 
-        var isFullyReceived = order.Items.All(x => x.ReceivedQuantity >= x.Quantity);
-        order.Status = isFullyReceived ? PurchaseOrderStatus.Received : PurchaseOrderStatus.PartiallyReceived;
-        _purchaseOrderRepository.Update(order);
+        await _unitOfWork.ExecuteInTransactionAsync(async ct =>
+        {
+            foreach (var line in receiptLines)
+            {
+                var orderItem = orderItemsById[line.PurchaseOrderItemId];
+                if (line.ReceivedQuantity <= 0)
+                {
+                    continue;
+                }
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+                orderItem.ReceivedQuantity = decimal.Round(orderItem.ReceivedQuantity + line.ReceivedQuantity, 3, MidpointRounding.AwayFromZero);
+
+                await _inventoryMovementRepository.AddAsync(new InventoryMovement
+                {
+                    BranchId = request.BranchId,
+                    ProductId = orderItem.ProductId,
+                    MovementType = InventoryMovementType.PurchaseReceipt,
+                    QuantityChange = line.ReceivedQuantity,
+                    ReferenceNumber = referenceNumber,
+                    Reason = reason
+                }, ct);
+            }
+
+            var isFullyReceived = order.Items.All(x => x.ReceivedQuantity >= x.Quantity);
+            order.Status = isFullyReceived ? PurchaseOrderStatus.Received : PurchaseOrderStatus.PartiallyReceived;
+            _purchaseOrderRepository.Update(order);
+
+            await _unitOfWork.SaveChangesAsync(ct);
+        }, cancellationToken);
 
         return await ProjectDetailsByIdAsync(request.BranchId, order.Id, cancellationToken)
             ?? throw new KeyNotFoundException("Purchase order receipt was saved but could not be loaded.");

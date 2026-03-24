@@ -1484,7 +1484,7 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany("CashierShifts")
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Branch");
@@ -1580,7 +1580,7 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany("PaymentTransactions")
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.CashierShift", "CashierShift")
@@ -1664,13 +1664,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.PurchaseOrder", "PurchaseOrder")
                         .WithMany("PurchaseReturns")
                         .HasForeignKey("PurchaseOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Branch");
@@ -1753,11 +1753,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
 
                     b.HasOne("RestaurantManagement.Domain.Entities.Customer", "Customer")
                         .WithMany("SalesOrders")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RestaurantManagement.Domain.Entities.RestaurantTable", "Table")
                         .WithMany("SalesOrders")
-                        .HasForeignKey("TableId");
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Branch");
 
@@ -1792,13 +1794,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.SalesOrder", "SalesOrder")
                         .WithMany("SalesReturns")
                         .HasForeignKey("SalesOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Branch");

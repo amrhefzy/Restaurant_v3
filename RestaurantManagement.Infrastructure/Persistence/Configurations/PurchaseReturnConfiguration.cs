@@ -12,5 +12,15 @@ public sealed class PurchaseReturnConfiguration : IEntityTypeConfiguration<Purch
         builder.Property(x => x.Total).HasColumnType("decimal(18,2)");
 
         builder.HasIndex(x => new { x.BranchId, x.ReturnNumber }).IsUnique();
+
+        builder.HasOne(x => x.Branch)
+            .WithMany()
+            .HasForeignKey(x => x.BranchId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.PurchaseOrder)
+            .WithMany(x => x.PurchaseReturns)
+            .HasForeignKey(x => x.PurchaseOrderId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

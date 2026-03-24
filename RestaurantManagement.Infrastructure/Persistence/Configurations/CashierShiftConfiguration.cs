@@ -24,5 +24,10 @@ public sealed class CashierShiftConfiguration : IEntityTypeConfiguration<Cashier
 
         builder.HasIndex(x => new { x.BranchId, x.ShiftNumber }).IsUnique();
         builder.HasIndex(x => new { x.BranchId, x.Status });
+
+        builder.HasOne(x => x.Branch)
+            .WithMany(x => x.CashierShifts)
+            .HasForeignKey(x => x.BranchId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

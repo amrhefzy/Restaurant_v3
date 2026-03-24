@@ -1016,9 +1016,6 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BranchId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("CashierShiftId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1094,8 +1091,6 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BranchId1");
 
                     b.HasIndex("CashierShiftId");
 
@@ -1724,14 +1719,10 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("RestaurantManagement.Domain.Entities.SalesOrder", b =>
                 {
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
-                        .WithMany()
+                        .WithMany("SalesOrders")
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("RestaurantManagement.Domain.Entities.Branch", null)
-                        .WithMany("SalesOrders")
-                        .HasForeignKey("BranchId1");
 
                     b.HasOne("RestaurantManagement.Domain.Entities.CashierShift", "CashierShift")
                         .WithMany("SalesOrders")
