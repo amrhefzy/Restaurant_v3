@@ -23,7 +23,7 @@ public sealed class PurchaseOrderConfiguration : IEntityTypeConfiguration<Purcha
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.Supplier)
-            .WithMany(x => x.PurchaseOrders)
+            .WithMany()
             .HasForeignKey(x => x.SupplierId)
             .OnDelete(DeleteBehavior.Restrict);
     }
