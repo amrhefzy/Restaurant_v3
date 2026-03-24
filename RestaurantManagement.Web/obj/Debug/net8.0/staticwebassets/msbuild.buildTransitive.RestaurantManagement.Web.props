@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/RestaurantManagement.Web.props" />
-</Project>
