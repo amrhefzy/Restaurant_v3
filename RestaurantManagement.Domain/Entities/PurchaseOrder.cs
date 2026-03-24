@@ -9,6 +9,8 @@ public sealed class PurchaseOrder : SoftDeletableAuditableEntity
     public Guid SupplierId { get; set; }
     public string PurchaseOrderNumber { get; set; } = string.Empty;
     public PurchaseOrderStatus Status { get; set; } = PurchaseOrderStatus.Draft;
+    public DateTime? SubmittedOnUtc { get; set; }
+    public string? Notes { get; set; }
     public decimal Subtotal { get; set; }
     public decimal TaxAmount { get; set; }
     public decimal Total { get; set; }

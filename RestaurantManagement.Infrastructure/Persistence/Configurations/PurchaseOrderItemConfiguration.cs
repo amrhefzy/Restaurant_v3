@@ -9,8 +9,11 @@ public sealed class PurchaseOrderItemConfiguration : IEntityTypeConfiguration<Pu
     public void Configure(EntityTypeBuilder<PurchaseOrderItem> builder)
     {
         builder.Property(x => x.Quantity).HasColumnType("decimal(18,3)");
+        builder.Property(x => x.ReceivedQuantity).HasColumnType("decimal(18,3)");
         builder.Property(x => x.UnitCost).HasColumnType("decimal(18,2)");
         builder.Property(x => x.LineTotal).HasColumnType("decimal(18,2)");
+
+        builder.HasIndex(x => new { x.PurchaseOrderId, x.ProductId }).IsUnique();
 
         builder.HasOne(x => x.PurchaseOrder)
             .WithMany(x => x.Items)
