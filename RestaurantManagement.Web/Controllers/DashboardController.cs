@@ -1,34 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.Services;
 using RestaurantManagement.Domain.Entities;
+using RestaurantManagement.Web.Controllers.Base;
 using RestaurantManagement.Web.ViewModels.Dashboard;
 
 namespace RestaurantManagement.Web.Controllers;
 
-public sealed class DashboardController : Controller
+public sealed class DashboardController : BranchScopedController
 {
     private readonly IDashboardService _dashboardService;
-    private readonly IRepository<Branch> _branchRepository;
 
     public DashboardController(IDashboardService dashboardService, IRepository<Branch> branchRepository)
+        : base(branchRepository)
     {
         _dashboardService = dashboardService;
-        _branchRepository = branchRepository;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
         var businessDateUtc = DateTime.UtcNow;
-        var branchId = await _branchRepository
-            .Query()
-            .Select(x => x.Id)
-            .FirstOrDefaultAsync(cancellationToken);
+        var branchId = await GetBranchIdAsync(cancellationToken);
 
         if (branchId == Guid.Empty)
         {
+            TempData["Error"] = "No active branch context is available.";
             return View(new DashboardPageViewModel
             {
                 BusinessDateUtc = businessDateUtc

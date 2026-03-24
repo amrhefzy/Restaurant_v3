@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantManagement.Domain.Common;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Infrastructure.Identity;
+using System.Reflection;
 
 namespace RestaurantManagement.Infrastructure.Persistence;
 
@@ -38,6 +39,7 @@ public sealed class AppDbContext : IdentityDbContext<ApplicationUser, Applicatio
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        ApplySoftDeleteQueryFilters(builder);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -49,6 +51,18 @@ public sealed class AppDbContext : IdentityDbContext<ApplicationUser, Applicatio
     private void UpdateAuditMetadata()
     {
         var nowUtc = DateTime.UtcNow;
+
+        foreach (var entry in ChangeTracker.Entries<SoftDeletableAuditableEntity>())
+        {
+            if (entry.State != EntityState.Deleted)
+            {
+                continue;
+            }
+
+            entry.State = EntityState.Modified;
+            entry.Entity.IsDeleted = true;
+            entry.Entity.DeletedOnUtc = nowUtc;
+        }
 
         foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
         {
@@ -62,5 +76,32 @@ public sealed class AppDbContext : IdentityDbContext<ApplicationUser, Applicatio
                 entry.Entity.ModifiedOn = nowUtc;
             }
         }
+    }
+
+    private static void ApplySoftDeleteQueryFilters(ModelBuilder builder)
+    {
+        var method = typeof(AppDbContext)
+            .GetMethod(nameof(SetSoftDeleteFilter), BindingFlags.Static | BindingFlags.NonPublic);
+
+        if (method is null)
+        {
+            return;
+        }
+
+        var softDeleteTypes = builder.Model.GetEntityTypes()
+            .Where(x => typeof(SoftDeletableAuditableEntity).IsAssignableFrom(x.ClrType))
+            .Select(x => x.ClrType)
+            .ToArray();
+
+        foreach (var clrType in softDeleteTypes)
+        {
+            method.MakeGenericMethod(clrType).Invoke(null, new object[] { builder });
+        }
+    }
+
+    private static void SetSoftDeleteFilter<TEntity>(ModelBuilder builder)
+        where TEntity : SoftDeletableAuditableEntity
+    {
+        builder.Entity<TEntity>().HasQueryFilter(x => !x.IsDeleted);
     }
 }

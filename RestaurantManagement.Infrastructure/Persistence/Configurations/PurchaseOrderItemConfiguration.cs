@@ -14,6 +14,12 @@ public sealed class PurchaseOrderItemConfiguration : IEntityTypeConfiguration<Pu
 
         builder.HasOne(x => x.PurchaseOrder)
             .WithMany(x => x.Items)
-            .HasForeignKey(x => x.PurchaseOrderId);
+            .HasForeignKey(x => x.PurchaseOrderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.Product)
+            .WithMany(x => x.PurchaseOrderItems)
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

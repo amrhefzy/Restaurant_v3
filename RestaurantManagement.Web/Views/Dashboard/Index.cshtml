@@ -2,37 +2,42 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["Dashboard"];
+    var vm = Model ?? new RestaurantManagement.Web.ViewModels.Dashboard.DashboardPageViewModel
+    {
+        BusinessDateUtc = DateTime.UtcNow
+    };
+    var summary = vm.Summary ?? new RestaurantManagement.Application.DTOs.Dashboard.DashboardSummaryDto();
 }
 
 <section class="dashboard-grid mb-3">
     <article class="metric-card">
         <p class="metric-label">@L["TodaySales"]</p>
-        <h3>@Model.Summary.TodaySales.ToString("N2")</h3>
+        <h3>@summary.TodaySales.ToString("N2")</h3>
         <small>@L["CurrencyHint"]</small>
     </article>
     <article class="metric-card">
         <p class="metric-label">@L["WeeklySales"]</p>
-        <h3>@Model.Summary.WeeklySales.ToString("N2")</h3>
+        <h3>@summary.WeeklySales.ToString("N2")</h3>
         <small>@L["Last7Days"]</small>
     </article>
     <article class="metric-card">
         <p class="metric-label">@L["OrdersToday"]</p>
-        <h3>@Model.Summary.TotalOrdersToday</h3>
+        <h3>@summary.TotalOrdersToday</h3>
         <small>@L["LiveOperations"]</small>
     </article>
     <article class="metric-card">
         <p class="metric-label">@L["AverageTicket"]</p>
-        <h3>@Model.Summary.AverageTicket.ToString("N2")</h3>
+        <h3>@summary.AverageTicket.ToString("N2")</h3>
         <small>@L["AveragePerOrder"]</small>
     </article>
     <article class="metric-card">
         <p class="metric-label">@L["ActiveReservations"]</p>
-        <h3>@Model.Summary.ActiveReservations</h3>
+        <h3>@summary.ActiveReservations</h3>
         <small>@L["ServiceFlow"]</small>
     </article>
     <article class="metric-card warning">
         <p class="metric-label">@L["LowStockAlerts"]</p>
-        <h3>@Model.Summary.LowStockItems</h3>
+        <h3>@summary.LowStockItems</h3>
         <small>@L["InventoryAttention"]</small>
     </article>
 </section>
@@ -41,7 +46,7 @@
     <article class="widget-card">
         <div class="widget-head">
             <h5>@L["RevenueTrend"]</h5>
-            <span>@Model.BusinessDateUtc.ToString("yyyy-MM-dd")</span>
+            <span>@vm.BusinessDateUtc.ToString("yyyy-MM-dd")</span>
         </div>
         <div class="trend-bars" aria-label="Revenue trend placeholder">
             <span style="height: 25%"></span>
@@ -60,9 +65,9 @@
             <span>@L["ActionNeeded"]</span>
         </div>
         <div class="alert-grid">
-            <article class="alert-chip warning">@L["LowStockAlerts"]: @Model.Summary.LowStockItems</article>
-            <article class="alert-chip neutral">@L["Reservations"]: @Model.Summary.ActiveReservations</article>
-            <article class="alert-chip neutral">@L["OrdersCount"]: @Model.Summary.TotalOrdersToday</article>
+            <article class="alert-chip warning">@L["LowStockAlerts"]: @summary.LowStockItems</article>
+            <article class="alert-chip neutral">@L["Reservations"]: @summary.ActiveReservations</article>
+            <article class="alert-chip neutral">@L["OrdersCount"]: @summary.TotalOrdersToday</article>
         </div>
     </article>
 
@@ -72,9 +77,9 @@
             <span>@L["Today"]</span>
         </div>
         <ul class="performance-list">
-            @if (Model.Summary.TopProducts.Any())
+            @if (summary.TopProducts.Any())
             {
-                foreach (var top in Model.Summary.TopProducts)
+                foreach (var top in summary.TopProducts)
                 {
                     <li>
                         <span>@top.ProductName</span>
@@ -107,9 +112,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.Summary.RecentOrders.Any())
+                    @if (summary.RecentOrders.Any())
                     {
-                        foreach (var order in Model.Summary.RecentOrders)
+                        foreach (var order in summary.RecentOrders)
                         {
                             <tr>
                                 <td>@order.OrderNumber</td>
@@ -134,9 +139,9 @@
             <span>@L["LiveOperations"]</span>
         </div>
         <ul class="performance-list">
-            @if (Model.Summary.RecentReservations.Any())
+            @if (summary.RecentReservations.Any())
             {
-                foreach (var reservation in Model.Summary.RecentReservations)
+                foreach (var reservation in summary.RecentReservations)
                 {
                     <li>
                         <span>@reservation.CustomerName (@reservation.TableNumber)</span>

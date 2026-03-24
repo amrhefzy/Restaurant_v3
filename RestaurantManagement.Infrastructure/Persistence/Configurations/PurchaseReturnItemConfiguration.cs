@@ -14,6 +14,12 @@ public sealed class PurchaseReturnItemConfiguration : IEntityTypeConfiguration<P
 
         builder.HasOne(x => x.PurchaseReturn)
             .WithMany(x => x.Items)
-            .HasForeignKey(x => x.PurchaseReturnId);
+            .HasForeignKey(x => x.PurchaseReturnId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.Product)
+            .WithMany()
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

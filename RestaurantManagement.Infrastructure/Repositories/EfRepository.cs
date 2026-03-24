@@ -39,5 +39,16 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEn
 
     public void Update(TEntity entity) => _dbSet.Update(entity);
 
-    public void Delete(TEntity entity) => _dbSet.Remove(entity);
+    public void Delete(TEntity entity)
+    {
+        if (entity is SoftDeletableAuditableEntity softDeletableEntity)
+        {
+            softDeletableEntity.IsDeleted = true;
+            softDeletableEntity.DeletedOnUtc = DateTime.UtcNow;
+            _dbSet.Update(entity);
+            return;
+        }
+
+        _dbSet.Remove(entity);
+    }
 }

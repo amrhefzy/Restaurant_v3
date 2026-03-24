@@ -14,6 +14,12 @@ public sealed class SalesReturnItemConfiguration : IEntityTypeConfiguration<Sale
 
         builder.HasOne(x => x.SalesReturn)
             .WithMany(x => x.Items)
-            .HasForeignKey(x => x.SalesReturnId);
+            .HasForeignKey(x => x.SalesReturnId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.Product)
+            .WithMany()
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
