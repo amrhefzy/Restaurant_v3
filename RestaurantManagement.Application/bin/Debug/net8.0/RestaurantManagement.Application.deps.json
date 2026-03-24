@@ -142,7 +142,10 @@
       },
       "RestaurantManagement.Domain/1.0.0": {
         "runtime": {
-          "RestaurantManagement.Domain.dll": {}
+          "RestaurantManagement.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

@@ -20,6 +20,10 @@ public sealed class SalesOrderConfiguration : IEntityTypeConfiguration<SalesOrde
         builder.HasOne(x => x.CashierShift)
             .WithMany(x => x.SalesOrders)
             .HasForeignKey(x => x.CashierShiftId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.Branch)
+    .WithMany()
+    .HasForeignKey(x => x.BranchId)
+    .OnDelete(DeleteBehavior.Restrict); 
     }
 }

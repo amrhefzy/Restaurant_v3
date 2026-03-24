@@ -12,5 +12,5 @@ public sealed class Supplier : SoftDeletableAuditableEntity
     public string? Address { get; set; }
 
     public Branch? Branch { get; set; }
-    public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = new HashSet<PurchaseOrder>();
+   // public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = new HashSet<PurchaseOrder>();
 }

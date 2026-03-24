@@ -12,8 +12,8 @@ using RestaurantManagement.Infrastructure.Persistence;
 namespace RestaurantManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260323201830_OrderStandaloneRefactor")]
-    partial class OrderStandaloneRefactor
+    [Migration("20260324152801_InitialFoundation")]
+    partial class InitialFoundation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,6 +230,91 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.ToTable("Branches");
                 });
 
+            modelBuilder.Entity("RestaurantManagement.Domain.Entities.CashierShift", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("CashVariance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ClosedByUserId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ClosedByUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime?>("ClosedOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("ClosingCashActual")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("ClosingCashExpected")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OpenedByUserId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("OpenedByUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("OpenedOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("OpeningCash")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ShiftNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalCard")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalCash")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalSales")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId", "ShiftNumber")
+                        .IsUnique();
+
+                    b.HasIndex("BranchId", "Status");
+
+                    b.ToTable("CashierShifts");
+                });
+
             modelBuilder.Entity("RestaurantManagement.Domain.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -306,7 +391,8 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -325,14 +411,16 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(160)
+                        .HasColumnType("nvarchar(160)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
+                    b.HasIndex("BranchId", "Phone");
 
                     b.ToTable("Customers");
                 });
@@ -492,6 +580,60 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("RestaurantManagement.Domain.Entities.PaymentTransaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CashierShiftId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PaidOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReferenceNumber")
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<Guid>("SalesOrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CashierShiftId");
+
+                    b.HasIndex("BranchId", "PaidOnUtc");
+
+                    b.HasIndex("SalesOrderId", "CashierShiftId");
+
+                    b.ToTable("PaymentTransactions");
                 });
 
             modelBuilder.Entity("RestaurantManagement.Domain.Entities.Product", b =>
@@ -787,7 +929,8 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("PartySize")
                         .HasColumnType("int");
@@ -803,11 +946,11 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("TableId");
+
+                    b.HasIndex("BranchId", "ReservationAtUtc");
 
                     b.ToTable("Reservations");
                 });
@@ -853,11 +996,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("TableNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
+                    b.HasIndex("BranchId", "TableNumber")
+                        .IsUnique();
 
                     b.ToTable("RestaurantTables");
                 });
@@ -869,6 +1014,12 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("BranchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("BranchId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CashierShiftId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
@@ -915,7 +1066,16 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.Property<int>("OrderType")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("PaidAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("PaidOnUtc")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PaymentType")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -934,6 +1094,10 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BranchId1");
+
+                    b.HasIndex("CashierShiftId");
 
                     b.HasIndex("CustomerId");
 
@@ -1083,13 +1247,15 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<Guid>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ContactName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(160)
+                        .HasColumnType("nvarchar(160)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1104,7 +1270,8 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1120,14 +1287,17 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(160)
+                        .HasColumnType("nvarchar(160)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
+                    b.HasIndex("BranchId", "Name")
+                        .IsUnique();
 
                     b.ToTable("Suppliers");
                 });
@@ -1296,6 +1466,17 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.Navigation("Branch");
                 });
 
+            modelBuilder.Entity("RestaurantManagement.Domain.Entities.CashierShift", b =>
+                {
+                    b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
+                        .WithMany("CashierShifts")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
             modelBuilder.Entity("RestaurantManagement.Domain.Entities.Category", b =>
                 {
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
@@ -1312,7 +1493,7 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Branch");
@@ -1381,6 +1562,33 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("RestaurantManagement.Domain.Entities.PaymentTransaction", b =>
+                {
+                    b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
+                        .WithMany("PaymentTransactions")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RestaurantManagement.Domain.Entities.CashierShift", "CashierShift")
+                        .WithMany("PaymentTransactions")
+                        .HasForeignKey("CashierShiftId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RestaurantManagement.Domain.Entities.SalesOrder", "SalesOrder")
+                        .WithMany("PaymentTransactions")
+                        .HasForeignKey("SalesOrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("CashierShift");
+
+                    b.Navigation("SalesOrder");
+                });
+
             modelBuilder.Entity("RestaurantManagement.Domain.Entities.Product", b =>
                 {
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
@@ -1405,13 +1613,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.Supplier", "Supplier")
-                        .WithMany("PurchaseOrders")
+                        .WithMany()
                         .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Branch");
@@ -1424,13 +1632,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Product", "Product")
                         .WithMany("PurchaseOrderItems")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.PurchaseOrder", "PurchaseOrder")
                         .WithMany("Items")
                         .HasForeignKey("PurchaseOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -1462,13 +1670,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.PurchaseReturn", "PurchaseReturn")
                         .WithMany("Items")
                         .HasForeignKey("PurchaseReturnId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -1481,18 +1689,19 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.Customer", "Customer")
                         .WithMany("Reservations")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.RestaurantTable", "Table")
                         .WithMany("Reservations")
-                        .HasForeignKey("TableId");
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Branch");
 
@@ -1506,7 +1715,7 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany("Tables")
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Branch");
@@ -1517,8 +1726,17 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("RestaurantManagement.Domain.Entities.Branch", null)
+                        .WithMany("SalesOrders")
+                        .HasForeignKey("BranchId1");
+
+                    b.HasOne("RestaurantManagement.Domain.Entities.CashierShift", "CashierShift")
+                        .WithMany("SalesOrders")
+                        .HasForeignKey("CashierShiftId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RestaurantManagement.Domain.Entities.Customer", "Customer")
                         .WithMany("SalesOrders")
@@ -1530,6 +1748,8 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
 
                     b.Navigation("Branch");
 
+                    b.Navigation("CashierShift");
+
                     b.Navigation("Customer");
 
                     b.Navigation("Table");
@@ -1540,13 +1760,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Product", "Product")
                         .WithMany("SalesOrderItems")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.SalesOrder", "SalesOrder")
                         .WithMany("Items")
                         .HasForeignKey("SalesOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -1578,13 +1798,13 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Domain.Entities.SalesReturn", "SalesReturn")
                         .WithMany("Items")
                         .HasForeignKey("SalesReturnId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -1597,7 +1817,7 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("RestaurantManagement.Domain.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Branch");
@@ -1605,9 +1825,22 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("RestaurantManagement.Domain.Entities.Branch", b =>
                 {
+                    b.Navigation("CashierShifts");
+
                     b.Navigation("Orders");
 
+                    b.Navigation("PaymentTransactions");
+
+                    b.Navigation("SalesOrders");
+
                     b.Navigation("Tables");
+                });
+
+            modelBuilder.Entity("RestaurantManagement.Domain.Entities.CashierShift", b =>
+                {
+                    b.Navigation("PaymentTransactions");
+
+                    b.Navigation("SalesOrders");
                 });
 
             modelBuilder.Entity("RestaurantManagement.Domain.Entities.Category", b =>
@@ -1665,17 +1898,14 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                 {
                     b.Navigation("Items");
 
+                    b.Navigation("PaymentTransactions");
+
                     b.Navigation("SalesReturns");
                 });
 
             modelBuilder.Entity("RestaurantManagement.Domain.Entities.SalesReturn", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("RestaurantManagement.Domain.Entities.Supplier", b =>
-                {
-                    b.Navigation("PurchaseOrders");
                 });
 #pragma warning restore 612, 618
         }
