@@ -12,6 +12,8 @@
     </div>
 
     <div class="topbar-actions">
+        <a class="btn btn-sm btn-outline-secondary shell-quick-link" asp-controller="Dashboard" asp-action="Index">@L["Dashboard"]</a>
+        <a class="btn btn-sm btn-outline-secondary shell-quick-link" asp-controller="POS" asp-action="Index">@L["Pos"]</a>
         <form asp-controller="Culture" asp-action="Set" method="post" class="culture-form">
             @Html.AntiForgeryToken()
             <input type="hidden" name="returnUrl" value="@returnUrl" />

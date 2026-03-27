@@ -1,0 +1,22 @@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+
+<div class="modal fade" id="confirmActionModal" tabindex="-1" aria-labelledby="confirmActionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shell-modal">
+            <div class="modal-header border-0 pb-0">
+                <div>
+                    <h5 class="modal-title" id="confirmActionModalLabel">@L["ConfirmAction"]</h5>
+                    <small class="text-muted">@L["ReviewActionBeforeContinue"]</small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-3">
+                <p id="confirmActionMessage" class="mb-0">@L["AreYouSureYouWantToContinue"]</p>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@L["Cancel"]</button>
+                <button type="button" class="btn btn-danger" id="confirmActionBtn">@L["Confirm"]</button>
+            </div>
+        </div>
+    </div>
+</div>

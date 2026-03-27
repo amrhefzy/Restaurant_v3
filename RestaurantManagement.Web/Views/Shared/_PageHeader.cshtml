@@ -9,12 +9,20 @@
         <h1 class="page-header-title">@pageTitle</h1>
         <p class="page-header-subtitle">@L["BusinessWorkspace"]</p>
     </div>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb shell-breadcrumb mb-0">
-            <li class="breadcrumb-item">
-                <a asp-controller="Dashboard" asp-action="Index">@L["Dashboard"]</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">@routeController</li>
-        </ol>
-    </nav>
+
+    <div class="page-header-meta">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb shell-breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Dashboard" asp-action="Index">@L["Dashboard"]</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">@routeController</li>
+            </ol>
+        </nav>
+
+        @if (ViewData["PageActions"] is string pageActions && !string.IsNullOrWhiteSpace(pageActions))
+        {
+            <div class="page-header-actions">@Html.Raw(pageActions)</div>
+        }
+    </div>
 </section>
