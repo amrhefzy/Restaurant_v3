@@ -921,6 +921,60 @@ body.shell-body {
   overflow: hidden;
 }
 
+.crud-shell {
+  overflow: hidden;
+}
+
+.crud-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.crud-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.crud-search {
+  width: min(320px, 100%);
+}
+
+.table-title {
+  font-weight: 700;
+  color: #213142;
+}
+
+.table-subtitle {
+  font-size: 0.82rem;
+  color: #7c8895;
+}
+
+.form-shell {
+  max-width: 100%;
+}
+
+.form-section-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #8a461e;
+  margin-bottom: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.shell-check {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fafbfd;
+  min-width: 100%;
+}
+
 .shell-modal {
   border: 0;
   border-radius: 18px;

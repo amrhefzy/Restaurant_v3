@@ -1,17 +1,23 @@
 @model RestaurantManagement.Application.DTOs.Products.CreateProductDto
 @{
     ViewData["Title"] = "Create Product";
+    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/Products'>Back to list</a>";
 }
 
-<div class="widget-card">
+<div class="widget-card form-shell">
     <div class="widget-head d-flex align-items-center justify-content-between">
-        <h5 class="mb-0">Create Product</h5>
+        <div>
+            <h5 class="mb-1">Create product</h5>
+            <small class="text-muted">Add a new sellable item with pricing and stock tracking settings.</small>
+        </div>
         <a class="btn btn-outline-secondary" asp-action="Index">Back</a>
     </div>
 
-    <form asp-action="Create" method="post" class="mt-3">
+    <form asp-action="Create" method="post" class="mt-3" data-confirm="Save this product now?" data-confirm-text="Save product" data-confirm-class="btn-primary">
         @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-section-title">Core information</div>
         <div class="row g-3">
             <div class="col-md-4">
                 <label asp-for="CategoryId" class="form-label"></label>
@@ -24,7 +30,7 @@
                 <span asp-validation-for="Sku" class="text-danger"></span>
             </div>
             <div class="col-md-4 d-flex align-items-center">
-                <div class="form-check mt-4">
+                <div class="form-check mt-4 shell-check">
                     <input asp-for="IsStockTracked" class="form-check-input" />
                     <label asp-for="IsStockTracked" class="form-check-label"></label>
                 </div>
@@ -39,6 +45,10 @@
                 <input asp-for="NameAr" class="form-control" />
                 <span asp-validation-for="NameAr" class="text-danger"></span>
             </div>
+        </div>
+
+        <div class="form-section-title mt-4">Pricing and replenishment</div>
+        <div class="row g-3">
             <div class="col-md-4">
                 <label asp-for="SalePrice" class="form-label"></label>
                 <input asp-for="SalePrice" class="form-control" type="number" step="0.01" min="0" />
@@ -55,7 +65,8 @@
                 <span asp-validation-for="ReorderLevel" class="text-danger"></span>
             </div>
         </div>
-        <div class="mt-4 d-flex gap-2">
+
+        <div class="mt-4 d-flex gap-2 flex-wrap">
             <button type="submit" class="btn btn-primary">Save</button>
             <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
         </div>

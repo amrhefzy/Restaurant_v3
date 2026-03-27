@@ -1,26 +1,32 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Products.ProductDto>
 @{
     ViewData["Title"] = "Products";
+    ViewData["PageActions"] = "<a class='btn btn-primary' href='/Products/Create'>Create product</a>";
 }
 
-<div class="widget-card">
-    <div class="widget-head d-flex align-items-center justify-content-between">
+<div class="widget-card crud-shell">
+    <div class="crud-toolbar">
         <div>
-            <h5 class="mb-1">Products and Pricing</h5>
-            <small class="text-muted">@Model.Count product records</small>
+            <h5 class="mb-1">Products and pricing</h5>
+            <small class="text-muted">@Model.Count product records across the active branch.</small>
         </div>
-        <a class="btn btn-primary" asp-action="Create">Create Product</a>
+        <div class="crud-toolbar-actions">
+            <div class="crud-search">
+                <input type="search" class="form-control" id="productTableSearch" placeholder="Search by English name or SKU" />
+            </div>
+            <a class="btn btn-primary" asp-action="Create">Create product</a>
+        </div>
     </div>
 
-    <div class="table-responsive mt-3">
-        <table class="table shell-table align-middle mb-0">
+    <div class="table-responsive mt-3 table-wrapper">
+        <table class="table shell-table align-middle mb-0" id="productsTable">
             <thead>
                 <tr>
-                    <th>Name (EN)</th>
+                    <th>Name</th>
                     <th>SKU</th>
-                    <th class="text-end">Sale Price</th>
-                    <th class="text-end">Cost Price</th>
-                    <th>Stock Tracking</th>
+                    <th class="text-end">Sale price</th>
+                    <th class="text-end">Cost price</th>
+                    <th>Stock tracking</th>
                     <th>Status</th>
                     <th class="text-end">Actions</th>
                 </tr>
@@ -31,11 +37,18 @@
                 foreach (var row in Model)
                 {
                     <tr>
-                        <td>@row.NameEn</td>
+                        <td>
+                            <div class="table-title">@row.NameEn</div>
+                            <div class="table-subtitle">@row.NameAr</div>
+                        </td>
                         <td>@row.Sku</td>
                         <td class="text-end">@row.SalePrice.ToString("N2")</td>
                         <td class="text-end">@row.CostPrice.ToString("N2")</td>
-                        <td>@(row.IsStockTracked ? "Tracked" : "Not tracked")</td>
+                        <td>
+                            <span class="badge rounded-pill @(row.IsStockTracked ? "text-bg-info" : "text-bg-light")">
+                                @(row.IsStockTracked ? "Tracked" : "Not tracked")
+                            </span>
+                        </td>
                         <td>
                             <span class="badge @(row.IsActive ? "text-bg-success" : "text-bg-secondary")">
                                 @(row.IsActive ? "Active" : "Inactive")
@@ -55,3 +68,21 @@
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("productTableSearch");
+            const table = document.getElementById("productsTable");
+            if (!searchInput || !table) return;
+
+            searchInput.addEventListener("input", function () {
+                const value = this.value.trim().toLowerCase();
+                table.querySelectorAll("tbody tr").forEach((row) => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(value) ? "" : "none";
+                });
+            });
+        });
+    </script>
+}
