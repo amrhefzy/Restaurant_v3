@@ -1,20 +1,27 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DTOs.Customers;
 using RestaurantManagement.Application.Services;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Web.Controllers.Base;
+using RestaurantManagement.Web.Localization;
 
 namespace RestaurantManagement.Web.Controllers;
 
 public sealed class CustomersController : BranchScopedController
 {
     private readonly ICustomerService _service;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public CustomersController(ICustomerService service, IRepository<Branch> branchRepository) : base(branchRepository)
+    public CustomersController(
+        ICustomerService service,
+        IStringLocalizer<SharedResource> localizer,
+        IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _service = service;
+        _localizer = localizer;
     }
 
     [HttpGet]
@@ -34,7 +41,7 @@ public sealed class CustomersController : BranchScopedController
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
-            TempData["Error"] = "No branch is configured.";
+            TempData["Error"] = _localizer["NoBranchConfigured"];
             return RedirectToAction(nameof(Index));
         }
 
@@ -50,7 +57,7 @@ public sealed class CustomersController : BranchScopedController
         try
         {
             await _service.CreateAsync(request, cancellationToken);
-            TempData["Success"] = "Customer created successfully.";
+            TempData["Success"] = _localizer["CustomerCreatedSuccessfully"];
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)
@@ -67,7 +74,7 @@ public sealed class CustomersController : BranchScopedController
         var model = await _service.GetForEditAsync(branchId, id, cancellationToken);
         if (model is null)
         {
-            TempData["Error"] = "Customer was not found.";
+            TempData["Error"] = _localizer["CustomerWasNotFound"];
             return RedirectToAction(nameof(Index));
         }
 
@@ -84,7 +91,7 @@ public sealed class CustomersController : BranchScopedController
         try
         {
             await _service.UpdateAsync(request, cancellationToken);
-            TempData["Success"] = "Customer updated successfully.";
+            TempData["Success"] = _localizer["CustomerUpdatedSuccessfully"];
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)

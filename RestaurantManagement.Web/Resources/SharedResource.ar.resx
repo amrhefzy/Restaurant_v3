@@ -240,4 +240,23 @@
   <data name="ConfirmCloseOrder" xml:space="preserve"><value>هل تريد إغلاق أمر البيع هذا الآن؟</value></data>
   <data name="PaymentRecordedSuccessfully" xml:space="preserve"><value>تم تسجيل الدفع بنجاح.</value></data>
   <data name="OrderClosedSuccessfully" xml:space="preserve"><value>تم إغلاق الطلب بنجاح.</value></data>
+  <data name="Customer" xml:space="preserve"><value>العميل</value></data>
+  <data name="Email" xml:space="preserve"><value>البريد الإلكتروني</value></data>
+  <data name="WalkIn" xml:space="preserve"><value>زائر مباشر</value></data>
+  <data name="Registered" xml:space="preserve"><value>مسجل</value></data>
+  <data name="CreateCustomer" xml:space="preserve"><value>إضافة عميل</value></data>
+  <data name="EditCustomer" xml:space="preserve"><value>تعديل عميل</value></data>
+  <data name="UpdateCustomer" xml:space="preserve"><value>تحديث العميل</value></data>
+  <data name="CustomerDirectory" xml:space="preserve"><value>دليل العملاء</value></data>
+  <data name="CustomerRecordsCount" xml:space="preserve"><value>{0} سجل عملاء</value></data>
+  <data name="SearchCustomersPlaceholder" xml:space="preserve"><value>ابحث بالعميل أو الهاتف أو البريد الإلكتروني</value></data>
+  <data name="NoCustomersCreatedYet" xml:space="preserve"><value>لا يوجد عملاء مضافون بعد.</value></data>
+  <data name="CustomerInformation" xml:space="preserve"><value>معلومات العميل</value></data>
+  <data name="AddCustomerProfileForReservationsOrdersAndServiceHistory" xml:space="preserve"><value>أضف ملف عميل للحجوزات والطلبات وسجل الخدمة.</value></data>
+  <data name="UpdateCustomerProfileContactPreferencesAndActivityStatus" xml:space="preserve"><value>حدّث ملف العميل وتفضيلات التواصل وحالة النشاط.</value></data>
+  <data name="SaveThisCustomerNow" xml:space="preserve"><value>هل تريد حفظ هذا العميل الآن؟</value></data>
+  <data name="SaveUpdatesToThisCustomer" xml:space="preserve"><value>هل تريد حفظ التعديلات على هذا العميل؟</value></data>
+  <data name="CustomerCreatedSuccessfully" xml:space="preserve"><value>تم إنشاء العميل بنجاح.</value></data>
+  <data name="CustomerUpdatedSuccessfully" xml:space="preserve"><value>تم تحديث العميل بنجاح.</value></data>
+  <data name="CustomerWasNotFound" xml:space="preserve"><value>تعذر العثور على العميل.</value></data>
 </root>

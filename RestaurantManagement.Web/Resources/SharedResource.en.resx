@@ -240,4 +240,23 @@
   <data name="ConfirmCloseOrder" xml:space="preserve"><value>Close this sales order now?</value></data>
   <data name="PaymentRecordedSuccessfully" xml:space="preserve"><value>Payment recorded successfully.</value></data>
   <data name="OrderClosedSuccessfully" xml:space="preserve"><value>Order closed successfully.</value></data>
+  <data name="Customer" xml:space="preserve"><value>Customer</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="WalkIn" xml:space="preserve"><value>Walk-in</value></data>
+  <data name="Registered" xml:space="preserve"><value>Registered</value></data>
+  <data name="CreateCustomer" xml:space="preserve"><value>Create customer</value></data>
+  <data name="EditCustomer" xml:space="preserve"><value>Edit customer</value></data>
+  <data name="UpdateCustomer" xml:space="preserve"><value>Update customer</value></data>
+  <data name="CustomerDirectory" xml:space="preserve"><value>Customer directory</value></data>
+  <data name="CustomerRecordsCount" xml:space="preserve"><value>{0} customer records</value></data>
+  <data name="SearchCustomersPlaceholder" xml:space="preserve"><value>Search by customer, phone, or email</value></data>
+  <data name="NoCustomersCreatedYet" xml:space="preserve"><value>No customers created yet.</value></data>
+  <data name="CustomerInformation" xml:space="preserve"><value>Customer information</value></data>
+  <data name="AddCustomerProfileForReservationsOrdersAndServiceHistory" xml:space="preserve"><value>Add a customer profile for reservations, orders, and service history.</value></data>
+  <data name="UpdateCustomerProfileContactPreferencesAndActivityStatus" xml:space="preserve"><value>Update customer profile, contact preferences, and activity status.</value></data>
+  <data name="SaveThisCustomerNow" xml:space="preserve"><value>Save this customer now?</value></data>
+  <data name="SaveUpdatesToThisCustomer" xml:space="preserve"><value>Save updates to this customer?</value></data>
+  <data name="CustomerCreatedSuccessfully" xml:space="preserve"><value>Customer created successfully.</value></data>
+  <data name="CustomerUpdatedSuccessfully" xml:space="preserve"><value>Customer updated successfully.</value></data>
+  <data name="CustomerWasNotFound" xml:space="preserve"><value>Customer was not found.</value></data>
 </root>

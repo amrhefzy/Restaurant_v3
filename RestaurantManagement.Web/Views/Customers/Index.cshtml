@@ -1,27 +1,34 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Customers.CustomerDto>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Customers";
+    ViewData["Title"] = L["Customers"];
+    ViewData["PageActions"] = $"<a class='btn btn-primary' href='/Customers/Create'>{L["CreateCustomer"]}</a>";
 }
 
-<div class="widget-card">
-    <div class="widget-head d-flex align-items-center justify-content-between">
+<div class="widget-card crud-shell">
+    <div class="crud-toolbar">
         <div>
-            <h5 class="mb-1">Customers</h5>
-            <small class="text-muted">@Model.Count customer records</small>
+            <h5 class="mb-1">@L["CustomerDirectory"]</h5>
+            <small class="text-muted">@string.Format(L["CustomerRecordsCount"], Model.Count)</small>
         </div>
-        <a class="btn btn-primary" asp-action="Create">Create Customer</a>
+        <div class="crud-toolbar-actions">
+            <div class="crud-search">
+                <input type="search" class="form-control" id="customersTableSearch" placeholder="@L["SearchCustomersPlaceholder"]" />
+            </div>
+            <a class="btn btn-primary" asp-action="Create">@L["CreateCustomer"]</a>
+        </div>
     </div>
 
-    <div class="table-responsive mt-3">
-        <table class="table shell-table align-middle mb-0">
+    <div class="table-responsive mt-3 table-wrapper">
+        <table class="table shell-table align-middle mb-0" id="customersTable">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th class="text-end">Actions</th>
+                    <th>@L["Customer"]</th>
+                    <th>@L["Phone"]</th>
+                    <th>@L["Email"]</th>
+                    <th>@L["Type"]</th>
+                    <th>@L["Status"]</th>
+                    <th class="text-end">@L["Actions"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,26 +37,47 @@
                 foreach (var row in Model)
                 {
                     <tr>
-                        <td>@row.Name</td>
-                        <td>@row.Phone</td>
-                        <td>@row.Email</td>
-                        <td>@(row.IsWalkIn ? "Walk-in" : "Registered")</td>
+                        <td>
+                            <div class="table-title">@row.Name</div>
+                            <div class="table-subtitle">@(string.IsNullOrWhiteSpace(row.Phone) ? "—" : row.Phone)</div>
+                        </td>
+                        <td>@(string.IsNullOrWhiteSpace(row.Phone) ? "—" : row.Phone)</td>
+                        <td>@(string.IsNullOrWhiteSpace(row.Email) ? "—" : row.Email)</td>
+                        <td><span class="badge text-bg-light">@(row.IsWalkIn ? L["WalkIn"] : L["Registered"])</span></td>
                         <td>
                             <span class="badge @(row.IsActive ? "text-bg-success" : "text-bg-secondary")">
-                                @(row.IsActive ? "Active" : "Inactive")
+                                @(row.IsActive ? L["Active"] : L["Inactive"])
                             </span>
                         </td>
                         <td class="text-end">
-                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">Edit</a>
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">@L["Edit"]</a>
                         </td>
                     </tr>
                 }
             }
             else
             {
-                <tr><td colspan="6" class="empty-state">No customers created yet.</td></tr>
+                <tr><td colspan="6" class="empty-state">@L["NoCustomersCreatedYet"]</td></tr>
             }
             </tbody>
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("customersTableSearch");
+            const table = document.getElementById("customersTable");
+            if (!searchInput || !table) return;
+
+            searchInput.addEventListener("input", function () {
+                const value = this.value.trim().toLowerCase();
+                table.querySelectorAll("tbody tr").forEach((row) => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(value) ? "" : "none";
+                });
+            });
+        });
+    </script>
+}
