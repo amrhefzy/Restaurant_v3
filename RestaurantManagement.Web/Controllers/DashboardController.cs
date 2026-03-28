@@ -8,6 +8,7 @@ using RestaurantManagement.Web.ViewModels.Dashboard;
 
 namespace RestaurantManagement.Web.Controllers;
 
+[Authorize(Roles = "SuperAdmin,Manager")]
 public sealed class DashboardController : BranchScopedController
 {
     private readonly IDashboardService _dashboardService;
