@@ -185,18 +185,32 @@
     const salesOrderId = card.getAttribute("data-order-id");
 
     if (event.target.classList.contains("start-btn")) {
-      const ok = await callAction("/Kitchen/Start", salesOrderId);
-      if (ok) {
-        await refresh();
-      }
+      window.appShell.confirm({
+        message: "Start this kitchen order now?",
+        confirmText: labels.start,
+        confirmClass: "btn-outline-dark",
+        onConfirm: async () => {
+          const ok = await callAction("/Kitchen/Start", salesOrderId);
+          if (ok) {
+            await refresh();
+          }
+        }
+      });
       return;
     }
 
     if (event.target.classList.contains("ready-btn")) {
-      const ok = await callAction("/Kitchen/Ready", salesOrderId);
-      if (ok) {
-        await refresh();
-      }
+      window.appShell.confirm({
+        message: "Mark this kitchen order as ready?",
+        confirmText: labels.ready,
+        confirmClass: "btn-primary",
+        onConfirm: async () => {
+          const ok = await callAction("/Kitchen/Ready", salesOrderId);
+          if (ok) {
+            await refresh();
+          }
+        }
+      });
     }
   });
 

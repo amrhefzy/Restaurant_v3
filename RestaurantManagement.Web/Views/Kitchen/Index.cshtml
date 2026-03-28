@@ -3,6 +3,7 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["Kitchen"];
+    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/Dashboard'>Back to dashboard</a>";
     var dataJson = JsonSerializer.Serialize(Model);
 }
 
@@ -13,9 +14,15 @@
      data-start='@L["Start"]'
      data-ready='@L["MarkReady"]'>
     @Html.AntiForgeryToken()
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <h4 class="mb-0">@L["Kitchen"]</h4>
-        <small class="text-muted">@L["LiveOperations"]</small>
+    <div class="kitchen-toolbar mb-3">
+        <div>
+            <h4 class="mb-1">@L["Kitchen"]</h4>
+            <small class="text-muted">@L["LiveOperations"]</small>
+        </div>
+        <div class="kitchen-toolbar-actions">
+            <span class="badge text-bg-light">Auto refresh: 10s</span>
+            <span class="badge text-bg-light">Audio alert on new orders</span>
+        </div>
     </div>
     <div id="kitchenBoard" class="kitchen-board"></div>
 </div>

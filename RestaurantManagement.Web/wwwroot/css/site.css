@@ -869,6 +869,12 @@ body.shell-body {
   .kitchen-board {
     grid-template-columns: 1fr;
   }
+
+  .kitchen-toolbar,
+  .kitchen-toolbar-actions {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 }
 
 .page-header-shell {
@@ -1059,6 +1065,13 @@ body.shell-body {
   }
 
   .page-header-meta,
+  .page-header-actions {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
+er-meta,
   .page-header-actions {
     width: 100%;
     align-items: flex-start;
