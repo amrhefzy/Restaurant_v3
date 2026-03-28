@@ -216,4 +216,14 @@
   <data name="SupplierUpdatedSuccessfully" xml:space="preserve"><value>تم تحديث المورد بنجاح.</value></data>
   <data name="SupplierWasNotFound" xml:space="preserve"><value>تعذر العثور على المورد.</value></data>
   <data name="NoBranchConfigured" xml:space="preserve"><value>لا يوجد فرع مُعدّ حاليًا.</value></data>
+  <data name="ReturnsOverview" xml:space="preserve"><value>نظرة عامة على المرتجعات</value></data>
+  <data name="MonitorSalesAndPurchaseReturnsAcrossTheCurrentReportingWindow" xml:space="preserve"><value>تابع مرتجعات البيع والشراء خلال نافذة التقرير الحالية.</value></data>
+  <data name="Last30Days" xml:space="preserve"><value>آخر 30 يومًا</value></data>
+  <data name="SalesReturnsCount" xml:space="preserve"><value>عدد مرتجعات البيع</value></data>
+  <data name="SalesReturnsTotal" xml:space="preserve"><value>إجمالي مرتجعات البيع</value></data>
+  <data name="PurchaseReturnsCount" xml:space="preserve"><value>عدد مرتجعات الشراء</value></data>
+  <data name="PurchaseReturnsTotal" xml:space="preserve"><value>إجمالي مرتجعات الشراء</value></data>
+  <data name="SalesReturns" xml:space="preserve"><value>مرتجعات البيع</value></data>
+  <data name="PurchaseReturns" xml:space="preserve"><value>مرتجعات الشراء</value></data>
+  <data name="Count" xml:space="preserve"><value>العدد</value></data>
 </root>

@@ -216,4 +216,14 @@
   <data name="SupplierUpdatedSuccessfully" xml:space="preserve"><value>Supplier updated successfully.</value></data>
   <data name="SupplierWasNotFound" xml:space="preserve"><value>Supplier was not found.</value></data>
   <data name="NoBranchConfigured" xml:space="preserve"><value>No branch is configured.</value></data>
+  <data name="ReturnsOverview" xml:space="preserve"><value>Returns overview</value></data>
+  <data name="MonitorSalesAndPurchaseReturnsAcrossTheCurrentReportingWindow" xml:space="preserve"><value>Monitor sales and purchase returns across the current reporting window.</value></data>
+  <data name="Last30Days" xml:space="preserve"><value>Last 30 days</value></data>
+  <data name="SalesReturnsCount" xml:space="preserve"><value>Sales returns count</value></data>
+  <data name="SalesReturnsTotal" xml:space="preserve"><value>Sales returns total</value></data>
+  <data name="PurchaseReturnsCount" xml:space="preserve"><value>Purchase returns count</value></data>
+  <data name="PurchaseReturnsTotal" xml:space="preserve"><value>Purchase returns total</value></data>
+  <data name="SalesReturns" xml:space="preserve"><value>Sales returns</value></data>
+  <data name="PurchaseReturns" xml:space="preserve"><value>Purchase returns</value></data>
+  <data name="Count" xml:space="preserve"><value>Count</value></data>
 </root>
