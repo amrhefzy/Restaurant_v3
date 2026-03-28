@@ -1,60 +1,105 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.SalesOrders.SalesOrderListItemDto>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Sales Orders";
+    ViewData["Title"] = L["SalesOrders"];
 }
 
-<div class="widget-card">
-    <div class="widget-head"><h5>Sales Orders Foundation</h5><span>Recent 50</span></div>
-    @Html.AntiForgeryToken()
-    <table class="table shell-table mb-0">
-        <thead><tr><th>Order #</th><th>Date (UTC)</th><th>Type</th><th>Status</th><th>Payment</th><th class="text-end">Total</th><th class="text-end">Actions</th></tr></thead>
-        <tbody>
-        @if (Model.Any())
-        {
-            foreach (var row in Model)
-            {
-                <tr>
-                    <td>@row.OrderNumber</td>
-                    <td>@row.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td>
-                    <td>@row.OrderType</td>
-                    <td>@row.Status</td>
-                    <td>@row.PaymentStatus @(row.PaymentType.HasValue ? $"({row.PaymentType})" : string.Empty)</td>
-                    <td class="text-end">@row.Total.ToString("N2")</td>
-                    <td class="text-end">
-                        <div class="d-inline-flex gap-1">
-                            @if (row.PaymentStatus != RestaurantManagement.Domain.Enums.PaymentStatus.Paid)
-                            {
-                                <form asp-action="MarkPaid" method="post">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id" value="@row.Id" />
-                                    <input type="hidden" name="paymentType" value="@RestaurantManagement.Domain.Enums.PaymentType.Cash" />
-                                    <button type="submit" class="btn btn-sm btn-outline-success">Pay Cash</button>
-                                </form>
-                                <form asp-action="MarkPaid" method="post">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id" value="@row.Id" />
-                                    <input type="hidden" name="paymentType" value="@RestaurantManagement.Domain.Enums.PaymentType.Card" />
-                                    <button type="submit" class="btn btn-sm btn-outline-primary">Pay Card</button>
-                                </form>
-                            }
+<div class="widget-card crud-shell">
+    <div class="crud-toolbar">
+        <div>
+            <h5 class="mb-1">@L["SalesOrdersFoundation"]</h5>
+            <small class="text-muted">@L["Recent50SalesOrdersAcrossPaymentAndClosureFlow"]</small>
+        </div>
+        <div class="crud-toolbar-actions">
+            <div class="crud-search">
+                <input type="search" class="form-control" id="salesOrdersTableSearch" placeholder="@L["SearchByOrderNumberTypeOrStatus"]" />
+            </div>
+            <span class="badge text-bg-light">@L["Recent50"]</span>
+        </div>
+    </div>
 
-                            @if (row.Status != RestaurantManagement.Domain.Enums.OrderStatus.Closed)
-                            {
-                                <form asp-action="Close" method="post">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id" value="@row.Id" />
-                                    <button type="submit" class="btn btn-sm btn-dark">Close</button>
-                                </form>
-                            }
-                        </div>
-                    </td>
+    <div class="table-responsive mt-3 table-wrapper">
+        <table class="table shell-table align-middle mb-0" id="salesOrdersTable">
+            <thead>
+                <tr>
+                    <th>@L["Order"]</th>
+                    <th>@L["DateUtc"]</th>
+                    <th>@L["Type"]</th>
+                    <th>@L["Status"]</th>
+                    <th>@L["Payment"]</th>
+                    <th class="text-end">@L["Total"]</th>
+                    <th class="text-end">@L["Actions"]</th>
                 </tr>
+            </thead>
+            <tbody>
+            @if (Model.Any())
+            {
+                foreach (var row in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="table-title">@row.OrderNumber</div>
+                            <div class="table-subtitle">@row.OrderType · @row.PaymentStatus</div>
+                        </td>
+                        <td>@row.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td><span class="badge text-bg-light">@row.OrderType</span></td>
+                        <td><span class="badge text-bg-light">@row.Status</span></td>
+                        <td>@row.PaymentStatus @(row.PaymentType.HasValue ? $"({row.PaymentType})" : string.Empty)</td>
+                        <td class="text-end fw-semibold">@row.Total.ToString("N2")</td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+                                @if (row.PaymentStatus != RestaurantManagement.Domain.Enums.PaymentStatus.Paid)
+                                {
+                                    <form asp-action="MarkPaid" method="post" data-confirm="@L["ConfirmCashPayment"]" data-confirm-text="@L["PayCash"]" data-confirm-class="btn-success">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@row.Id" />
+                                        <input type="hidden" name="paymentType" value="@RestaurantManagement.Domain.Enums.PaymentType.Cash" />
+                                        <button type="submit" class="btn btn-sm btn-outline-success">@L["PayCash"]</button>
+                                    </form>
+                                    <form asp-action="MarkPaid" method="post" data-confirm="@L["ConfirmCardPayment"]" data-confirm-text="@L["PayCard"]" data-confirm-class="btn-primary">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@row.Id" />
+                                        <input type="hidden" name="paymentType" value="@RestaurantManagement.Domain.Enums.PaymentType.Card" />
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">@L["PayCard"]</button>
+                                    </form>
+                                }
+
+                                @if (row.Status != RestaurantManagement.Domain.Enums.OrderStatus.Closed)
+                                {
+                                    <form asp-action="Close" method="post" data-confirm="@L["ConfirmCloseOrder"]" data-confirm-text="@L["Close"]" data-confirm-class="btn-dark">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@row.Id" />
+                                        <button type="submit" class="btn btn-sm btn-dark">@L["Close"]</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
             }
-        }
-        else
-        {
-            <tr><td colspan="7" class="empty-state">No sales orders yet.</td></tr>
-        }
-        </tbody>
-    </table>
+            else
+            {
+                <tr><td colspan="7" class="empty-state">@L["NoSalesOrdersYet"]</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("salesOrdersTableSearch");
+            const table = document.getElementById("salesOrdersTable");
+            if (!searchInput || !table) return;
+
+            searchInput.addEventListener("input", function () {
+                const value = this.value.trim().toLowerCase();
+                table.querySelectorAll("tbody tr").forEach((row) => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(value) ? "" : "none";
+                });
+            });
+        });
+    </script>
+}

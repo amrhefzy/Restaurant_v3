@@ -226,4 +226,18 @@
   <data name="SalesReturns" xml:space="preserve"><value>Sales returns</value></data>
   <data name="PurchaseReturns" xml:space="preserve"><value>Purchase returns</value></data>
   <data name="Count" xml:space="preserve"><value>Count</value></data>
+  <data name="SalesOrdersFoundation" xml:space="preserve"><value>Sales orders foundation</value></data>
+  <data name="Recent50SalesOrdersAcrossPaymentAndClosureFlow" xml:space="preserve"><value>Recent 50 sales orders across payment and closure flow.</value></data>
+  <data name="Recent50" xml:space="preserve"><value>Recent 50</value></data>
+  <data name="DateUtc" xml:space="preserve"><value>Date (UTC)</value></data>
+  <data name="Payment" xml:space="preserve"><value>Payment</value></data>
+  <data name="NoSalesOrdersYet" xml:space="preserve"><value>No sales orders yet.</value></data>
+  <data name="PayCash" xml:space="preserve"><value>Pay cash</value></data>
+  <data name="PayCard" xml:space="preserve"><value>Pay card</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="ConfirmCashPayment" xml:space="preserve"><value>Record this order as paid in cash?</value></data>
+  <data name="ConfirmCardPayment" xml:space="preserve"><value>Record this order as paid by card?</value></data>
+  <data name="ConfirmCloseOrder" xml:space="preserve"><value>Close this sales order now?</value></data>
+  <data name="PaymentRecordedSuccessfully" xml:space="preserve"><value>Payment recorded successfully.</value></data>
+  <data name="OrderClosedSuccessfully" xml:space="preserve"><value>Order closed successfully.</value></data>
 </root>

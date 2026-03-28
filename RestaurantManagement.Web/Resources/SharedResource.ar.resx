@@ -226,4 +226,18 @@
   <data name="SalesReturns" xml:space="preserve"><value>مرتجعات البيع</value></data>
   <data name="PurchaseReturns" xml:space="preserve"><value>مرتجعات الشراء</value></data>
   <data name="Count" xml:space="preserve"><value>العدد</value></data>
+  <data name="SalesOrdersFoundation" xml:space="preserve"><value>أساس أوامر البيع</value></data>
+  <data name="Recent50SalesOrdersAcrossPaymentAndClosureFlow" xml:space="preserve"><value>أحدث 50 أمر بيع عبر دورة الدفع والإغلاق.</value></data>
+  <data name="Recent50" xml:space="preserve"><value>أحدث 50</value></data>
+  <data name="DateUtc" xml:space="preserve"><value>التاريخ (UTC)</value></data>
+  <data name="Payment" xml:space="preserve"><value>الدفع</value></data>
+  <data name="NoSalesOrdersYet" xml:space="preserve"><value>لا توجد أوامر بيع بعد.</value></data>
+  <data name="PayCash" xml:space="preserve"><value>دفع نقدي</value></data>
+  <data name="PayCard" xml:space="preserve"><value>دفع بطاقة</value></data>
+  <data name="Close" xml:space="preserve"><value>إغلاق</value></data>
+  <data name="ConfirmCashPayment" xml:space="preserve"><value>هل تريد تسجيل هذا الطلب كمدفوع نقدًا؟</value></data>
+  <data name="ConfirmCardPayment" xml:space="preserve"><value>هل تريد تسجيل هذا الطلب كمدفوع بالبطاقة؟</value></data>
+  <data name="ConfirmCloseOrder" xml:space="preserve"><value>هل تريد إغلاق أمر البيع هذا الآن؟</value></data>
+  <data name="PaymentRecordedSuccessfully" xml:space="preserve"><value>تم تسجيل الدفع بنجاح.</value></data>
+  <data name="OrderClosedSuccessfully" xml:space="preserve"><value>تم إغلاق الطلب بنجاح.</value></data>
 </root>

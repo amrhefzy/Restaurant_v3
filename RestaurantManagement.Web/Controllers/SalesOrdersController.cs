@@ -1,21 +1,28 @@
-using Microsoft.AspNetCore.Mvc;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DTOs.SalesOrders;
 using RestaurantManagement.Application.Services;
-using RestaurantManagement.Domain.Enums;
 using RestaurantManagement.Domain.Entities;
+using RestaurantManagement.Domain.Enums;
 using RestaurantManagement.Web.Controllers.Base;
+using RestaurantManagement.Web.Localization;
 
 namespace RestaurantManagement.Web.Controllers;
 
 public sealed class SalesOrdersController : BranchScopedController
 {
     private readonly ISalesOrderService _service;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public SalesOrdersController(ISalesOrderService service, IRepository<Branch> branchRepository) : base(branchRepository)
+    public SalesOrdersController(
+        ISalesOrderService service,
+        IStringLocalizer<SharedResource> localizer,
+        IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _service = service;
+        _localizer = localizer;
     }
 
     [HttpGet]
@@ -37,7 +44,7 @@ public sealed class SalesOrdersController : BranchScopedController
         {
             var branchId = await GetBranchIdAsync(cancellationToken);
             await _service.MarkAsPaidAsync(branchId, id, paymentType, cancellationToken);
-            TempData["Success"] = "Payment recorded successfully.";
+            TempData["Success"] = _localizer["PaymentRecordedSuccessfully"];
         }
         catch (ValidationException ex)
         {
@@ -59,7 +66,7 @@ public sealed class SalesOrdersController : BranchScopedController
         {
             var branchId = await GetBranchIdAsync(cancellationToken);
             await _service.CloseAsync(branchId, id, cancellationToken);
-            TempData["Success"] = "Order closed successfully.";
+            TempData["Success"] = _localizer["OrderClosedSuccessfully"];
         }
         catch (ValidationException ex)
         {
