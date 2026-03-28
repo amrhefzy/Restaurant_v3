@@ -1,46 +1,71 @@
 @model RestaurantManagement.Web.ViewModels.Inventory.InventoryOverviewViewModel
 @{
     ViewData["Title"] = "Inventory";
+    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/PurchaseOrders'>Open purchase orders</a>";
 }
 
 <section class="widget-grid">
-    <article class="widget-card">
-        <div class="widget-head"><h5>Low Stock Items</h5><span>@Model.LowStockItems.Count item(s)</span></div>
-        <table class="table shell-table mb-0">
-            <thead><tr><th>Product</th><th class="text-end">On Hand</th><th class="text-end">Reorder</th></tr></thead>
-            <tbody>
-            @if (Model.LowStockItems.Any())
-            {
-                foreach (var row in Model.LowStockItems)
+    <article class="widget-card crud-shell">
+        <div class="crud-toolbar">
+            <div>
+                <h5 class="mb-1">Low stock items</h5>
+                <small class="text-muted">@Model.LowStockItems.Count item(s) need attention based on reorder thresholds.</small>
+            </div>
+        </div>
+        <div class="table-responsive mt-3 table-wrapper">
+            <table class="table shell-table mb-0">
+                <thead><tr><th>Product</th><th class="text-end">On hand</th><th class="text-end">Reorder</th></tr></thead>
+                <tbody>
+                @if (Model.LowStockItems.Any())
                 {
-                    <tr><td>@row.ProductName</td><td class="text-end">@row.OnHandQuantity</td><td class="text-end">@row.ReorderLevel</td></tr>
+                    foreach (var row in Model.LowStockItems)
+                    {
+                        <tr>
+                            <td><div class="table-title">@row.ProductName</div></td>
+                            <td class="text-end">@row.OnHandQuantity</td>
+                            <td class="text-end">@row.ReorderLevel</td>
+                        </tr>
+                    }
                 }
-            }
-            else
-            {
-                <tr><td colspan="3" class="empty-state">No low stock alerts.</td></tr>
-            }
-            </tbody>
-        </table>
+                else
+                {
+                    <tr><td colspan="3" class="empty-state">No low stock alerts.</td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </article>
 
-    <article class="widget-card">
-        <div class="widget-head"><h5>Recent Inventory Movements</h5><span>@Model.RecentMovements.Count move(s)</span></div>
-        <table class="table shell-table mb-0">
-            <thead><tr><th>When (UTC)</th><th>Product</th><th>Type</th><th class="text-end">Qty</th><th>Ref</th></tr></thead>
-            <tbody>
-            @if (Model.RecentMovements.Any())
-            {
-                foreach (var row in Model.RecentMovements)
+    <article class="widget-card crud-shell">
+        <div class="crud-toolbar">
+            <div>
+                <h5 class="mb-1">Recent inventory movements</h5>
+                <small class="text-muted">@Model.RecentMovements.Count move(s) logged across receipts, sales, and adjustments.</small>
+            </div>
+        </div>
+        <div class="table-responsive mt-3 table-wrapper">
+            <table class="table shell-table mb-0">
+                <thead><tr><th>When (UTC)</th><th>Product</th><th>Type</th><th class="text-end">Qty</th><th>Reference</th></tr></thead>
+                <tbody>
+                @if (Model.RecentMovements.Any())
                 {
-                    <tr><td>@row.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td><td>@row.ProductName</td><td>@row.MovementType</td><td class="text-end">@row.QuantityChange</td><td>@row.ReferenceNumber</td></tr>
+                    foreach (var row in Model.RecentMovements)
+                    {
+                        <tr>
+                            <td>@row.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td><div class="table-title">@row.ProductName</div></td>
+                            <td><span class="badge text-bg-light">@row.MovementType</span></td>
+                            <td class="text-end">@row.QuantityChange</td>
+                            <td>@row.ReferenceNumber</td>
+                        </tr>
+                    }
                 }
-            }
-            else
-            {
-                <tr><td colspan="5" class="empty-state">No inventory movements yet.</td></tr>
-            }
-            </tbody>
-        </table>
+                else
+                {
+                    <tr><td colspan="5" class="empty-state">No inventory movements yet.</td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </article>
 </section>

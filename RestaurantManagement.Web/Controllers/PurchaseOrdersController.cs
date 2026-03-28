@@ -1,7 +1,10 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RestaurantManagement.Application.Common.Interfaces;
+using RestaurantManagement.Application.DTOs.Products;
 using RestaurantManagement.Application.DTOs.PurchaseOrders;
+using RestaurantManagement.Application.DTOs.Suppliers;
 using RestaurantManagement.Application.Services;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Web.Controllers.Base;
@@ -11,10 +14,18 @@ namespace RestaurantManagement.Web.Controllers;
 public sealed class PurchaseOrdersController : BranchScopedController
 {
     private readonly IPurchaseOrderService _service;
+    private readonly ISupplierService _supplierService;
+    private readonly IProductService _productService;
 
-    public PurchaseOrdersController(IPurchaseOrderService service, IRepository<Branch> branchRepository) : base(branchRepository)
+    public PurchaseOrdersController(
+        IPurchaseOrderService service,
+        ISupplierService supplierService,
+        IProductService productService,
+        IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _service = service;
+        _supplierService = supplierService;
+        _productService = productService;
     }
 
     [HttpGet]
@@ -26,6 +37,24 @@ public sealed class PurchaseOrdersController : BranchScopedController
             : await _service.GetRecentByBranchAsync(branchId, 50, cancellationToken);
 
         return View(purchaseOrders);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Create(CancellationToken cancellationToken)
+    {
+        var branchId = await GetBranchIdAsync(cancellationToken);
+        if (branchId == Guid.Empty)
+        {
+            TempData["Error"] = "No branch is configured.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        await LoadOptionsAsync(branchId, null, cancellationToken);
+        return View(new CreatePurchaseOrderDto
+        {
+            BranchId = branchId,
+            Items = new List<CreatePurchaseOrderItemDto> { new() }
+        });
     }
 
     [HttpGet]
@@ -45,7 +74,7 @@ public sealed class PurchaseOrdersController : BranchScopedController
             return RedirectToAction(nameof(Index));
         }
 
-        return Ok(purchaseOrder);
+        return View(purchaseOrder);
     }
 
     [HttpPost]
@@ -69,8 +98,14 @@ public sealed class PurchaseOrdersController : BranchScopedController
         }
         catch (ValidationException ex)
         {
-            TempData["Error"] = ex.Message;
-            return RedirectToAction(nameof(Index));
+            ModelState.AddModelError(string.Empty, ex.Message);
+            await LoadOptionsAsync(branchId, request.SupplierId, cancellationToken);
+            if (request.Items.Count == 0)
+            {
+                request.Items = new List<CreatePurchaseOrderItemDto> { new() };
+            }
+
+            return View("Create", request);
         }
     }
 
@@ -142,5 +177,14 @@ public sealed class PurchaseOrdersController : BranchScopedController
             TempData["Error"] = ex.Message;
             return RedirectToAction(nameof(Index));
         }
+    }
+
+    private async Task LoadOptionsAsync(Guid branchId, Guid? selectedSupplierId, CancellationToken cancellationToken)
+    {
+        var suppliers = await _supplierService.GetByBranchAsync(branchId, cancellationToken);
+        var products = await _productService.GetByBranchAsync(branchId, cancellationToken);
+
+        ViewBag.Suppliers = new SelectList(suppliers, nameof(SupplierDto.Id), nameof(SupplierDto.Name), selectedSupplierId);
+        ViewBag.Products = new SelectList(products, nameof(ProductDto.Id), nameof(ProductDto.NameEn));
     }
 }
