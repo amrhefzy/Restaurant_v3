@@ -1040,6 +1040,25 @@ body.shell-body {
   direction: rtl;
 }
 
+[dir="rtl"] .topbar-content,
+[dir="rtl"] .widget-head,
+[dir="rtl"] .crud-toolbar,
+[dir="rtl"] .crud-toolbar-actions,
+[dir="rtl"] .kitchen-toolbar,
+[dir="rtl"] .kitchen-toolbar-actions,
+[dir="rtl"] .pos-header,
+[dir="rtl"] .pos-shortcuts {
+  direction: rtl;
+}
+
+[dir="rtl"] .pos-product-card,
+[dir="rtl"] .cart-line,
+[dir="rtl"] .shell-table,
+[dir="rtl"] .form-shell,
+[dir="rtl"] .widget-card {
+  text-align: right;
+}
+
 [dir="rtl"] .shell-breadcrumb {
   direction: rtl;
 }
@@ -1065,13 +1084,6 @@ body.shell-body {
   }
 
   .page-header-meta,
-  .page-header-actions {
-    width: 100%;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-}
-er-meta,
   .page-header-actions {
     width: 100%;
     align-items: flex-start;
