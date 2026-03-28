@@ -1,29 +1,30 @@
 @model RestaurantManagement.Application.DTOs.PurchaseOrders.PurchaseOrderDetailsDto
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Purchase Order Details";
-    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/PurchaseOrders'>Back to list</a>";
+    ViewData["Title"] = L["PurchaseOrderDetails"];
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/PurchaseOrders'>{L["BackToList"]}</a>";
 }
 
 <div class="widget-card form-shell">
     <div class="widget-head d-flex align-items-center justify-content-between">
         <div>
-            <h5 class="mb-1">Purchase order details</h5>
+            <h5 class="mb-1">@L["PurchaseOrderDetails"]</h5>
             <small class="text-muted">Review supplier, totals, line items, and receiving progress.</small>
         </div>
-        <a class="btn btn-outline-secondary" asp-action="Index">Back</a>
+        <a class="btn btn-outline-secondary" asp-action="Index">@L["BackToList"]</a>
     </div>
 
     <div class="row g-3 mt-1">
         <div class="col-md-3"><div class="table-title">PO Number</div><div class="table-subtitle">@Model.PurchaseOrderNumber</div></div>
         <div class="col-md-3"><div class="table-title">Supplier</div><div class="table-subtitle">@Model.SupplierName</div></div>
-        <div class="col-md-3"><div class="table-title">Status</div><div class="table-subtitle">@Model.Status</div></div>
+        <div class="col-md-3"><div class="table-title">@L["Status"]</div><div class="table-subtitle">@Model.Status</div></div>
         <div class="col-md-3"><div class="table-title">Created</div><div class="table-subtitle">@Model.CreatedOn.ToString("yyyy-MM-dd HH:mm")</div></div>
     </div>
 
     <div class="row g-3 mt-2">
-        <div class="col-md-4"><div class="table-title">Subtotal</div><div class="table-subtitle">@Model.Subtotal.ToString("N2")</div></div>
-        <div class="col-md-4"><div class="table-title">Tax</div><div class="table-subtitle">@Model.TaxAmount.ToString("N2")</div></div>
-        <div class="col-md-4"><div class="table-title">Total</div><div class="table-subtitle">@Model.Total.ToString("N2")</div></div>
+        <div class="col-md-4"><div class="table-title">@L["Subtotal"]</div><div class="table-subtitle">@Model.Subtotal.ToString("N2")</div></div>
+        <div class="col-md-4"><div class="table-title">@L["Tax"]</div><div class="table-subtitle">@Model.TaxAmount.ToString("N2")</div></div>
+        <div class="col-md-4"><div class="table-title">@L["Total"]</div><div class="table-subtitle">@Model.Total.ToString("N2")</div></div>
     </div>
 
     @if (!string.IsNullOrWhiteSpace(Model.Notes))
@@ -32,12 +33,12 @@
         <p class="mb-0">@Model.Notes</p>
     }
 
-    <div class="form-section-title mt-4">Items</div>
+    <div class="form-section-title mt-4">@L["Items"]</div>
     <div class="table-responsive table-wrapper">
         <table class="table shell-table align-middle mb-0">
             <thead>
                 <tr>
-                    <th>Product</th>
+                    <th>@L["Product"]</th>
                     <th class="text-end">Ordered</th>
                     <th class="text-end">Received</th>
                     <th class="text-end">Remaining</th>
@@ -92,7 +93,7 @@
                 <table class="table shell-table align-middle mb-0">
                     <thead>
                         <tr>
-                            <th>Product</th>
+                            <th>@L["Product"]</th>
                             <th class="text-end">Remaining</th>
                             <th class="text-end">Receive now</th>
                         </tr>

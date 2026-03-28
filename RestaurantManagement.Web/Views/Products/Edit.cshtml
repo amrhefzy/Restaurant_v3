@@ -1,7 +1,8 @@
 @model RestaurantManagement.Application.DTOs.Products.UpdateProductDto
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = "Edit Product";
-    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/Products'>Back to list</a>";
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Products'>{L["BackToList"]}</a>";
 }
 
 <div class="widget-card form-shell">
@@ -10,7 +11,7 @@
             <h5 class="mb-1">Edit product</h5>
             <small class="text-muted">Update pricing, stock strategy, naming, and product activation.</small>
         </div>
-        <a class="btn btn-outline-secondary" asp-action="Index">Back</a>
+        <a class="btn btn-outline-secondary" asp-action="Index">@L["BackToList"]</a>
     </div>
 
     <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="mt-3" data-confirm="Save updates to this product?" data-confirm-text="Update product" data-confirm-class="btn-primary">
@@ -74,7 +75,7 @@
         </div>
         <div class="mt-4 d-flex gap-2 flex-wrap">
             <button type="submit" class="btn btn-primary">Update</button>
-            <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+            <a class="btn btn-outline-secondary" asp-action="Index">@L["Cancel"]</a>
         </div>
     </form>
 </div>
