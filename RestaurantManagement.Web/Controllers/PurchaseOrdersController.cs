@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RestaurantManagement.Application.Common.Interfaces;
@@ -11,6 +12,7 @@ using RestaurantManagement.Web.Controllers.Base;
 
 namespace RestaurantManagement.Web.Controllers;
 
+[Authorize(Roles = "SuperAdmin,Manager")]
 public sealed class PurchaseOrdersController : BranchScopedController
 {
     private readonly IPurchaseOrderService _service;

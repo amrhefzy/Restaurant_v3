@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DTOs.POS;
@@ -8,6 +9,7 @@ using RestaurantManagement.Web.Controllers.Base;
 
 namespace RestaurantManagement.Web.Controllers;
 
+[Authorize(Roles = "SuperAdmin,Manager,Cashier")]
 public sealed class POSController : BranchScopedController
 {
     private readonly IPosService _posService;
