@@ -1,20 +1,21 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Orders.OrderDto>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Orders";
-    ViewData["PageActions"] = "<a class='btn btn-primary' href='/Orders/Create'>Create order</a>";
+    ViewData["Title"] = L["Orders"];
+    ViewData["PageActions"] = $"<a class='btn btn-primary' href='/Orders/Create'>{L["CreateOrder"]}</a>";
 }
 
 <div class="widget-card crud-shell">
     <div class="crud-toolbar">
         <div>
-            <h5 class="mb-1">Order register</h5>
+            <h5 class="mb-1">@L["OrderRegister"]</h5>
             <small class="text-muted">Recent @Model.Count order records for dine-in, takeaway, and delivery operations.</small>
         </div>
         <div class="crud-toolbar-actions">
             <div class="crud-search">
-                <input type="search" class="form-control" id="ordersTableSearch" placeholder="Search by order number, type, or status" />
+                <input type="search" class="form-control" id="ordersTableSearch" placeholder="@L["SearchByOrderNumberTypeOrStatus"]" />
             </div>
-            <a class="btn btn-primary" asp-action="Create">Create order</a>
+            <a class="btn btn-primary" asp-action="Create">@L["CreateOrder"]</a>
         </div>
     </div>
 
@@ -22,13 +23,13 @@
         <table class="table shell-table align-middle mb-0" id="ordersTable">
             <thead>
                 <tr>
-                    <th>Order</th>
+                    <th>@L["Order"]</th>
                     <th>Date (UTC)</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th class="text-end">Subtotal</th>
-                    <th class="text-end">Tax</th>
-                    <th class="text-end">Total</th>
+                    <th>@L["Type"]</th>
+                    <th>@L["Status"]</th>
+                    <th class="text-end">@L["Subtotal"]</th>
+                    <th class="text-end">@L["Tax"]</th>
+                    <th class="text-end">@L["Total"]</th>
                     <th class="text-end">Actions</th>
                 </tr>
             </thead>

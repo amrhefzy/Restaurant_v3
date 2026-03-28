@@ -2,7 +2,7 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["Reports"];
-    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/Dashboard'>Back to dashboard</a>";
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Dashboard'>{L["Dashboard"]}</a>";
 }
 
 <section class="dashboard-grid">
@@ -44,7 +44,7 @@
         <div class="crud-toolbar">
             <div>
                 <h5 class="mb-1">@L["TopCategorySales"]</h5>
-                <small class="text-muted">Selected reporting window</small>
+                <small class="text-muted">@L["SelectedReportingWindow"]</small>
             </div>
         </div>
         <div class="table-responsive mt-3 table-wrapper">

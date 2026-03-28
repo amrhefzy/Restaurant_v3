@@ -3,7 +3,7 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["Kitchen"];
-    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/Dashboard'>Back to dashboard</a>";
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Dashboard'>{L["Dashboard"]}</a>";
     var dataJson = JsonSerializer.Serialize(Model);
 }
 
@@ -20,8 +20,8 @@
             <small class="text-muted">@L["LiveOperations"]</small>
         </div>
         <div class="kitchen-toolbar-actions">
-            <span class="badge text-bg-light">Auto refresh: 10s</span>
-            <span class="badge text-bg-light">Audio alert on new orders</span>
+            <span class="badge text-bg-light">@L["AutoRefresh10s"]</span>
+            <span class="badge text-bg-light">@L["AudioAlertOnNewOrders"]</span>
         </div>
     </div>
     <div id="kitchenBoard" class="kitchen-board"></div>

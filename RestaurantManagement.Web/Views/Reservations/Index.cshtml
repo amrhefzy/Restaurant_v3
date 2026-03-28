@@ -1,20 +1,21 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Reservations.ReservationDto>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Reservations";
-    ViewData["PageActions"] = "<a class='btn btn-primary' href='/Reservations/Create'>Create reservation</a>";
+    ViewData["Title"] = L["Reservations"];
+    ViewData["PageActions"] = $"<a class='btn btn-primary' href='/Reservations/Create'>{L["CreateReservation"]}</a>";
 }
 
 <div class="widget-card crud-shell">
     <div class="crud-toolbar">
         <div>
-            <h5 class="mb-1">Reservations</h5>
+            <h5 class="mb-1">@L["Reservations"]</h5>
             <small class="text-muted">@Model.Count reservation records for upcoming guest seating and branch planning.</small>
         </div>
         <div class="crud-toolbar-actions">
             <div class="crud-search">
-                <input type="search" class="form-control" id="reservationsTableSearch" placeholder="Search by customer, table, or status" />
+                <input type="search" class="form-control" id="reservationsTableSearch" placeholder="@L["SearchByCustomerTableOrStatus"]" />
             </div>
-            <a class="btn btn-primary" asp-action="Create">Create reservation</a>
+            <a class="btn btn-primary" asp-action="Create">@L["CreateReservation"]</a>
         </div>
     </div>
 
@@ -25,8 +26,8 @@
                     <th>Customer</th>
                     <th>Table</th>
                     <th>Date (UTC)</th>
-                    <th>Party size</th>
-                    <th>Status</th>
+                    <th>@L["PartySizeGuests"]</th>
+                    <th>@L["Status"]</th>
                     <th class="text-end">Actions</th>
                 </tr>
             </thead>

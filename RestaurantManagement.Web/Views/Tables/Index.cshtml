@@ -1,20 +1,21 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Tables.TableDto>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Tables";
-    ViewData["PageActions"] = "<a class='btn btn-primary' href='/Tables/Create'>Create table</a>";
+    ViewData["Title"] = L["Tables"];
+    ViewData["PageActions"] = $"<a class='btn btn-primary' href='/Tables/Create'>{L["CreateTable"]}</a>";
 }
 
 <div class="widget-card crud-shell">
     <div class="crud-toolbar">
         <div>
-            <h5 class="mb-1">Restaurant tables</h5>
+            <h5 class="mb-1">@L["RestaurantTables"]</h5>
             <small class="text-muted">@Model.Count table records available for dine-in and reservation assignment.</small>
         </div>
         <div class="crud-toolbar-actions">
             <div class="crud-search">
-                <input type="search" class="form-control" id="tablesTableSearch" placeholder="Search by table number or status" />
+                <input type="search" class="form-control" id="tablesTableSearch" placeholder="@L["SearchByTableNumberOrStatus"]" />
             </div>
-            <a class="btn btn-primary" asp-action="Create">Create table</a>
+            <a class="btn btn-primary" asp-action="Create">@L["CreateTable"]</a>
         </div>
     </div>
 
@@ -24,7 +25,7 @@
                 <tr>
                     <th>Table</th>
                     <th>Capacity</th>
-                    <th>Status</th>
+                    <th>@L["Status"]</th>
                     <th>Active</th>
                     <th class="text-end">Actions</th>
                 </tr>
