@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DTOs.Returns;
@@ -7,6 +8,7 @@ using RestaurantManagement.Web.Controllers.Base;
 
 namespace RestaurantManagement.Web.Controllers;
 
+[Authorize(Roles = "SuperAdmin,Manager")]
 public sealed class ReturnsController : BranchScopedController
 {
     private readonly IReturnService _service;

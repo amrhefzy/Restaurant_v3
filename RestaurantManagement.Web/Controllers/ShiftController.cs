@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
@@ -10,6 +11,7 @@ using RestaurantManagement.Web.Localization;
 
 namespace RestaurantManagement.Web.Controllers;
 
+[Authorize(Roles = "SuperAdmin,Manager,Cashier")]
 public sealed class ShiftController : BranchScopedController
 {
     private readonly IShiftService _shiftService;

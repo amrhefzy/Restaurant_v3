@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
@@ -11,6 +12,7 @@ using RestaurantManagement.Web.ViewModels.Inventory;
 
 namespace RestaurantManagement.Web.Controllers;
 
+[Authorize(Roles = "SuperAdmin,Manager")]
 public sealed class InventoryController : BranchScopedController
 {
     private readonly IInventoryService _service;
