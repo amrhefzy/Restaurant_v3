@@ -1,25 +1,31 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Reservations.ReservationDto>
 @{
     ViewData["Title"] = "Reservations";
+    ViewData["PageActions"] = "<a class='btn btn-primary' href='/Reservations/Create'>Create reservation</a>";
 }
 
-<div class="widget-card">
-    <div class="widget-head d-flex align-items-center justify-content-between">
+<div class="widget-card crud-shell">
+    <div class="crud-toolbar">
         <div>
             <h5 class="mb-1">Reservations</h5>
-            <small class="text-muted">@Model.Count reservation records</small>
+            <small class="text-muted">@Model.Count reservation records for upcoming guest seating and branch planning.</small>
         </div>
-        <a class="btn btn-primary" asp-action="Create">Create Reservation</a>
+        <div class="crud-toolbar-actions">
+            <div class="crud-search">
+                <input type="search" class="form-control" id="reservationsTableSearch" placeholder="Search by customer, table, or status" />
+            </div>
+            <a class="btn btn-primary" asp-action="Create">Create reservation</a>
+        </div>
     </div>
 
-    <div class="table-responsive mt-3">
-        <table class="table shell-table align-middle mb-0">
+    <div class="table-responsive mt-3 table-wrapper">
+        <table class="table shell-table align-middle mb-0" id="reservationsTable">
             <thead>
                 <tr>
                     <th>Customer</th>
                     <th>Table</th>
                     <th>Date (UTC)</th>
-                    <th>Party Size</th>
+                    <th>Party size</th>
                     <th>Status</th>
                     <th class="text-end">Actions</th>
                 </tr>
@@ -30,11 +36,14 @@
                 foreach (var row in Model)
                 {
                     <tr>
-                        <td>@row.CustomerName</td>
-                        <td>@(row.TableNumber ?? "-")</td>
+                        <td>
+                            <div class="table-title">@row.CustomerName</div>
+                            <div class="table-subtitle">Upcoming guest booking</div>
+                        </td>
+                        <td>@(row.TableNumber ?? "Unassigned")</td>
                         <td>@row.ReservationAtUtc.ToString("yyyy-MM-dd HH:mm")</td>
-                        <td>@row.PartySize</td>
-                        <td>@row.Status</td>
+                        <td>@row.PartySize guests</td>
+                        <td><span class="badge text-bg-light">@row.Status</span></td>
                         <td class="text-end">
                             <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">Edit</a>
                         </td>
@@ -49,3 +58,21 @@
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("reservationsTableSearch");
+            const table = document.getElementById("reservationsTable");
+            if (!searchInput || !table) return;
+
+            searchInput.addEventListener("input", function () {
+                const value = this.value.trim().toLowerCase();
+                table.querySelectorAll("tbody tr").forEach((row) => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(value) ? "" : "none";
+                });
+            });
+        });
+    </script>
+}

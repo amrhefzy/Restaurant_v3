@@ -1,22 +1,28 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Tables.TableDto>
 @{
     ViewData["Title"] = "Tables";
+    ViewData["PageActions"] = "<a class='btn btn-primary' href='/Tables/Create'>Create table</a>";
 }
 
-<div class="widget-card">
-    <div class="widget-head d-flex align-items-center justify-content-between">
+<div class="widget-card crud-shell">
+    <div class="crud-toolbar">
         <div>
-            <h5 class="mb-1">Restaurant Tables</h5>
-            <small class="text-muted">@Model.Count table records</small>
+            <h5 class="mb-1">Restaurant tables</h5>
+            <small class="text-muted">@Model.Count table records available for dine-in and reservation assignment.</small>
         </div>
-        <a class="btn btn-primary" asp-action="Create">Create Table</a>
+        <div class="crud-toolbar-actions">
+            <div class="crud-search">
+                <input type="search" class="form-control" id="tablesTableSearch" placeholder="Search by table number or status" />
+            </div>
+            <a class="btn btn-primary" asp-action="Create">Create table</a>
+        </div>
     </div>
 
-    <div class="table-responsive mt-3">
-        <table class="table shell-table align-middle mb-0">
+    <div class="table-responsive mt-3 table-wrapper">
+        <table class="table shell-table align-middle mb-0" id="tablesTable">
             <thead>
                 <tr>
-                    <th>Table Number</th>
+                    <th>Table</th>
                     <th>Capacity</th>
                     <th>Status</th>
                     <th>Active</th>
@@ -29,9 +35,14 @@
                 foreach (var row in Model)
                 {
                     <tr>
-                        <td>@row.TableNumber</td>
-                        <td>@row.Capacity</td>
-                        <td>@row.Status</td>
+                        <td>
+                            <div class="table-title">Table @row.TableNumber</div>
+                            <div class="table-subtitle">Dining capacity management</div>
+                        </td>
+                        <td>@row.Capacity guests</td>
+                        <td>
+                            <span class="badge text-bg-light">@row.Status</span>
+                        </td>
                         <td>
                             <span class="badge @(row.IsActive ? "text-bg-success" : "text-bg-secondary")">
                                 @(row.IsActive ? "Yes" : "No")
@@ -51,3 +62,21 @@
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("tablesTableSearch");
+            const table = document.getElementById("tablesTable");
+            if (!searchInput || !table) return;
+
+            searchInput.addEventListener("input", function () {
+                const value = this.value.trim().toLowerCase();
+                table.querySelectorAll("tbody tr").forEach((row) => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(value) ? "" : "none";
+                });
+            });
+        });
+    </script>
+}
