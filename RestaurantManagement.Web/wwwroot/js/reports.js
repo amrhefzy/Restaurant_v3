@@ -9,8 +9,8 @@
   const low = document.getElementById("repLow");
   const cats = document.getElementById("repCategories");
   const buttons = document.querySelectorAll(".rep-range");
-  const noDataText = app?.dataset.noData || "No data available yet.";
-  const loadErrorText = app?.dataset.loadError || "Unable to load report data.";
+  const noDataText = app?.dataset.noData || "";
+  const loadErrorText = app?.dataset.loadError || "";
 
   function drawTrend(points) {
     if (!points || !points.length) {

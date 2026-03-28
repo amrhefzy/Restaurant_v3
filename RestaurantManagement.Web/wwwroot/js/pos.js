@@ -306,7 +306,7 @@
                 ${
                   item.note
                     ? `<span class="cart-note">${item.note}</span>`
-                    : `<span class="cart-note muted">No note</span>`
+                    : `<span class="cart-note muted">—</span>`
                 }
               </div>
               <div class="cart-line-actions">
