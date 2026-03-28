@@ -39,19 +39,27 @@ public sealed class ReportService : IReportService
                 })
             .CountAsync(x => x.OnHand <= x.ReorderLevel, cancellationToken);
 
-        var trend = await _dbContext.SalesOrders
+        var trendRaw = await _dbContext.SalesOrders
             .Where(x => x.BranchId == branchId
                         && x.CreatedOn >= fromUtc
                         && x.CreatedOn <= toUtc
                         && x.Status != OrderStatus.Cancelled)
             .GroupBy(x => x.CreatedOn.Date)
-            .Select(g => new SalesTrendPointDto
+            .Select(g => new
             {
-                Label = g.Key.ToString("MM-dd"),
+                Date = g.Key,
                 SalesAmount = g.Sum(x => x.Total)
             })
-            .OrderBy(x => x.Label)
+            .OrderBy(x => x.Date)
             .ToListAsync(cancellationToken);
+
+        var trend = trendRaw
+            .Select(x => new SalesTrendPointDto
+            {
+                Label = x.Date.ToString("MM-dd"),
+                SalesAmount = x.SalesAmount
+            })
+            .ToList();
 
         var topCategories = await _dbContext.SalesOrderItems
             .Where(x => x.SalesOrder != null

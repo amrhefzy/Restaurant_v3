@@ -27,9 +27,16 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                 name: "FK_PurchaseReturns_PurchaseOrders_PurchaseOrderId",
                 table: "PurchaseReturns");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_SalesOrders_Branches_BranchId1",
-                table: "SalesOrders");
+            migrationBuilder.Sql(@"
+IF EXISTS (
+    SELECT 1
+    FROM sys.foreign_keys
+    WHERE name = 'FK_SalesOrders_Branches_BranchId1'
+      AND parent_object_id = OBJECT_ID(N'[SalesOrders]'))
+BEGIN
+    ALTER TABLE [SalesOrders] DROP CONSTRAINT [FK_SalesOrders_Branches_BranchId1];
+END
+");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_SalesOrders_Customers_CustomerId",
@@ -47,13 +54,27 @@ namespace RestaurantManagement.Infrastructure.Persistence.Migrations
                 name: "FK_SalesReturns_SalesOrders_SalesOrderId",
                 table: "SalesReturns");
 
-            migrationBuilder.DropIndex(
-                name: "IX_SalesOrders_BranchId1",
-                table: "SalesOrders");
+            migrationBuilder.Sql(@"
+IF EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_SalesOrders_BranchId1'
+      AND object_id = OBJECT_ID(N'[SalesOrders]'))
+BEGIN
+    DROP INDEX [IX_SalesOrders_BranchId1] ON [SalesOrders];
+END
+");
 
-            migrationBuilder.DropColumn(
-                name: "BranchId1",
-                table: "SalesOrders");
+            migrationBuilder.Sql(@"
+IF EXISTS (
+    SELECT 1
+    FROM sys.columns
+    WHERE Name = N'BranchId1'
+      AND Object_ID = OBJECT_ID(N'[SalesOrders]'))
+BEGIN
+    ALTER TABLE [SalesOrders] DROP COLUMN [BranchId1];
+END
+");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CashierShifts_Branches_BranchId",
