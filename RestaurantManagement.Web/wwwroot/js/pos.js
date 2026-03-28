@@ -19,6 +19,7 @@
     noProductsMatch: "No products match the current filter.",
     cartEmptyState: "Cart is empty.",
     noHeldOrders: "No held orders.",
+    shortcutsHint: "Keyboard shortcuts ready.",
     showingProducts: "Showing",
     ofProducts: "of",
     productsLabel: "products",

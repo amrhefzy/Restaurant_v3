@@ -439,6 +439,13 @@ body.shell-body {
   margin-bottom: 0.8rem;
 }
 
+.pos-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
 .pos-search-wrap {
   width: min(460px, 100%);
 }
