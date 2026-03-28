@@ -2,68 +2,89 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["Shift"];
+    ViewData["PageActions"] = Model is null
+        ? $"<a class='btn btn-primary' href='/Shift/Open'>{L["OpenShift"]}</a>"
+        : $"<a class='btn btn-outline-danger' href='/Shift/Close'>{L["CloseShift"]}</a>";
 }
 
-<div class="page-header-shell">
-    <div>
-        <h2 class="page-header-title">@L["ShiftManagement"]</h2>
-        <p class="page-header-subtitle">@L["TrackCashierSession"]</p>
+<div class="widget-card crud-shell">
+    <div class="crud-toolbar">
+        <div>
+            <h5 class="mb-1">@L["ShiftManagement"]</h5>
+            <small class="text-muted">@L["TrackCashierSession"]</small>
+        </div>
+        <div class="crud-toolbar-actions">
+            @if (Model is null)
+            {
+                <a asp-action="Open" class="btn btn-primary">@L["OpenShift"]</a>
+            }
+            else
+            {
+                <a asp-action="Close" class="btn btn-outline-danger">@L["CloseShift"]</a>
+            }
+        </div>
     </div>
-    <div class="d-flex gap-2">
-        @if (Model is null)
-        {
-            <a asp-action="Open" class="btn btn-primary">@L["OpenShift"]</a>
-        }
-        else
-        {
-            <a asp-action="Close" class="btn btn-outline-danger">@L["CloseShift"]</a>
-        }
-    </div>
+
+    @if (Model is null)
+    {
+        <div class="empty-state mt-4">@L["NoOpenShift"]</div>
+    }
+    else
+    {
+        <div class="widget-head mt-4">
+            <div>
+                <h5 class="mb-1">@Model.ShiftNumber</h5>
+                <small class="text-muted">@L["CurrentShiftOverview"]</small>
+            </div>
+            <span class="badge text-bg-light">@Model.Status</span>
+        </div>
+
+        <div class="row g-3 mt-1">
+            <div class="col-md-3 col-sm-6">
+                <div class="metric-card h-100">
+                    <p class="metric-label">@L["OpeningCash"]</p>
+                    <h3>@Model.OpeningCash.ToString("N2")</h3>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="metric-card h-100">
+                    <p class="metric-label">@L["TotalSales"]</p>
+                    <h3>@Model.TotalSales.ToString("N2")</h3>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="metric-card h-100">
+                    <p class="metric-label">@L["TotalCash"]</p>
+                    <h3>@Model.TotalCash.ToString("N2")</h3>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="metric-card h-100">
+                    <p class="metric-label">@L["TotalCard"]</p>
+                    <h3>@Model.TotalCard.ToString("N2")</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+            <div class="col-lg-6">
+                <div class="widget-card h-100">
+                    <div class="form-section-title">@L["ShiftTimeline"]</div>
+                    <div class="d-flex flex-column gap-2">
+                        <div><strong>@L["OpenedOn"]:</strong> @Model.OpenedOnUtc.ToString("yyyy-MM-dd HH:mm") UTC</div>
+                        <div><strong>@L["Status"]:</strong> @Model.Status</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="widget-card h-100">
+                    <div class="form-section-title">@L["CashSummary"]</div>
+                    <div class="d-flex flex-column gap-2">
+                        <div><strong>@L["ExpectedCash"]:</strong> @Model.ExpectedCash.ToString("N2")</div>
+                        <div><strong>@L["TotalSales"]:</strong> @Model.TotalSales.ToString("N2")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
-
-@if (Model is null)
-{
-    <div class="widget-card">
-        <div class="empty-state">@L["NoOpenShift"]</div>
-    </div>
-}
-else
-{
-    <div class="widget-card">
-        <div class="widget-head">
-            <h5>@Model.ShiftNumber</h5>
-            <span>@Model.Status</span>
-        </div>
-        <div class="row g-3">
-            <div class="col-md-3">
-                <div class="metric-card">
-                    <h6>@L["OpeningCash"]</h6>
-                    <strong>@Model.OpeningCash.ToString("N2")</strong>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="metric-card">
-                    <h6>@L["TotalSales"]</h6>
-                    <strong>@Model.TotalSales.ToString("N2")</strong>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="metric-card">
-                    <h6>@L["TotalCash"]</h6>
-                    <strong>@Model.TotalCash.ToString("N2")</strong>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="metric-card">
-                    <h6>@L["TotalCard"]</h6>
-                    <strong>@Model.TotalCard.ToString("N2")</strong>
-                </div>
-            </div>
-        </div>
-        <hr />
-        <div class="d-flex flex-wrap gap-4">
-            <div><strong>@L["OpenedOn"]:</strong> @Model.OpenedOnUtc.ToString("yyyy-MM-dd HH:mm") UTC</div>
-            <div><strong>@L["ExpectedCash"]:</strong> @Model.ExpectedCash.ToString("N2")</div>
-        </div>
-    </div>
-}

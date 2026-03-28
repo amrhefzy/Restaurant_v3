@@ -1,10 +1,12 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DTOs.Shifts;
 using RestaurantManagement.Application.Services;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Web.Controllers.Base;
+using RestaurantManagement.Web.Localization;
 
 namespace RestaurantManagement.Web.Controllers;
 
@@ -12,14 +14,17 @@ public sealed class ShiftController : BranchScopedController
 {
     private readonly IShiftService _shiftService;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
     public ShiftController(
         IShiftService shiftService,
         ICurrentUserService currentUserService,
+        IStringLocalizer<SharedResource> localizer,
         IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _shiftService = shiftService;
         _currentUserService = currentUserService;
+        _localizer = localizer;
     }
 
     [HttpGet]
@@ -49,7 +54,7 @@ public sealed class ShiftController : BranchScopedController
             request.OpenedByUserId = _currentUserService.UserId;
             request.OpenedByUserName = _currentUserService.UserName ?? "System";
             await _shiftService.OpenAsync(request, cancellationToken);
-            TempData["Success"] = "Shift opened successfully.";
+            TempData["Success"] = _localizer["ShiftOpenedSuccessfully"];
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)
@@ -66,7 +71,7 @@ public sealed class ShiftController : BranchScopedController
         var current = await _shiftService.GetCurrentAsync(branchId, cancellationToken);
         if (current is null)
         {
-            TempData["Error"] = "No open shift available.";
+            TempData["Error"] = _localizer["NoOpenShiftAvailable"];
             return RedirectToAction(nameof(Index));
         }
 
@@ -85,7 +90,7 @@ public sealed class ShiftController : BranchScopedController
             request.ClosedByUserId = _currentUserService.UserId;
             request.ClosedByUserName = _currentUserService.UserName ?? "System";
             await _shiftService.CloseAsync(request, cancellationToken);
-            TempData["Success"] = "Shift closed successfully.";
+            TempData["Success"] = _localizer["ShiftClosedSuccessfully"];
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)

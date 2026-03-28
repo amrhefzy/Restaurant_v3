@@ -181,4 +181,14 @@
   <data name="SaveUpdatesToThisCategory" xml:space="preserve"><value>هل تريد حفظ التعديلات على هذا التصنيف؟</value></data>
   <data name="CategoryInformation" xml:space="preserve"><value>معلومات التصنيف</value></data>
   <data name="LoadingDaysReportView" xml:space="preserve"><value>جارٍ تحميل عرض تقرير {days} يومًا</value></data>
+  <data name="ShiftOpenedSuccessfully" xml:space="preserve"><value>تم فتح الوردية بنجاح.</value></data>
+  <data name="ShiftClosedSuccessfully" xml:space="preserve"><value>تم إغلاق الوردية بنجاح.</value></data>
+  <data name="NoOpenShiftAvailable" xml:space="preserve"><value>لا توجد وردية مفتوحة متاحة.</value></data>
+  <data name="CurrentShiftOverview" xml:space="preserve"><value>ملخص الوردية الحالية</value></data>
+  <data name="ShiftTimeline" xml:space="preserve"><value>الخط الزمني للوردية</value></data>
+  <data name="CashSummary" xml:space="preserve"><value>ملخص النقدية</value></data>
+  <data name="ConfirmOpenShift" xml:space="preserve"><value>هل تريد فتح هذه الوردية الآن؟</value></data>
+  <data name="ConfirmCloseShift" xml:space="preserve"><value>هل تريد إغلاق هذه الوردية الآن؟</value></data>
+  <data name="ShiftOpeningDetails" xml:space="preserve"><value>تفاصيل فتح الوردية</value></data>
+  <data name="ShiftClosingDetails" xml:space="preserve"><value>تفاصيل إغلاق الوردية</value></data>
 </root>

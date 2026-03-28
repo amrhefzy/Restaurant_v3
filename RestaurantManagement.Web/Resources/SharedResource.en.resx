@@ -181,4 +181,14 @@
   <data name="SaveUpdatesToThisCategory" xml:space="preserve"><value>Save updates to this category?</value></data>
   <data name="CategoryInformation" xml:space="preserve"><value>Category information</value></data>
   <data name="LoadingDaysReportView" xml:space="preserve"><value>Loading {days}-day report view</value></data>
+  <data name="ShiftOpenedSuccessfully" xml:space="preserve"><value>Shift opened successfully.</value></data>
+  <data name="ShiftClosedSuccessfully" xml:space="preserve"><value>Shift closed successfully.</value></data>
+  <data name="NoOpenShiftAvailable" xml:space="preserve"><value>No open shift available.</value></data>
+  <data name="CurrentShiftOverview" xml:space="preserve"><value>Current shift overview</value></data>
+  <data name="ShiftTimeline" xml:space="preserve"><value>Shift timeline</value></data>
+  <data name="CashSummary" xml:space="preserve"><value>Cash summary</value></data>
+  <data name="ConfirmOpenShift" xml:space="preserve"><value>Open this shift now?</value></data>
+  <data name="ConfirmCloseShift" xml:space="preserve"><value>Close this shift now?</value></data>
+  <data name="ShiftOpeningDetails" xml:space="preserve"><value>Shift opening details</value></data>
+  <data name="ShiftClosingDetails" xml:space="preserve"><value>Shift closing details</value></data>
 </root>
