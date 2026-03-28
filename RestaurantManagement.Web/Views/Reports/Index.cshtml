@@ -2,6 +2,7 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["Reports"];
+    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/Dashboard'>Back to dashboard</a>";
 }
 
 <section class="dashboard-grid">
@@ -24,41 +25,48 @@
 </section>
 
 <section class="widget-grid mt-3" id="reportsApp" data-no-data="@L["NoDataYet"]" data-load-error="@L["DataIntegrationPending"]">
-    <article class="widget-card">
-        <div class="widget-head">
-            <h5>@L["SalesTrend"]</h5>
+    <article class="widget-card crud-shell">
+        <div class="crud-toolbar">
+            <div>
+                <h5 class="mb-1">@L["SalesTrend"]</h5>
+                <small class="text-muted">Rolling sales performance and order activity windows.</small>
+            </div>
             <div class="btn-group btn-group-sm" role="group">
                 <button class="btn btn-outline-secondary rep-range" data-days="7">7D</button>
                 <button class="btn btn-outline-secondary rep-range active" data-days="30">30D</button>
                 <button class="btn btn-outline-secondary rep-range" data-days="90">90D</button>
             </div>
         </div>
-        <div id="reportTrend" class="trend-bars"></div>
+        <div id="reportTrend" class="trend-bars mt-3"></div>
     </article>
 
-    <article class="widget-card">
-        <div class="widget-head">
-            <h5>@L["TopCategorySales"]</h5>
-            <span>@L["Today"]</span>
+    <article class="widget-card crud-shell">
+        <div class="crud-toolbar">
+            <div>
+                <h5 class="mb-1">@L["TopCategorySales"]</h5>
+                <small class="text-muted">Selected reporting window</small>
+            </div>
         </div>
-        <table class="table shell-table mb-0">
-            <thead>
-                <tr><th>@L["Category"]</th><th class="text-end">@L["Amount"]</th></tr>
-            </thead>
-            <tbody id="repCategories">
-            @if (Model.TopCategories.Any())
-            {
-                foreach (var row in Model.TopCategories)
+        <div class="table-responsive mt-3 table-wrapper">
+            <table class="table shell-table mb-0">
+                <thead>
+                    <tr><th>@L["Category"]</th><th class="text-end">@L["Amount"]</th></tr>
+                </thead>
+                <tbody id="repCategories">
+                @if (Model.TopCategories.Any())
                 {
-                    <tr><td>@row.CategoryName</td><td class="text-end">@row.SalesAmount.ToString("N2")</td></tr>
+                    foreach (var row in Model.TopCategories)
+                    {
+                        <tr><td><div class="table-title">@row.CategoryName</div></td><td class="text-end">@row.SalesAmount.ToString("N2")</td></tr>
+                    }
                 }
-            }
-            else
-            {
-                <tr><td colspan="2" class="empty-state">@L["NoDataYet"]</td></tr>
-            }
-            </tbody>
-        </table>
+                else
+                {
+                    <tr><td colspan="2" class="empty-state">@L["NoDataYet"]</td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </article>
 </section>
 

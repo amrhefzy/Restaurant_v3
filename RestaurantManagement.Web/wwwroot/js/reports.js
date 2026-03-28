@@ -33,7 +33,14 @@
     try {
       const res = await fetch(`/Reports/SummaryJson?days=${days}`);
       const json = await res.json();
-      if (!json.success) return;
+      if (!res.ok || !json.success) {
+        if (window.appShell?.toast) {
+          window.appShell.toast(loadErrorText, "danger");
+        }
+        trend.innerHTML = '<span style="height:15%"></span>';
+        cats.innerHTML = `<tr><td colspan="2" class="empty-state">${loadErrorText}</td></tr>`;
+        return;
+      }
 
       const d = json.data;
       gross.textContent = Number(d.grossSales || 0).toFixed(2);
@@ -64,6 +71,9 @@
     b.addEventListener("click", () => {
       buttons.forEach((x) => x.classList.remove("active"));
       b.classList.add("active");
+      if (window.appShell?.toast) {
+        window.appShell.toast(`Loading ${b.dataset.days || "30"}-day report view`, "info");
+      }
       load(Number(b.dataset.days || "30"));
     });
   });
