@@ -1,19 +1,20 @@
 @model RestaurantManagement.Application.DTOs.Products.CreateProductDto
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Create Product";
-    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/Products'>Back to list</a>";
+    ViewData["Title"] = L["CreateProduct"];
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Products'>{L["BackToList"]}</a>";
 }
 
 <div class="widget-card form-shell">
     <div class="widget-head d-flex align-items-center justify-content-between">
         <div>
-            <h5 class="mb-1">Create product</h5>
+            <h5 class="mb-1">@L["CreateProduct"]</h5>
             <small class="text-muted">Add a new sellable item with pricing and stock tracking settings.</small>
         </div>
-        <a class="btn btn-outline-secondary" asp-action="Index">Back</a>
+        <a class="btn btn-outline-secondary" asp-action="Index">@L["BackToList"]</a>
     </div>
 
-    <form asp-action="Create" method="post" class="mt-3" data-confirm="Save this product now?" data-confirm-text="Save product" data-confirm-class="btn-primary">
+    <form asp-action="Create" method="post" class="mt-3" data-confirm="@L["SaveThisProductNow"]" data-confirm-text="@L["CreateProduct"]" data-confirm-class="btn-primary">
         @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
@@ -68,7 +69,7 @@
 
         <div class="mt-4 d-flex gap-2 flex-wrap">
             <button type="submit" class="btn btn-primary">Save</button>
-            <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+            <a class="btn btn-outline-secondary" asp-action="Index">@L["Cancel"]</a>
         </div>
     </form>
 </div>

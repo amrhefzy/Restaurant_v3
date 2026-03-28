@@ -1,7 +1,8 @@
 @model RestaurantManagement.Application.DTOs.Orders.UpdateOrderDto
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = "Edit Order";
-    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/Orders'>Back to list</a>";
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Orders'>{L["BackToList"]}</a>";
     var productOptions = (IEnumerable<SelectListItem>)ViewBag.Products;
     var rows = Math.Max(3, Model.Items.Count);
 }
@@ -12,7 +13,7 @@
             <h5 class="mb-1">Edit order</h5>
             <small class="text-muted">Adjust order header values, table assignment, and item lines.</small>
         </div>
-        <a class="btn btn-outline-secondary" asp-action="Index">Back</a>
+        <a class="btn btn-outline-secondary" asp-action="Index">@L["BackToList"]</a>
     </div>
 
     <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="mt-3" data-confirm="Save updates to this order?" data-confirm-text="Update order" data-confirm-class="btn-primary">
@@ -20,7 +21,7 @@
         <input asp-for="Id" type="hidden" />
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-        <div class="form-section-title">Order header</div>
+        <div class="form-section-title">@L["OrderHeader"]</div>
         <div class="row g-3">
             <div class="col-md-3">
                 <label asp-for="OrderType" class="form-label"></label>
@@ -54,12 +55,12 @@
             </div>
         </div>
 
-        <div class="form-section-title mt-4">Order items</div>
+        <div class="form-section-title mt-4">@L["OrderItems"]</div>
         <div class="table-responsive table-wrapper">
             <table class="table shell-table align-middle mb-0">
                 <thead>
                     <tr>
-                        <th style="width: 42%;">Product</th>
+                        <th style="width: 42%;">@L["Product"]</th>
                         <th style="width: 16%;">Qty</th>
                         <th style="width: 18%;">Price</th>
                         <th style="width: 24%;">Note</th>
@@ -91,7 +92,7 @@
 
         <div class="mt-4 d-flex gap-2 flex-wrap">
             <button type="submit" class="btn btn-primary">Update</button>
-            <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+            <a class="btn btn-outline-secondary" asp-action="Index">@L["Cancel"]</a>
         </div>
     </form>
 </div>

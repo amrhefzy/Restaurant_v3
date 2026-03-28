@@ -167,4 +167,18 @@
   <data name="Error" xml:space="preserve"><value>Error</value></data>
   <data name="Warning" xml:space="preserve"><value>Warning</value></data>
   <data name="Info" xml:space="preserve"><value>Info</value></data>
+  <data name="EditProduct" xml:space="preserve"><value>Edit product</value></data>
+  <data name="UpdateProduct" xml:space="preserve"><value>Update product</value></data>
+  <data name="SaveUpdatesToThisProduct" xml:space="preserve"><value>Save updates to this product?</value></data>
+  <data name="CoreInformation" xml:space="preserve"><value>Core information</value></data>
+  <data name="PricingAndReplenishment" xml:space="preserve"><value>Pricing and replenishment</value></data>
+  <data name="AddSellableItemWithPricing" xml:space="preserve"><value>Add a new sellable item with pricing and stock tracking settings.</value></data>
+  <data name="SaveThisProductNow" xml:space="preserve"><value>Save this product now?</value></data>
+  <data name="AddCategoryForOrganization" xml:space="preserve"><value>Add a category for menu organization, filters, and reporting.</value></data>
+  <data name="SaveThisCategoryNow" xml:space="preserve"><value>Save this category now?</value></data>
+  <data name="EditCategory" xml:space="preserve"><value>Edit category</value></data>
+  <data name="UpdateCategory" xml:space="preserve"><value>Update category</value></data>
+  <data name="SaveUpdatesToThisCategory" xml:space="preserve"><value>Save updates to this category?</value></data>
+  <data name="CategoryInformation" xml:space="preserve"><value>Category information</value></data>
+  <data name="LoadingDaysReportView" xml:space="preserve"><value>Loading {days}-day report view</value></data>
 </root>

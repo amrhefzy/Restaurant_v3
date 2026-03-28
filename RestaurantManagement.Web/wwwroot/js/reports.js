@@ -72,7 +72,16 @@
       buttons.forEach((x) => x.classList.remove("active"));
       b.classList.add("active");
       if (window.appShell?.toast) {
-        window.appShell.toast(`Loading ${b.dataset.days || "30"}-day report view`, "info");
+        const message = loadingFormat.replace("{days}", b.dataset.days || "30");
+        window.appShell.toast(message, "info");
+      }
+      load(Number(b.dataset.days || "30"));
+    });
+  });
+
+  load(30);
+})();
+view` : loadErrorText, "info");
       }
       load(Number(b.dataset.days || "30"));
     });
