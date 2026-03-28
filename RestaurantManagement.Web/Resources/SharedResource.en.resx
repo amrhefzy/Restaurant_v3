@@ -259,4 +259,15 @@
   <data name="CustomerCreatedSuccessfully" xml:space="preserve"><value>Customer created successfully.</value></data>
   <data name="CustomerUpdatedSuccessfully" xml:space="preserve"><value>Customer updated successfully.</value></data>
   <data name="CustomerWasNotFound" xml:space="preserve"><value>Customer was not found.</value></data>
+  <data name="OpenPurchaseOrders" xml:space="preserve"><value>Open purchase orders</value></data>
+  <data name="LowStockAttentionCount" xml:space="preserve"><value>{0} item(s) need attention based on reorder thresholds.</value></data>
+  <data name="ReorderWatch" xml:space="preserve"><value>Reorder watch</value></data>
+  <data name="OnHand" xml:space="preserve"><value>On hand</value></data>
+  <data name="Reorder" xml:space="preserve"><value>Reorder</value></data>
+  <data name="NoLowStockAlerts" xml:space="preserve"><value>No low stock alerts.</value></data>
+  <data name="RecentInventoryMovesCount" xml:space="preserve"><value>{0} move(s) logged across receipts, sales, and adjustments.</value></data>
+  <data name="Last100Moves" xml:space="preserve"><value>Last 100 moves</value></data>
+  <data name="WhenUtc" xml:space="preserve"><value>When (UTC)</value></data>
+  <data name="Reference" xml:space="preserve"><value>Reference</value></data>
+  <data name="NoInventoryMovementsYet" xml:space="preserve"><value>No inventory movements yet.</value></data>
 </root>

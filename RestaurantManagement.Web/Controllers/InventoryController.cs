@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DTOs.Inventory;
 using RestaurantManagement.Application.Services;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Domain.Enums;
 using RestaurantManagement.Web.Controllers.Base;
+using RestaurantManagement.Web.Localization;
 using RestaurantManagement.Web.ViewModels.Inventory;
 
 namespace RestaurantManagement.Web.Controllers;
@@ -12,10 +14,15 @@ namespace RestaurantManagement.Web.Controllers;
 public sealed class InventoryController : BranchScopedController
 {
     private readonly IInventoryService _service;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public InventoryController(IInventoryService service, IRepository<Branch> branchRepository) : base(branchRepository)
+    public InventoryController(
+        IInventoryService service,
+        IStringLocalizer<SharedResource> localizer,
+        IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _service = service;
+        _localizer = localizer;
     }
 
     [HttpGet]
@@ -44,7 +51,7 @@ public sealed class InventoryController : BranchScopedController
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
-            TempData["Error"] = "No branch is configured.";
+            TempData["Error"] = _localizer["NoBranchConfigured"];
             return RedirectToAction(nameof(Index));
         }
 
@@ -70,7 +77,7 @@ public sealed class InventoryController : BranchScopedController
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
-            TempData["Error"] = "No branch is configured.";
+            TempData["Error"] = _localizer["NoBranchConfigured"];
             return RedirectToAction(nameof(Index));
         }
 

@@ -259,4 +259,15 @@
   <data name="CustomerCreatedSuccessfully" xml:space="preserve"><value>تم إنشاء العميل بنجاح.</value></data>
   <data name="CustomerUpdatedSuccessfully" xml:space="preserve"><value>تم تحديث العميل بنجاح.</value></data>
   <data name="CustomerWasNotFound" xml:space="preserve"><value>تعذر العثور على العميل.</value></data>
+  <data name="OpenPurchaseOrders" xml:space="preserve"><value>فتح أوامر الشراء</value></data>
+  <data name="LowStockAttentionCount" xml:space="preserve"><value>{0} عنصرًا يحتاج المتابعة حسب حدود إعادة الطلب.</value></data>
+  <data name="ReorderWatch" xml:space="preserve"><value>مراقبة إعادة الطلب</value></data>
+  <data name="OnHand" xml:space="preserve"><value>المتوفر</value></data>
+  <data name="Reorder" xml:space="preserve"><value>إعادة الطلب</value></data>
+  <data name="NoLowStockAlerts" xml:space="preserve"><value>لا توجد تنبيهات انخفاض مخزون.</value></data>
+  <data name="RecentInventoryMovesCount" xml:space="preserve"><value>{0} حركة مسجلة عبر الاستلامات والمبيعات والتسويات.</value></data>
+  <data name="Last100Moves" xml:space="preserve"><value>آخر 100 حركة</value></data>
+  <data name="WhenUtc" xml:space="preserve"><value>الوقت (UTC)</value></data>
+  <data name="Reference" xml:space="preserve"><value>المرجع</value></data>
+  <data name="NoInventoryMovementsYet" xml:space="preserve"><value>لا توجد حركات مخزون بعد.</value></data>
 </root>

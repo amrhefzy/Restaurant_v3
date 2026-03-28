@@ -1,20 +1,30 @@
 @model RestaurantManagement.Web.ViewModels.Inventory.InventoryOverviewViewModel
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Inventory";
-    ViewData["PageActions"] = "<a class='btn btn-outline-secondary' href='/PurchaseOrders'>Open purchase orders</a>";
+    ViewData["Title"] = L["Inventory"];
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/PurchaseOrders'>{L["OpenPurchaseOrders"]}</a>";
 }
 
 <section class="widget-grid">
     <article class="widget-card crud-shell">
         <div class="crud-toolbar">
             <div>
-                <h5 class="mb-1">Low stock items</h5>
-                <small class="text-muted">@Model.LowStockItems.Count item(s) need attention based on reorder thresholds.</small>
+                <h5 class="mb-1">@L["LowStockItems"]</h5>
+                <small class="text-muted">@string.Format(L["LowStockAttentionCount"], Model.LowStockItems.Count)</small>
+            </div>
+            <div class="crud-toolbar-actions">
+                <span class="badge text-bg-light">@L["ReorderWatch"]</span>
             </div>
         </div>
         <div class="table-responsive mt-3 table-wrapper">
             <table class="table shell-table mb-0">
-                <thead><tr><th>Product</th><th class="text-end">On hand</th><th class="text-end">Reorder</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>@L["Product"]</th>
+                        <th class="text-end">@L["OnHand"]</th>
+                        <th class="text-end">@L["Reorder"]</th>
+                    </tr>
+                </thead>
                 <tbody>
                 @if (Model.LowStockItems.Any())
                 {
@@ -29,7 +39,7 @@
                 }
                 else
                 {
-                    <tr><td colspan="3" class="empty-state">No low stock alerts.</td></tr>
+                    <tr><td colspan="3" class="empty-state">@L["NoLowStockAlerts"]</td></tr>
                 }
                 </tbody>
             </table>
@@ -39,13 +49,24 @@
     <article class="widget-card crud-shell">
         <div class="crud-toolbar">
             <div>
-                <h5 class="mb-1">Recent inventory movements</h5>
-                <small class="text-muted">@Model.RecentMovements.Count move(s) logged across receipts, sales, and adjustments.</small>
+                <h5 class="mb-1">@L["RecentInventoryMovements"]</h5>
+                <small class="text-muted">@string.Format(L["RecentInventoryMovesCount"], Model.RecentMovements.Count)</small>
+            </div>
+            <div class="crud-toolbar-actions">
+                <span class="badge text-bg-light">@L["Last100Moves"]</span>
             </div>
         </div>
         <div class="table-responsive mt-3 table-wrapper">
             <table class="table shell-table mb-0">
-                <thead><tr><th>When (UTC)</th><th>Product</th><th>Type</th><th class="text-end">Qty</th><th>Reference</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>@L["WhenUtc"]</th>
+                        <th>@L["Product"]</th>
+                        <th>@L["Type"]</th>
+                        <th class="text-end">@L["Quantity"]</th>
+                        <th>@L["Reference"]</th>
+                    </tr>
+                </thead>
                 <tbody>
                 @if (Model.RecentMovements.Any())
                 {
@@ -56,13 +77,13 @@
                             <td><div class="table-title">@row.ProductName</div></td>
                             <td><span class="badge text-bg-light">@row.MovementType</span></td>
                             <td class="text-end">@row.QuantityChange</td>
-                            <td>@row.ReferenceNumber</td>
+                            <td>@(string.IsNullOrWhiteSpace(row.ReferenceNumber) ? "—" : row.ReferenceNumber)</td>
                         </tr>
                     }
                 }
                 else
                 {
-                    <tr><td colspan="5" class="empty-state">No inventory movements yet.</td></tr>
+                    <tr><td colspan="5" class="empty-state">@L["NoInventoryMovementsYet"]</td></tr>
                 }
                 </tbody>
             </table>
