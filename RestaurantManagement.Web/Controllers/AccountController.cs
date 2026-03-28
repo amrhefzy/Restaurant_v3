@@ -56,7 +56,7 @@ public sealed class AccountController : Controller
         var result = await _signInManager.PasswordSignInAsync(user.UserName ?? model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
         if (result.Succeeded)
         {
-            TempData["Success"] = _localizer["SignedInSuccessfully"];
+            TempData["Success"] = _localizer["SignedInSuccessfully"].Value;
             return RedirectToLocal(model.ReturnUrl);
         }
 
@@ -70,7 +70,7 @@ public sealed class AccountController : Controller
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
-        TempData["Success"] = _localizer["SignedOutSuccessfully"];
+        TempData["Success"] = _localizer["SignedOutSuccessfully"].Value;
         return RedirectToAction(nameof(Login));
     }
 

@@ -43,7 +43,7 @@ public sealed class CustomersController : BranchScopedController
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
-            TempData["Error"] = _localizer["NoBranchConfigured"];
+            TempData["Error"] = _localizer["NoBranchConfigured"].Value;
             return RedirectToAction(nameof(Index));
         }
 
@@ -59,7 +59,7 @@ public sealed class CustomersController : BranchScopedController
         try
         {
             await _service.CreateAsync(request, cancellationToken);
-            TempData["Success"] = _localizer["CustomerCreatedSuccessfully"];
+            TempData["Success"] = _localizer["CustomerCreatedSuccessfully"].Value;
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)
@@ -76,7 +76,7 @@ public sealed class CustomersController : BranchScopedController
         var model = await _service.GetForEditAsync(branchId, id, cancellationToken);
         if (model is null)
         {
-            TempData["Error"] = _localizer["CustomerWasNotFound"];
+            TempData["Error"] = _localizer["CustomerWasNotFound"].Value;
             return RedirectToAction(nameof(Index));
         }
 
@@ -93,7 +93,7 @@ public sealed class CustomersController : BranchScopedController
         try
         {
             await _service.UpdateAsync(request, cancellationToken);
-            TempData["Success"] = _localizer["CustomerUpdatedSuccessfully"];
+            TempData["Success"] = _localizer["CustomerUpdatedSuccessfully"].Value;
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)

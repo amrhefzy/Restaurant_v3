@@ -43,7 +43,7 @@ public sealed class SuppliersController : BranchScopedController
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
-            TempData["Error"] = _localizer["NoBranchConfigured"];
+            TempData["Error"] = _localizer["NoBranchConfigured"].Value;
             return RedirectToAction(nameof(Index));
         }
 
@@ -59,7 +59,7 @@ public sealed class SuppliersController : BranchScopedController
         try
         {
             await _service.CreateAsync(request, cancellationToken);
-            TempData["Success"] = _localizer["SupplierCreatedSuccessfully"];
+            TempData["Success"] = _localizer["SupplierCreatedSuccessfully"].Value;
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)
@@ -76,7 +76,7 @@ public sealed class SuppliersController : BranchScopedController
         var model = await _service.GetForEditAsync(branchId, id, cancellationToken);
         if (model is null)
         {
-            TempData["Error"] = _localizer["SupplierWasNotFound"];
+            TempData["Error"] = _localizer["SupplierWasNotFound"].Value;
             return RedirectToAction(nameof(Index));
         }
 
@@ -93,7 +93,7 @@ public sealed class SuppliersController : BranchScopedController
         try
         {
             await _service.UpdateAsync(request, cancellationToken);
-            TempData["Success"] = _localizer["SupplierUpdatedSuccessfully"];
+            TempData["Success"] = _localizer["SupplierUpdatedSuccessfully"].Value;
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)

@@ -46,7 +46,7 @@ public sealed class SalesOrdersController : BranchScopedController
         {
             var branchId = await GetBranchIdAsync(cancellationToken);
             await _service.MarkAsPaidAsync(branchId, id, paymentType, cancellationToken);
-            TempData["Success"] = _localizer["PaymentRecordedSuccessfully"];
+            TempData["Success"] = _localizer["PaymentRecordedSuccessfully"].Value;
         }
         catch (ValidationException ex)
         {
@@ -68,7 +68,7 @@ public sealed class SalesOrdersController : BranchScopedController
         {
             var branchId = await GetBranchIdAsync(cancellationToken);
             await _service.CloseAsync(branchId, id, cancellationToken);
-            TempData["Success"] = _localizer["OrderClosedSuccessfully"];
+            TempData["Success"] = _localizer["OrderClosedSuccessfully"].Value;
         }
         catch (ValidationException ex)
         {

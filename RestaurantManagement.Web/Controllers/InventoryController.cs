@@ -53,7 +53,7 @@ public sealed class InventoryController : BranchScopedController
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
-            TempData["Error"] = _localizer["NoBranchConfigured"];
+            TempData["Error"] = _localizer["NoBranchConfigured"].Value;
             return RedirectToAction(nameof(Index));
         }
 
@@ -79,7 +79,7 @@ public sealed class InventoryController : BranchScopedController
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
-            TempData["Error"] = _localizer["NoBranchConfigured"];
+            TempData["Error"] = _localizer["NoBranchConfigured"].Value;
             return RedirectToAction(nameof(Index));
         }
 

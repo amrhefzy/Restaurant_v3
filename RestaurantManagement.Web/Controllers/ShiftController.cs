@@ -56,7 +56,7 @@ public sealed class ShiftController : BranchScopedController
             request.OpenedByUserId = _currentUserService.UserId;
             request.OpenedByUserName = _currentUserService.UserName ?? "System";
             await _shiftService.OpenAsync(request, cancellationToken);
-            TempData["Success"] = _localizer["ShiftOpenedSuccessfully"];
+            TempData["Success"] = _localizer["ShiftOpenedSuccessfully"].Value;
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)
@@ -73,7 +73,7 @@ public sealed class ShiftController : BranchScopedController
         var current = await _shiftService.GetCurrentAsync(branchId, cancellationToken);
         if (current is null)
         {
-            TempData["Error"] = _localizer["NoOpenShiftAvailable"];
+            TempData["Error"] = _localizer["NoOpenShiftAvailable"].Value;
             return RedirectToAction(nameof(Index));
         }
 
@@ -92,7 +92,7 @@ public sealed class ShiftController : BranchScopedController
             request.ClosedByUserId = _currentUserService.UserId;
             request.ClosedByUserName = _currentUserService.UserName ?? "System";
             await _shiftService.CloseAsync(request, cancellationToken);
-            TempData["Success"] = _localizer["ShiftClosedSuccessfully"];
+            TempData["Success"] = _localizer["ShiftClosedSuccessfully"].Value;
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)
