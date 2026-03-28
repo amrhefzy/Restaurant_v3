@@ -127,4 +127,44 @@
   <data name="Cash" xml:space="preserve"><value>Cash</value></data>
   <data name="Card" xml:space="preserve"><value>Card</value></data>
   <data name="SelectPaymentType" xml:space="preserve"><value>Please select a payment type.</value></data>
+  <data name="CreateProduct" xml:space="preserve"><value>Create product</value></data>
+  <data name="BackToList" xml:space="preserve"><value>Back to list</value></data>
+  <data name="ProductsAndPricing" xml:space="preserve"><value>Products and pricing</value></data>
+  <data name="SearchByEnglishNameOrSku" xml:space="preserve"><value>Search by English name or SKU</value></data>
+  <data name="StockTracking" xml:space="preserve"><value>Stock tracking</value></data>
+  <data name="Tracked" xml:space="preserve"><value>Tracked</value></data>
+  <data name="NotTracked" xml:space="preserve"><value>Not tracked</value></data>
+  <data name="CreateCategory" xml:space="preserve"><value>Create category</value></data>
+  <data name="CategoryCatalog" xml:space="preserve"><value>Category catalog</value></data>
+  <data name="SearchByEnglishOrArabicName" xml:space="preserve"><value>Search by English or Arabic name</value></data>
+  <data name="DisplayOrder" xml:space="preserve"><value>Display order</value></data>
+  <data name="CreateTable" xml:space="preserve"><value>Create table</value></data>
+  <data name="RestaurantTables" xml:space="preserve"><value>Restaurant tables</value></data>
+  <data name="SearchByTableNumberOrStatus" xml:space="preserve"><value>Search by table number or status</value></data>
+  <data name="CapacityGuests" xml:space="preserve"><value>Capacity guests</value></data>
+  <data name="CreateReservation" xml:space="preserve"><value>Create reservation</value></data>
+  <data name="SearchByCustomerTableOrStatus" xml:space="preserve"><value>Search by customer, table, or status</value></data>
+  <data name="PartySizeGuests" xml:space="preserve"><value>Party size guests</value></data>
+  <data name="CreateOrder" xml:space="preserve"><value>Create order</value></data>
+  <data name="OrderRegister" xml:space="preserve"><value>Order register</value></data>
+  <data name="SearchByOrderNumberTypeOrStatus" xml:space="preserve"><value>Search by order number, type, or status</value></data>
+  <data name="OrderHeader" xml:space="preserve"><value>Order header</value></data>
+  <data name="OrderItems" xml:space="preserve"><value>Order items</value></data>
+  <data name="PurchaseOrderHeader" xml:space="preserve"><value>Purchase order header</value></data>
+  <data name="PurchaseOrderItems" xml:space="preserve"><value>Purchase order items</value></data>
+  <data name="CreatePurchaseOrder" xml:space="preserve"><value>Create purchase order</value></data>
+  <data name="PurchaseOrderDetails" xml:space="preserve"><value>Purchase order details</value></data>
+  <data name="LowStockItems" xml:space="preserve"><value>Low stock items</value></data>
+  <data name="RecentInventoryMovements" xml:space="preserve"><value>Recent inventory movements</value></data>
+  <data name="SelectedReportingWindow" xml:space="preserve"><value>Selected reporting window</value></data>
+  <data name="AutoRefresh10s" xml:space="preserve"><value>Auto refresh: 10s</value></data>
+  <data name="AudioAlertOnNewOrders" xml:space="preserve"><value>Audio alert on new orders</value></data>
+  <data name="ConfirmAction" xml:space="preserve"><value>Confirm action</value></data>
+  <data name="ReviewActionBeforeContinue" xml:space="preserve"><value>Review this action before continuing.</value></data>
+  <data name="AreYouSureYouWantToContinue" xml:space="preserve"><value>Are you sure you want to continue?</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Success" xml:space="preserve"><value>Success</value></data>
+  <data name="Error" xml:space="preserve"><value>Error</value></data>
+  <data name="Warning" xml:space="preserve"><value>Warning</value></data>
+  <data name="Info" xml:space="preserve"><value>Info</value></data>
 </root>

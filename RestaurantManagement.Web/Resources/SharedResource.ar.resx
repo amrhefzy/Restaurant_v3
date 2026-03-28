@@ -127,4 +127,44 @@
   <data name="Cash" xml:space="preserve"><value>نقدي</value></data>
   <data name="Card" xml:space="preserve"><value>بطاقة</value></data>
   <data name="SelectPaymentType" xml:space="preserve"><value>يرجى اختيار نوع الدفع.</value></data>
+  <data name="CreateProduct" xml:space="preserve"><value>إضافة منتج</value></data>
+  <data name="BackToList" xml:space="preserve"><value>العودة للقائمة</value></data>
+  <data name="ProductsAndPricing" xml:space="preserve"><value>المنتجات والتسعير</value></data>
+  <data name="SearchByEnglishNameOrSku" xml:space="preserve"><value>ابحث بالاسم الإنجليزي أو رمز المنتج</value></data>
+  <data name="StockTracking" xml:space="preserve"><value>تتبع المخزون</value></data>
+  <data name="Tracked" xml:space="preserve"><value>متتبع</value></data>
+  <data name="NotTracked" xml:space="preserve"><value>غير متتبع</value></data>
+  <data name="CreateCategory" xml:space="preserve"><value>إضافة تصنيف</value></data>
+  <data name="CategoryCatalog" xml:space="preserve"><value>دليل التصنيفات</value></data>
+  <data name="SearchByEnglishOrArabicName" xml:space="preserve"><value>ابحث بالاسم الإنجليزي أو العربي</value></data>
+  <data name="DisplayOrder" xml:space="preserve"><value>ترتيب العرض</value></data>
+  <data name="CreateTable" xml:space="preserve"><value>إضافة طاولة</value></data>
+  <data name="RestaurantTables" xml:space="preserve"><value>طاولات المطعم</value></data>
+  <data name="SearchByTableNumberOrStatus" xml:space="preserve"><value>ابحث برقم الطاولة أو الحالة</value></data>
+  <data name="CapacityGuests" xml:space="preserve"><value>سعة الضيوف</value></data>
+  <data name="CreateReservation" xml:space="preserve"><value>إضافة حجز</value></data>
+  <data name="SearchByCustomerTableOrStatus" xml:space="preserve"><value>ابحث بالعميل أو الطاولة أو الحالة</value></data>
+  <data name="PartySizeGuests" xml:space="preserve"><value>عدد الضيوف</value></data>
+  <data name="CreateOrder" xml:space="preserve"><value>إضافة طلب</value></data>
+  <data name="OrderRegister" xml:space="preserve"><value>سجل الطلبات</value></data>
+  <data name="SearchByOrderNumberTypeOrStatus" xml:space="preserve"><value>ابحث برقم الطلب أو النوع أو الحالة</value></data>
+  <data name="OrderHeader" xml:space="preserve"><value>بيانات الطلب</value></data>
+  <data name="OrderItems" xml:space="preserve"><value>عناصر الطلب</value></data>
+  <data name="PurchaseOrderHeader" xml:space="preserve"><value>بيانات أمر الشراء</value></data>
+  <data name="PurchaseOrderItems" xml:space="preserve"><value>عناصر أمر الشراء</value></data>
+  <data name="CreatePurchaseOrder" xml:space="preserve"><value>إضافة أمر شراء</value></data>
+  <data name="PurchaseOrderDetails" xml:space="preserve"><value>تفاصيل أمر الشراء</value></data>
+  <data name="LowStockItems" xml:space="preserve"><value>أصناف منخفضة المخزون</value></data>
+  <data name="RecentInventoryMovements" xml:space="preserve"><value>أحدث حركات المخزون</value></data>
+  <data name="SelectedReportingWindow" xml:space="preserve"><value>فترة التقرير المحددة</value></data>
+  <data name="AutoRefresh10s" xml:space="preserve"><value>تحديث تلقائي: 10 ثوانٍ</value></data>
+  <data name="AudioAlertOnNewOrders" xml:space="preserve"><value>تنبيه صوتي عند الطلبات الجديدة</value></data>
+  <data name="ConfirmAction" xml:space="preserve"><value>تأكيد الإجراء</value></data>
+  <data name="ReviewActionBeforeContinue" xml:space="preserve"><value>راجع هذا الإجراء قبل المتابعة.</value></data>
+  <data name="AreYouSureYouWantToContinue" xml:space="preserve"><value>هل أنت متأكد أنك تريد المتابعة؟</value></data>
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Success" xml:space="preserve"><value>نجاح</value></data>
+  <data name="Error" xml:space="preserve"><value>خطأ</value></data>
+  <data name="Warning" xml:space="preserve"><value>تنبيه</value></data>
+  <data name="Info" xml:space="preserve"><value>معلومة</value></data>
 </root>
