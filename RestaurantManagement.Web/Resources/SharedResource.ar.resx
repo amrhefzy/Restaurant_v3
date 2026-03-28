@@ -191,4 +191,29 @@
   <data name="ConfirmCloseShift" xml:space="preserve"><value>هل تريد إغلاق هذه الوردية الآن؟</value></data>
   <data name="ShiftOpeningDetails" xml:space="preserve"><value>تفاصيل فتح الوردية</value></data>
   <data name="ShiftClosingDetails" xml:space="preserve"><value>تفاصيل إغلاق الوردية</value></data>
+  <data name="Supplier" xml:space="preserve"><value>المورد</value></data>
+  <data name="Contact" xml:space="preserve"><value>جهة الاتصال</value></data>
+  <data name="Phone" xml:space="preserve"><value>الهاتف</value></data>
+  <data name="Actions" xml:space="preserve"><value>الإجراءات</value></data>
+  <data name="Active" xml:space="preserve"><value>نشط</value></data>
+  <data name="Inactive" xml:space="preserve"><value>غير نشط</value></data>
+  <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
+  <data name="Save" xml:space="preserve"><value>حفظ</value></data>
+  <data name="Update" xml:space="preserve"><value>تحديث</value></data>
+  <data name="CreateSupplier" xml:space="preserve"><value>إضافة مورد</value></data>
+  <data name="EditSupplier" xml:space="preserve"><value>تعديل مورد</value></data>
+  <data name="UpdateSupplier" xml:space="preserve"><value>تحديث المورد</value></data>
+  <data name="SupplierDirectory" xml:space="preserve"><value>دليل الموردين</value></data>
+  <data name="SupplierRecordsCount" xml:space="preserve"><value>{0} سجل موردين</value></data>
+  <data name="SearchSuppliersPlaceholder" xml:space="preserve"><value>ابحث بالمورد أو جهة الاتصال أو الهاتف أو البريد الإلكتروني</value></data>
+  <data name="NoSuppliersCreatedYet" xml:space="preserve"><value>لا يوجد موردون مضافون بعد.</value></data>
+  <data name="SupplierInformation" xml:space="preserve"><value>معلومات المورد</value></data>
+  <data name="AddSupplierForPurchasingAndDeliveryCoordination" xml:space="preserve"><value>أضف موردًا لإدارة المشتريات وبيانات التواصل وتنسيق التسليم.</value></data>
+  <data name="UpdateSupplierContactsStatusAndPurchasingDetails" xml:space="preserve"><value>حدّث بيانات التواصل وحالة النشاط وتفاصيل التعامل الشرائي للمورد.</value></data>
+  <data name="SaveThisSupplierNow" xml:space="preserve"><value>هل تريد حفظ هذا المورد الآن؟</value></data>
+  <data name="SaveUpdatesToThisSupplier" xml:space="preserve"><value>هل تريد حفظ التعديلات على هذا المورد؟</value></data>
+  <data name="SupplierCreatedSuccessfully" xml:space="preserve"><value>تم إنشاء المورد بنجاح.</value></data>
+  <data name="SupplierUpdatedSuccessfully" xml:space="preserve"><value>تم تحديث المورد بنجاح.</value></data>
+  <data name="SupplierWasNotFound" xml:space="preserve"><value>تعذر العثور على المورد.</value></data>
+  <data name="NoBranchConfigured" xml:space="preserve"><value>لا يوجد فرع مُعدّ حاليًا.</value></data>
 </root>

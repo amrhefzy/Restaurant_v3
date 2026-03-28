@@ -191,4 +191,29 @@
   <data name="ConfirmCloseShift" xml:space="preserve"><value>Close this shift now?</value></data>
   <data name="ShiftOpeningDetails" xml:space="preserve"><value>Shift opening details</value></data>
   <data name="ShiftClosingDetails" xml:space="preserve"><value>Shift closing details</value></data>
+  <data name="Supplier" xml:space="preserve"><value>Supplier</value></data>
+  <data name="Contact" xml:space="preserve"><value>Contact</value></data>
+  <data name="Phone" xml:space="preserve"><value>Phone</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="Active" xml:space="preserve"><value>Active</value></data>
+  <data name="Inactive" xml:space="preserve"><value>Inactive</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Update" xml:space="preserve"><value>Update</value></data>
+  <data name="CreateSupplier" xml:space="preserve"><value>Create supplier</value></data>
+  <data name="EditSupplier" xml:space="preserve"><value>Edit supplier</value></data>
+  <data name="UpdateSupplier" xml:space="preserve"><value>Update supplier</value></data>
+  <data name="SupplierDirectory" xml:space="preserve"><value>Supplier directory</value></data>
+  <data name="SupplierRecordsCount" xml:space="preserve"><value>{0} supplier records</value></data>
+  <data name="SearchSuppliersPlaceholder" xml:space="preserve"><value>Search by supplier, contact, phone, or email</value></data>
+  <data name="NoSuppliersCreatedYet" xml:space="preserve"><value>No suppliers created yet.</value></data>
+  <data name="SupplierInformation" xml:space="preserve"><value>Supplier information</value></data>
+  <data name="AddSupplierForPurchasingAndDeliveryCoordination" xml:space="preserve"><value>Add a supplier for purchasing, contact management, and delivery coordination.</value></data>
+  <data name="UpdateSupplierContactsStatusAndPurchasingDetails" xml:space="preserve"><value>Update supplier contacts, activity status, and purchasing details.</value></data>
+  <data name="SaveThisSupplierNow" xml:space="preserve"><value>Save this supplier now?</value></data>
+  <data name="SaveUpdatesToThisSupplier" xml:space="preserve"><value>Save updates to this supplier?</value></data>
+  <data name="SupplierCreatedSuccessfully" xml:space="preserve"><value>Supplier created successfully.</value></data>
+  <data name="SupplierUpdatedSuccessfully" xml:space="preserve"><value>Supplier updated successfully.</value></data>
+  <data name="SupplierWasNotFound" xml:space="preserve"><value>Supplier was not found.</value></data>
+  <data name="NoBranchConfigured" xml:space="preserve"><value>No branch is configured.</value></data>
 </root>
