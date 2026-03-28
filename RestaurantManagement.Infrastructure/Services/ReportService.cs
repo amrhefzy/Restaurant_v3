@@ -28,11 +28,16 @@ public sealed class ReportService : IReportService
 
         var lowStockCount = await _dbContext.Products
             .Where(x => x.BranchId == branchId && x.IsStockTracked)
-            .CountAsync(x => _dbContext.InventoryMovements
-                .Where(m => m.ProductId == x.Id)
-                .Select(m => m.QuantityChange)
-                .DefaultIfEmpty(0)
-                .Sum() <= x.ReorderLevel, cancellationToken);
+            .GroupJoin(
+                _dbContext.InventoryMovements,
+                product => product.Id,
+                movement => movement.ProductId,
+                (product, movements) => new
+                {
+                    product.ReorderLevel,
+                    OnHand = movements.Sum(m => (decimal?)m.QuantityChange) ?? 0m
+                })
+            .CountAsync(x => x.OnHand <= x.ReorderLevel, cancellationToken);
 
         var trend = await _dbContext.SalesOrders
             .Where(x => x.BranchId == branchId
