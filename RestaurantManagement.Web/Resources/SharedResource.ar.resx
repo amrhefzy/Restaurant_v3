@@ -270,4 +270,16 @@
   <data name="WhenUtc" xml:space="preserve"><value>الوقت (UTC)</value></data>
   <data name="Reference" xml:space="preserve"><value>المرجع</value></data>
   <data name="NoInventoryMovementsYet" xml:space="preserve"><value>لا توجد حركات مخزون بعد.</value></data>
+  <data name="Login" xml:space="preserve"><value>تسجيل الدخول</value></data>
+  <data name="Logout" xml:space="preserve"><value>تسجيل الخروج</value></data>
+  <data name="Password" xml:space="preserve"><value>كلمة المرور</value></data>
+  <data name="RememberMe" xml:space="preserve"><value>تذكرني</value></data>
+  <data name="InvalidLoginAttempt" xml:space="preserve"><value>محاولة تسجيل دخول غير صحيحة.</value></data>
+  <data name="SignedInSuccessfully" xml:space="preserve"><value>تم تسجيل الدخول بنجاح.</value></data>
+  <data name="SignedOutSuccessfully" xml:space="preserve"><value>تم تسجيل الخروج بنجاح.</value></data>
+  <data name="AccessDenied" xml:space="preserve"><value>تم رفض الوصول</value></data>
+  <data name="SignInToAccessRestaurantOperations" xml:space="preserve"><value>سجّل الدخول للوصول إلى عمليات المطعم.</value></data>
+  <data name="AccountCredentials" xml:space="preserve"><value>بيانات الحساب</value></data>
+  <data name="YouDoNotHavePermissionToAccessThisPage" xml:space="preserve"><value>ليس لديك صلاحية الوصول إلى هذه الصفحة.</value></data>
+  <data name="PleaseSignInWithAnAccountThatHasTheRequiredPermissions" xml:space="preserve"><value>يرجى تسجيل الدخول بحساب يمتلك الصلاحيات المطلوبة.</value></data>
 </root>

@@ -23,8 +23,8 @@ public static class IdentitySeeder
             });
         }
 
-        const string adminEmail = "superadmin@restaurant-v3.local";
-        const string adminPassword = "SuperAdmin#2026";
+        const string adminEmail = "admin@gmail";
+        const string adminPassword = "Admin@123456";
 
         var admin = await userManager.FindByEmailAsync(adminEmail);
         if (admin is not null)
