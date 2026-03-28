@@ -1,20 +1,21 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Products.ProductDto>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Products";
-    ViewData["PageActions"] = "<a class='btn btn-primary' href='/Products/Create'>Create product</a>";
+    ViewData["Title"] = L["Products"];
+    ViewData["PageActions"] = $"<a class='btn btn-primary' href='/Products/Create'>{L["CreateProduct"]}</a>";
 }
 
 <div class="widget-card crud-shell">
     <div class="crud-toolbar">
         <div>
-            <h5 class="mb-1">Products and pricing</h5>
+            <h5 class="mb-1">@L["ProductsAndPricing"]</h5>
             <small class="text-muted">@Model.Count product records across the active branch.</small>
         </div>
         <div class="crud-toolbar-actions">
             <div class="crud-search">
-                <input type="search" class="form-control" id="productTableSearch" placeholder="Search by English name or SKU" />
+                <input type="search" class="form-control" id="productTableSearch" placeholder="@L["SearchByEnglishNameOrSku"]" />
             </div>
-            <a class="btn btn-primary" asp-action="Create">Create product</a>
+            <a class="btn btn-primary" asp-action="Create">@L["CreateProduct"]</a>
         </div>
     </div>
 
@@ -22,12 +23,12 @@
         <table class="table shell-table align-middle mb-0" id="productsTable">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>@L["Product"]</th>
                     <th>SKU</th>
                     <th class="text-end">Sale price</th>
                     <th class="text-end">Cost price</th>
-                    <th>Stock tracking</th>
-                    <th>Status</th>
+                    <th>@L["StockTracking"]</th>
+                    <th>@L["Status"]</th>
                     <th class="text-end">Actions</th>
                 </tr>
             </thead>
@@ -46,7 +47,7 @@
                         <td class="text-end">@row.CostPrice.ToString("N2")</td>
                         <td>
                             <span class="badge rounded-pill @(row.IsStockTracked ? "text-bg-info" : "text-bg-light")">
-                                @(row.IsStockTracked ? "Tracked" : "Not tracked")
+                                @(row.IsStockTracked ? L["Tracked"] : L["NotTracked"])
                             </span>
                         </td>
                         <td>

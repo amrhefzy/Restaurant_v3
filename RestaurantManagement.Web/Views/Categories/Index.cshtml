@@ -1,20 +1,21 @@
 @model IReadOnlyCollection<RestaurantManagement.Application.DTOs.Categories.CategoryDto>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
-    ViewData["Title"] = "Categories";
-    ViewData["PageActions"] = "<a class='btn btn-primary' href='/Categories/Create'>Create category</a>";
+    ViewData["Title"] = L["Categories"];
+    ViewData["PageActions"] = $"<a class='btn btn-primary' href='/Categories/Create'>{L["CreateCategory"]}</a>";
 }
 
 <div class="widget-card crud-shell">
     <div class="crud-toolbar">
         <div>
-            <h5 class="mb-1">Category catalog</h5>
+            <h5 class="mb-1">@L["CategoryCatalog"]</h5>
             <small class="text-muted">@Model.Count category records available for classification and POS filtering.</small>
         </div>
         <div class="crud-toolbar-actions">
             <div class="crud-search">
-                <input type="search" class="form-control" id="categoryTableSearch" placeholder="Search by English or Arabic name" />
+                <input type="search" class="form-control" id="categoryTableSearch" placeholder="@L["SearchByEnglishOrArabicName"]" />
             </div>
-            <a class="btn btn-primary" asp-action="Create">Create category</a>
+            <a class="btn btn-primary" asp-action="Create">@L["CreateCategory"]</a>
         </div>
     </div>
 
@@ -22,9 +23,9 @@
         <table class="table shell-table align-middle mb-0" id="categoriesTable">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Display order</th>
-                    <th>Status</th>
+                    <th>@L["Category"]</th>
+                    <th>@L["DisplayOrder"]</th>
+                    <th>@L["Status"]</th>
                     <th class="text-end">Actions</th>
                 </tr>
             </thead>
