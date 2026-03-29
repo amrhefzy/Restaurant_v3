@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Domain.Entities;
+using RestaurantManagement.Web.Configuration;
 using RestaurantManagement.Web.Services;
 
 namespace RestaurantManagement.Web.Controllers.Base;
@@ -88,11 +89,8 @@ public abstract class BranchScopedController : Controller
             return null;
         }
 
+        ApplyBlockedFlowMetadata(SettingsCatalog.BlockedFlow.InventoryTracking);
         TempData["Error"] = blockedMessage;
-        TempData["BlockedBySettings"] = "TrackInventory";
-        TempData["BlockedSettingsHint"] = "Inventory-sensitive workflows are disabled at runtime for this branch.";
-        TempData["BlockedSettingsActionText"] = "Open settings";
-        TempData["BlockedSettingsActionUrl"] = Url.Action("Index", "Settings");
         return RedirectToAction("Index", "Dashboard");
     }
 
@@ -111,12 +109,17 @@ public abstract class BranchScopedController : Controller
             return null;
         }
 
+        ApplyBlockedFlowMetadata(SettingsCatalog.BlockedFlow.OperationalLogin, new { returnUrl = Request.Path + Request.QueryString });
         TempData["Error"] = blockedMessage;
-        TempData["BlockedBySettings"] = "RequireLoginForOperations";
-        TempData["BlockedSettingsHint"] = "Operational entry points require an authenticated session under the current branch settings.";
-        TempData["BlockedSettingsActionText"] = "Sign in";
-        TempData["BlockedSettingsActionUrl"] = Url.Action("Login", "Account", new { returnUrl = Request.Path + Request.QueryString });
         return RedirectToAction("Login", "Account", new { returnUrl = Request.Path + Request.QueryString });
+    }
+
+    private void ApplyBlockedFlowMetadata(SettingsCatalog.BlockedFlow.Metadata metadata, object? routeValues = null)
+    {
+        TempData["BlockedBySettings"] = metadata.SettingKey;
+        TempData["BlockedSettingsHint"] = metadata.HintText;
+        TempData["BlockedSettingsActionText"] = metadata.ActionText;
+        TempData["BlockedSettingsActionUrl"] = Url.Action(metadata.ActionName, metadata.ActionController, routeValues);
     }
 
     private static bool TryReadBranchId(string? input, out Guid branchId)

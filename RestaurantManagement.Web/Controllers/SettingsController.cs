@@ -64,13 +64,13 @@ public sealed class SettingsController : BranchScopedController
         _branchRepository.Update(branch);
 
         var settings = await _settingsRepository.ListAsync(x => x.BranchId == branchId, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.CurrencyCode, model.CurrencyCode, _localizer["DisplayCurrencyCode"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.TaxRatePercent, model.TaxRatePercent.ToString(CultureInfo.InvariantCulture), _localizer["SalesTaxPercent"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.ServiceChargePercent, model.ServiceChargePercent.ToString(CultureInfo.InvariantCulture), _localizer["ServiceChargePercentSetting"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.TrackInventory, model.TrackInventory.ToString(), _localizer["TrackInventoryDescription"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RequireLoginForOperations, model.RequireLoginForOperations.ToString(), _localizer["RequireLoginForOperationsDescription"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RoleAwareNavigationEnabled, model.RoleAwareNavigationEnabled.ToString(), _localizer["RoleAwareNavigationDescription"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RuntimeNotes, model.RuntimeNotes ?? string.Empty, _localizer["RuntimeAndDeploymentNotesDescription"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.CurrencyCode, model.CurrencyCode, _localizer[SettingsCatalog.Localization.DisplayCurrencyCode].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.TaxRatePercent, model.TaxRatePercent.ToString(CultureInfo.InvariantCulture), _localizer[SettingsCatalog.Localization.SalesTaxPercent].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.ServiceChargePercent, model.ServiceChargePercent.ToString(CultureInfo.InvariantCulture), _localizer[SettingsCatalog.Localization.ServiceChargePercentSetting].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.TrackInventory, model.TrackInventory.ToString(), _localizer[SettingsCatalog.Localization.TrackInventoryDescription].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RequireLoginForOperations, model.RequireLoginForOperations.ToString(), _localizer[SettingsCatalog.Localization.RequireLoginForOperationsDescription].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RoleAwareNavigationEnabled, model.RoleAwareNavigationEnabled.ToString(), _localizer[SettingsCatalog.Localization.RoleAwareNavigationDescription].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RuntimeNotes, model.RuntimeNotes ?? string.Empty, _localizer[SettingsCatalog.Localization.RuntimeAndDeploymentNotesDescription].Value, cancellationToken);
 
         TempData["Success"] = _localizer["SettingsSavedSuccessfully"].Value;
         return RedirectToAction(nameof(Index));

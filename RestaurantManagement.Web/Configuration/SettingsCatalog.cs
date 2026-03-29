@@ -22,4 +22,34 @@ public static class SettingsCatalog
         public const bool RequireLoginForOperations = true;
         public const bool RoleAwareNavigationEnabled = true;
     }
+
+    public static class Localization
+    {
+        public const string DisplayCurrencyCode = nameof(DisplayCurrencyCode);
+        public const string SalesTaxPercent = nameof(SalesTaxPercent);
+        public const string ServiceChargePercentSetting = nameof(ServiceChargePercentSetting);
+        public const string TrackInventoryDescription = nameof(TrackInventoryDescription);
+        public const string RequireLoginForOperationsDescription = nameof(RequireLoginForOperationsDescription);
+        public const string RoleAwareNavigationDescription = nameof(RoleAwareNavigationDescription);
+        public const string RuntimeAndDeploymentNotesDescription = nameof(RuntimeAndDeploymentNotesDescription);
+    }
+
+    public static class BlockedFlow
+    {
+        public sealed record Metadata(string SettingKey, string HintText, string ActionText, string ActionController, string ActionName);
+
+        public static readonly Metadata InventoryTracking = new(
+            Keys.TrackInventory,
+            "Inventory-sensitive workflows are disabled at runtime for this branch.",
+            "Open settings",
+            "Settings",
+            "Index");
+
+        public static readonly Metadata OperationalLogin = new(
+            Keys.RequireLoginForOperations,
+            "Operational entry points require an authenticated session under the current branch settings.",
+            "Sign in",
+            "Account",
+            "Login");
+    }
 }
