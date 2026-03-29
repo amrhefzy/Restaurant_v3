@@ -2,7 +2,7 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["Roles"];
-    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Users'>{L["Users"]}</a>";
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Users'>{L["Users"]}</a><a class='btn btn-primary ms-2' href='/Users/CreateRole'>{L["CreateRole"]}</a>";
 }
 
 <div class="widget-card crud-shell">
@@ -13,6 +13,7 @@
         </div>
         <div class="crud-toolbar-actions">
             <a class="btn btn-outline-secondary" asp-action="Index">@L["Users"]</a>
+            <a class="btn btn-primary" asp-action="CreateRole">@L["CreateRole"]</a>
         </div>
     </div>
 
@@ -23,6 +24,7 @@
                     <th>@L["Role"]</th>
                     <th>@L["Description"]</th>
                     <th class="text-end">@L["Users"]</th>
+                    <th class="text-end">@L["Actions"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,12 +36,15 @@
                         <td><span class="badge text-bg-light">@row.Name</span></td>
                         <td>@(string.IsNullOrWhiteSpace(row.Description) ? "—" : row.Description)</td>
                         <td class="text-end">@row.UsersCount</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="EditRole" asp-route-id="@row.Name">@L["Edit"]</a>
+                        </td>
                     </tr>
                 }
             }
             else
             {
-                <tr><td colspan="3" class="empty-state">@L["NoRolesAvailable"]</td></tr>
+                <tr><td colspan="4" class="empty-state">@L["NoRolesAvailable"]</td></tr>
             }
             </tbody>
         </table>

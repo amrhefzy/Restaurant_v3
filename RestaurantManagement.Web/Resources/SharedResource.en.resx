@@ -315,4 +315,21 @@
   <data name="ConfirmDeactivateUser" xml:space="preserve"><value>Deactivate this user now?</value></data>
   <data name="UserActivatedSuccessfully" xml:space="preserve"><value>User activated successfully.</value></data>
   <data name="UserDeactivatedSuccessfully" xml:space="preserve"><value>User deactivated successfully.</value></data>
+  <data name="CreateRole" xml:space="preserve"><value>Create role</value></data>
+  <data name="EditRole" xml:space="preserve"><value>Edit role</value></data>
+  <data name="UpdateRole" xml:space="preserve"><value>Update role</value></data>
+  <data name="RoleInformation" xml:space="preserve"><value>Role information</value></data>
+  <data name="AddRoleForOperationalAccessControl" xml:space="preserve"><value>Add a role for operational access control.</value></data>
+  <data name="UpdateRoleMetadataForOperationalAccessControl" xml:space="preserve"><value>Update role metadata for operational access control.</value></data>
+  <data name="CreateThisRoleNow" xml:space="preserve"><value>Create this role now?</value></data>
+  <data name="SaveUpdatesToThisRole" xml:space="preserve"><value>Save updates to this role?</value></data>
+  <data name="RoleCreatedSuccessfully" xml:space="preserve"><value>Role created successfully.</value></data>
+  <data name="RoleUpdatedSuccessfully" xml:space="preserve"><value>Role updated successfully.</value></data>
+  <data name="RoleAlreadyExists" xml:space="preserve"><value>A role with this name already exists.</value></data>
+  <data name="RoleWasNotFound" xml:space="preserve"><value>Role was not found.</value></data>
+  <data name="ResetPassword" xml:space="preserve"><value>Reset password</value></data>
+  <data name="NewPassword" xml:space="preserve"><value>New password</value></data>
+  <data name="PasswordReset" xml:space="preserve"><value>Password reset</value></data>
+  <data name="ResetThisPasswordNow" xml:space="preserve"><value>Reset this password now?</value></data>
+  <data name="PasswordResetSuccessfully" xml:space="preserve"><value>Password reset successfully.</value></data>
 </root>

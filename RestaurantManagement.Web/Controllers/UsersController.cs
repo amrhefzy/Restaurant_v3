@@ -259,6 +259,54 @@ public sealed class UsersController : BranchScopedController
     }
 
     [HttpGet]
+    public async Task<IActionResult> ResetPassword(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        if (user is null)
+        {
+            TempData["Error"] = _localizer["UserWasNotFound"].Value;
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(new ResetPasswordViewModel
+        {
+            UserId = user.Id,
+            UserDisplayName = string.IsNullOrWhiteSpace(user.FullName) ? (user.Email ?? string.Empty) : user.FullName
+        });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == model.UserId, cancellationToken);
+        if (user is null)
+        {
+            TempData["Error"] = _localizer["UserWasNotFound"].Value;
+            return RedirectToAction(nameof(Index));
+        }
+
+        var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var result = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View(model);
+        }
+
+        TempData["Success"] = _localizer["PasswordResetSuccessfully"].Value;
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
     public async Task<IActionResult> Roles(CancellationToken cancellationToken)
     {
         var roles = await _roleManager.Roles
@@ -278,6 +326,108 @@ public sealed class UsersController : BranchScopedController
         }
 
         return View(model);
+    }
+
+    [HttpGet]
+    public IActionResult CreateRole()
+    {
+        return View(new CreateRoleViewModel());
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var exists = await _roleManager.RoleExistsAsync(model.Name);
+        if (exists)
+        {
+            ModelState.AddModelError(nameof(model.Name), _localizer["RoleAlreadyExists"].Value);
+            return View(model);
+        }
+
+        var role = new ApplicationRole
+        {
+            Id = Guid.NewGuid(),
+            Name = model.Name,
+            NormalizedName = model.Name.ToUpperInvariant(),
+            Description = model.Description
+        };
+
+        var result = await _roleManager.CreateAsync(role);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View(model);
+        }
+
+        TempData["Success"] = _localizer["RoleCreatedSuccessfully"].Value;
+        return RedirectToAction(nameof(Roles));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditRole(string id)
+    {
+        var role = await _roleManager.FindByIdAsync(id);
+        if (role is null)
+        {
+            TempData["Error"] = _localizer["RoleWasNotFound"].Value;
+            return RedirectToAction(nameof(Roles));
+        }
+
+        return View(new EditRoleViewModel
+        {
+            Name = role.Name ?? string.Empty,
+            Description = role.Description
+        });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditRole(string id, EditRoleViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var role = await _roleManager.FindByIdAsync(id);
+        if (role is null)
+        {
+            TempData["Error"] = _localizer["RoleWasNotFound"].Value;
+            return RedirectToAction(nameof(Roles));
+        }
+
+        var existing = await _roleManager.FindByNameAsync(model.Name);
+        if (existing is not null && existing.Id != role.Id)
+        {
+            ModelState.AddModelError(nameof(model.Name), _localizer["RoleAlreadyExists"].Value);
+            return View(model);
+        }
+
+        role.Name = model.Name;
+        role.NormalizedName = model.Name.ToUpperInvariant();
+        role.Description = model.Description;
+
+        var result = await _roleManager.UpdateAsync(role);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View(model);
+        }
+
+        TempData["Success"] = _localizer["RoleUpdatedSuccessfully"].Value;
+        return RedirectToAction(nameof(Roles));
     }
 
     private async Task LoadRoleOptionsAsync(CreateUserViewModel model, CancellationToken cancellationToken)

@@ -53,6 +53,7 @@
                         <td class="text-end">
                             <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
                                 <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">@L["Edit"]</a>
+                                <a class="btn btn-sm btn-outline-warning" asp-action="ResetPassword" asp-route-id="@row.Id">@L["ResetPassword"]</a>
                                 <form asp-action="ToggleStatus" method="post" data-confirm="@(row.IsActive ? L["ConfirmDeactivateUser"] : L["ConfirmActivateUser"] )" data-confirm-text="@(row.IsActive ? L["Deactivate"] : L["Activate"] )" data-confirm-class="@(row.IsActive ? "btn-danger" : "btn-success")">
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" name="id" value="@row.Id" />

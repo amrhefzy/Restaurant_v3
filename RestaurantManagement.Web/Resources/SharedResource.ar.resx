@@ -315,4 +315,21 @@
   <data name="ConfirmDeactivateUser" xml:space="preserve"><value>هل تريد تعطيل هذا المستخدم الآن؟</value></data>
   <data name="UserActivatedSuccessfully" xml:space="preserve"><value>تم تفعيل المستخدم بنجاح.</value></data>
   <data name="UserDeactivatedSuccessfully" xml:space="preserve"><value>تم تعطيل المستخدم بنجاح.</value></data>
+  <data name="CreateRole" xml:space="preserve"><value>إضافة دور</value></data>
+  <data name="EditRole" xml:space="preserve"><value>تعديل الدور</value></data>
+  <data name="UpdateRole" xml:space="preserve"><value>تحديث الدور</value></data>
+  <data name="RoleInformation" xml:space="preserve"><value>معلومات الدور</value></data>
+  <data name="AddRoleForOperationalAccessControl" xml:space="preserve"><value>أضف دورًا للتحكم في الوصول التشغيلي.</value></data>
+  <data name="UpdateRoleMetadataForOperationalAccessControl" xml:space="preserve"><value>حدّث بيانات الدور للتحكم في الوصول التشغيلي.</value></data>
+  <data name="CreateThisRoleNow" xml:space="preserve"><value>هل تريد إنشاء هذا الدور الآن؟</value></data>
+  <data name="SaveUpdatesToThisRole" xml:space="preserve"><value>هل تريد حفظ التعديلات على هذا الدور؟</value></data>
+  <data name="RoleCreatedSuccessfully" xml:space="preserve"><value>تم إنشاء الدور بنجاح.</value></data>
+  <data name="RoleUpdatedSuccessfully" xml:space="preserve"><value>تم تحديث الدور بنجاح.</value></data>
+  <data name="RoleAlreadyExists" xml:space="preserve"><value>يوجد دور بهذا الاسم بالفعل.</value></data>
+  <data name="RoleWasNotFound" xml:space="preserve"><value>تعذر العثور على الدور.</value></data>
+  <data name="ResetPassword" xml:space="preserve"><value>إعادة تعيين كلمة المرور</value></data>
+  <data name="NewPassword" xml:space="preserve"><value>كلمة المرور الجديدة</value></data>
+  <data name="PasswordReset" xml:space="preserve"><value>إعادة تعيين كلمة المرور</value></data>
+  <data name="ResetThisPasswordNow" xml:space="preserve"><value>هل تريد إعادة تعيين كلمة المرور الآن؟</value></data>
+  <data name="PasswordResetSuccessfully" xml:space="preserve"><value>تمت إعادة تعيين كلمة المرور بنجاح.</value></data>
 </root>
