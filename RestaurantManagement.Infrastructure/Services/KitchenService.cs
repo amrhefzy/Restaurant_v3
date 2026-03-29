@@ -78,4 +78,19 @@ public sealed class KitchenService : IKitchenService
         await _dbContext.SaveChangesAsync(cancellationToken);
         return true;
     }
+
+    public async Task<bool> CompleteOrderAsync(Guid branchId, Guid salesOrderId, CancellationToken cancellationToken = default)
+    {
+        var order = await _dbContext.SalesOrders
+            .FirstOrDefaultAsync(x => x.BranchId == branchId && x.Id == salesOrderId, cancellationToken);
+
+        if (order is null || order.Status != OrderStatus.Ready)
+        {
+            return false;
+        }
+
+        order.Status = OrderStatus.Served;
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return true;
+    }
 }

@@ -12,7 +12,11 @@
      data-seed='@Html.Raw(dataJson)'
      data-no-active='@L["NoActiveOrders"]'
      data-start='@L["Start"]'
-     data-ready='@L["MarkReady"]'>
+     data-ready='@L["MarkReady"]'
+     data-complete='@L["Complete"]'
+     data-start-confirm='@L["StartKitchenOrderNow"]'
+     data-ready-confirm='@L["MarkKitchenOrderReadyNow"]'
+     data-complete-confirm='@L["CompleteKitchenOrderNow"]'>
     @Html.AntiForgeryToken()
     <div class="kitchen-toolbar mb-3">
         <div>

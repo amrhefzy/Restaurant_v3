@@ -377,4 +377,14 @@
   <data name="InventoryTrackingDisabledActionBlocked" xml:space="preserve"><value>This inventory action is blocked because inventory tracking is disabled in settings.</value></data>
   <data name="OperationalLoginRequiredActionBlocked" xml:space="preserve"><value>This operation requires login because operational login enforcement is enabled in settings.</value></data>
   <data name="OpenSettings" xml:space="preserve"><value>Open settings</value></data>
+  <data name="Complete" xml:space="preserve"><value>Complete</value></data>
+  <data name="StartKitchenOrderNow" xml:space="preserve"><value>Start this kitchen order now?</value></data>
+  <data name="MarkKitchenOrderReadyNow" xml:space="preserve"><value>Mark this kitchen order as ready?</value></data>
+  <data name="CompleteKitchenOrderNow" xml:space="preserve"><value>Complete this kitchen order now?</value></data>
+  <data name="KitchenOrderStartFailed" xml:space="preserve"><value>Kitchen order cannot be started.</value></data>
+  <data name="KitchenOrderReadyFailed" xml:space="preserve"><value>Kitchen order cannot be marked ready.</value></data>
+  <data name="KitchenOrderCompleteFailed" xml:space="preserve"><value>Kitchen order cannot be completed.</value></data>
+  <data name="KitchenOrderStartedSuccessfully" xml:space="preserve"><value>Kitchen order started successfully.</value></data>
+  <data name="KitchenOrderMarkedReadySuccessfully" xml:space="preserve"><value>Kitchen order marked ready successfully.</value></data>
+  <data name="KitchenOrderCompletedSuccessfully" xml:space="preserve"><value>Kitchen order completed successfully.</value></data>
 </root>

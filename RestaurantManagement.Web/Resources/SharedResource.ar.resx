@@ -377,4 +377,14 @@
   <data name="InventoryTrackingDisabledActionBlocked" xml:space="preserve"><value>تم منع هذا الإجراء الخاص بالمخزون لأن تتبع المخزون معطّل في الإعدادات.</value></data>
   <data name="OperationalLoginRequiredActionBlocked" xml:space="preserve"><value>تتطلب هذه العملية تسجيل الدخول لأن فرض تسجيل الدخول للعمليات مفعّل في الإعدادات.</value></data>
   <data name="OpenSettings" xml:space="preserve"><value>فتح الإعدادات</value></data>
+  <data name="Complete" xml:space="preserve"><value>إكمال</value></data>
+  <data name="StartKitchenOrderNow" xml:space="preserve"><value>بدء هذا الطلب في المطبخ الآن؟</value></data>
+  <data name="MarkKitchenOrderReadyNow" xml:space="preserve"><value>وضع علامة جاهز على هذا الطلب الآن؟</value></data>
+  <data name="CompleteKitchenOrderNow" xml:space="preserve"><value>إكمال هذا الطلب الآن؟</value></data>
+  <data name="KitchenOrderStartFailed" xml:space="preserve"><value>لا يمكن بدء طلب المطبخ.</value></data>
+  <data name="KitchenOrderReadyFailed" xml:space="preserve"><value>لا يمكن وضع علامة جاهز على طلب المطبخ.</value></data>
+  <data name="KitchenOrderCompleteFailed" xml:space="preserve"><value>لا يمكن إكمال طلب المطبخ.</value></data>
+  <data name="KitchenOrderStartedSuccessfully" xml:space="preserve"><value>تم بدء طلب المطبخ بنجاح.</value></data>
+  <data name="KitchenOrderMarkedReadySuccessfully" xml:space="preserve"><value>تم وضع علامة جاهز على طلب المطبخ بنجاح.</value></data>
+  <data name="KitchenOrderCompletedSuccessfully" xml:space="preserve"><value>تم إكمال طلب المطبخ بنجاح.</value></data>
 </root>

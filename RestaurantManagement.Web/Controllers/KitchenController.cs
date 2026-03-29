@@ -90,10 +90,10 @@ public sealed class KitchenController : BranchScopedController
         var ok = await _kitchenService.StartOrderAsync(branchId, salesOrderId, cancellationToken);
         if (!ok)
         {
-            return BadRequest(new { success = false, message = "Order cannot be started." });
+            return BadRequest(new { success = false, message = _localizer["KitchenOrderStartFailed"].Value });
         }
 
-        return Json(new { success = true });
+        return Json(new { success = true, message = _localizer["KitchenOrderStartedSuccessfully"].Value });
     }
 
     [HttpPost]
@@ -113,9 +113,32 @@ public sealed class KitchenController : BranchScopedController
         var ok = await _kitchenService.MarkReadyAsync(branchId, salesOrderId, cancellationToken);
         if (!ok)
         {
-            return BadRequest(new { success = false, message = "Order cannot be marked ready." });
+            return BadRequest(new { success = false, message = _localizer["KitchenOrderReadyFailed"].Value });
         }
 
-        return Json(new { success = true });
+        return Json(new { success = true, message = _localizer["KitchenOrderMarkedReadySuccessfully"].Value });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Complete([FromBody] Guid salesOrderId, CancellationToken cancellationToken)
+    {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
+        var branchId = await GetBranchIdAsync(cancellationToken);
+        var ok = await _kitchenService.CompleteOrderAsync(branchId, salesOrderId, cancellationToken);
+        if (!ok)
+        {
+            return BadRequest(new { success = false, message = _localizer["KitchenOrderCompleteFailed"].Value });
+        }
+
+        return Json(new { success = true, message = _localizer["KitchenOrderCompletedSuccessfully"].Value });
     }
 }

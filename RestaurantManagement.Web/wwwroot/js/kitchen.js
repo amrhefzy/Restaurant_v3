@@ -11,7 +11,11 @@
   const labels = {
     noActive: app.dataset.noActive || "No active orders.",
     start: app.dataset.start || "Start",
-    ready: app.dataset.ready || "Mark Ready"
+    ready: app.dataset.ready || "Mark Ready",
+    complete: app.dataset.complete || "Complete",
+    startConfirm: app.dataset.startConfirm || "Start this kitchen order now?",
+    readyConfirm: app.dataset.readyConfirm || "Mark this kitchen order as ready?",
+    completeConfirm: app.dataset.completeConfirm || "Complete this kitchen order now?"
   };
 
   let orders = JSON.parse(app.dataset.seed || "[]");
@@ -100,6 +104,7 @@
 
         const canStart = order.status === "New";
         const canReady = order.status === "InKitchen" || order.status === "New";
+        const canComplete = order.status === "Ready";
 
         const ageClass = getAgeClass(order.minutesSinceCreated);
         const isOverdue = order.minutesSinceCreated > criticalMinutes;
@@ -125,6 +130,9 @@
               <button type="button" class="btn btn-lg btn-primary ready-btn" ${
                 canReady ? "" : "disabled"
               }>${labels.ready}</button>
+              <button type="button" class="btn btn-lg btn-success complete-btn" ${
+                canComplete ? "" : "disabled"
+              }>${labels.complete}</button>
             </div>
           </article>`;
       })
@@ -147,6 +155,10 @@
       if (!response.ok || !json.success) {
         window.appShell.toast(json.message || "Action failed.", "danger");
         return false;
+      }
+
+      if (json.message) {
+        window.appShell.toast(json.message, "success");
       }
 
       return true;
@@ -186,7 +198,7 @@
 
     if (event.target.classList.contains("start-btn")) {
       window.appShell.confirm({
-        message: "Start this kitchen order now?",
+        message: labels.startConfirm,
         confirmText: labels.start,
         confirmClass: "btn-outline-dark",
         onConfirm: async () => {
@@ -201,11 +213,26 @@
 
     if (event.target.classList.contains("ready-btn")) {
       window.appShell.confirm({
-        message: "Mark this kitchen order as ready?",
+        message: labels.readyConfirm,
         confirmText: labels.ready,
         confirmClass: "btn-primary",
         onConfirm: async () => {
           const ok = await callAction("/Kitchen/Ready", salesOrderId);
+          if (ok) {
+            await refresh();
+          }
+        }
+      });
+      return;
+    }
+
+    if (event.target.classList.contains("complete-btn")) {
+      window.appShell.confirm({
+        message: labels.completeConfirm,
+        confirmText: labels.complete,
+        confirmClass: "btn-success",
+        onConfirm: async () => {
+          const ok = await callAction("/Kitchen/Complete", salesOrderId);
           if (ok) {
             await refresh();
           }
