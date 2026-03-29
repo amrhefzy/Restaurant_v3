@@ -13,6 +13,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<ISettingsRuntimeService, SettingsRuntimeService>();
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 

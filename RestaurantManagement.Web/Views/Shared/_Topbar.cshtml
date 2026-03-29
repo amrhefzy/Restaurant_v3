@@ -1,10 +1,12 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@inject RestaurantManagement.Web.Services.ISettingsRuntimeService SettingsRuntime
 @using System.Globalization
 @{
     var current = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     var returnUrl = Context.Request.Path + Context.Request.QueryString;
-    var canManage = User.IsInRole("SuperAdmin") || User.IsInRole("Manager");
-    var canOperate = canManage || User.IsInRole("Cashier");
+    var roleAwareNavigationEnabled = await SettingsRuntime.IsRoleAwareNavigationEnabledAsync();
+    var canManage = !roleAwareNavigationEnabled || User.IsInRole("SuperAdmin") || User.IsInRole("Manager");
+    var canOperate = !roleAwareNavigationEnabled || canManage || User.IsInRole("Cashier");
 }
 
 <div class="topbar-content">
