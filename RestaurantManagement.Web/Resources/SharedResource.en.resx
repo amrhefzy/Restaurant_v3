@@ -371,4 +371,7 @@
   <data name="InventoryTrackingDisabled" xml:space="preserve"><value>Inventory tracking disabled</value></data>
   <data name="LoginRequired" xml:space="preserve"><value>Login required</value></data>
   <data name="LoginOptional" xml:space="preserve"><value>Login optional</value></data>
+  <data name="InventoryTrackingEnabled" xml:space="preserve"><value>Inventory tracking enabled</value></data>
+  <data name="ReportsOverview" xml:space="preserve"><value>Reports overview</value></data>
+  <data name="CurrentCommercialRuntimeSettings" xml:space="preserve"><value>Current commercial runtime settings.</value></data>
 </root>

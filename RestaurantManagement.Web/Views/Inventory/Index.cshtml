@@ -1,8 +1,10 @@
 @model RestaurantManagement.Web.ViewModels.Inventory.InventoryOverviewViewModel
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@inject RestaurantManagement.Web.Services.ISettingsRuntimeService SettingsRuntime
 @{
     ViewData["Title"] = L["Inventory"];
     ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/PurchaseOrders'>{L["OpenPurchaseOrders"]}</a>";
+    var inventoryTrackingEnabled = await SettingsRuntime.IsInventoryTrackingEnabledAsync();
 }
 
 <section class="widget-grid">
@@ -14,6 +16,9 @@
             </div>
             <div class="crud-toolbar-actions">
                 <span class="badge text-bg-light">@L["ReorderWatch"]</span>
+                <span class="badge @(inventoryTrackingEnabled ? "text-bg-success" : "text-bg-secondary")">
+                    @(inventoryTrackingEnabled ? L["InventoryTrackingEnabled"] : L["InventoryTrackingDisabled"])
+                </span>
             </div>
         </div>
         <div class="table-responsive mt-3 table-wrapper">

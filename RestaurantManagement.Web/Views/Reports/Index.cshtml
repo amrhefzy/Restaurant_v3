@@ -1,72 +1,65 @@
 @model RestaurantManagement.Application.DTOs.Reports.ReportOverviewDto
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@inject RestaurantManagement.Web.Services.ISettingsRuntimeService SettingsRuntime
 @{
     ViewData["Title"] = L["Reports"];
-    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Dashboard'>{L["Dashboard"]}</a>";
+    var currencyCode = await SettingsRuntime.GetCurrencyCodeAsync();
+    var taxRatePercent = await SettingsRuntime.GetTaxRatePercentAsync();
+    var serviceChargePercent = await SettingsRuntime.GetServiceChargePercentAsync();
 }
+
+<div class="widget-card crud-shell mb-3">
+    <div class="crud-toolbar">
+        <div>
+            <h5 class="mb-1">@L["ReportsOverview"]</h5>
+            <small class="text-muted">@L["CurrentCommercialRuntimeSettings"]</small>
+        </div>
+        <div class="crud-toolbar-actions">
+            <span class="badge text-bg-light">@L["Currency"]: @currencyCode</span>
+            <span class="badge text-bg-light">@L["TaxRate"]: @taxRatePercent.ToString("N0")%</span>
+            <span class="badge text-bg-light">@L["ServiceCharge"]: @serviceChargePercent.ToString("N0")%</span>
+        </div>
+    </div>
+</div>
 
 <section class="dashboard-grid">
     <article class="metric-card">
         <p class="metric-label">@L["GrossSales"]</p>
-        <h3 id="repGross">@Model.GrossSales.ToString("N2")</h3>
+        <h3>@Model.GrossSales.ToString("N2")</h3>
     </article>
-    <article class="metric-card">
+    <article class="metric-card success">
         <p class="metric-label">@L["OrdersCount"]</p>
-        <h3 id="repOrders">@Model.OrdersCount</h3>
-    </article>
-    <article class="metric-card">
-        <p class="metric-label">@L["AverageTicket"]</p>
-        <h3 id="repAvg">@Model.AverageTicket.ToString("N2")</h3>
+        <h3>@Model.OrdersCount</h3>
     </article>
     <article class="metric-card warning">
+        <p class="metric-label">@L["AverageTicket"]</p>
+        <h3>@Model.AverageTicket.ToString("N2")</h3>
+    </article>
+    <article class="metric-card">
         <p class="metric-label">@L["LowStockAlerts"]</p>
-        <h3 id="repLow">@Model.LowStockCount</h3>
+        <h3>@Model.LowStockCount</h3>
     </article>
 </section>
 
-<section class="widget-grid mt-3" id="reportsApp" data-no-data="@L["NoDataYet"]" data-load-error="@L["DataIntegrationPending"]" data-loading-format="@L["LoadingDaysReportView"]">
-    <article class="widget-card crud-shell">
-        <div class="crud-toolbar">
+<section class="widget-grid mt-4">
+    <article class="widget-card">
+        <div class="widget-head">
             <div>
                 <h5 class="mb-1">@L["SalesTrend"]</h5>
-                <small class="text-muted">Rolling sales performance and order activity windows.</small>
-            </div>
-            <div class="btn-group btn-group-sm" role="group">
-                <button class="btn btn-outline-secondary rep-range" data-days="7">7D</button>
-                <button class="btn btn-outline-secondary rep-range active" data-days="30">30D</button>
-                <button class="btn btn-outline-secondary rep-range" data-days="90">90D</button>
+                <small class="text-muted">@L["Last14Days"]</small>
             </div>
         </div>
-        <div id="reportTrend" class="trend-bars mt-3"></div>
+        <div id="reportsSalesTrend" class="chart-placeholder" data-reports-trend='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.SalesTrend))'></div>
     </article>
 
-    <article class="widget-card crud-shell">
-        <div class="crud-toolbar">
+    <article class="widget-card">
+        <div class="widget-head">
             <div>
-                <h5 class="mb-1">@L["TopCategorySales"]</h5>
-                <small class="text-muted">@L["SelectedReportingWindow"]</small>
+                <h5 class="mb-1">@L["TopCategories"]</h5>
+                <small class="text-muted">@L["BySalesValue"]</small>
             </div>
         </div>
-        <div class="table-responsive mt-3 table-wrapper">
-            <table class="table shell-table mb-0">
-                <thead>
-                    <tr><th>@L["Category"]</th><th class="text-end">@L["Amount"]</th></tr>
-                </thead>
-                <tbody id="repCategories">
-                @if (Model.TopCategories.Any())
-                {
-                    foreach (var row in Model.TopCategories)
-                    {
-                        <tr><td><div class="table-title">@row.CategoryName</div></td><td class="text-end">@row.SalesAmount.ToString("N2")</td></tr>
-                    }
-                }
-                else
-                {
-                    <tr><td colspan="2" class="empty-state">@L["NoDataYet"]</td></tr>
-                }
-                </tbody>
-            </table>
-        </div>
+        <div id="reportsTopCategories" class="chart-placeholder" data-reports-categories='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopCategories))'></div>
     </article>
 </section>
 

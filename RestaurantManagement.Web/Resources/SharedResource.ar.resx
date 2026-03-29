@@ -371,4 +371,7 @@
   <data name="InventoryTrackingDisabled" xml:space="preserve"><value>تتبع المخزون معطّل</value></data>
   <data name="LoginRequired" xml:space="preserve"><value>تسجيل الدخول مطلوب</value></data>
   <data name="LoginOptional" xml:space="preserve"><value>تسجيل الدخول اختياري</value></data>
+  <data name="InventoryTrackingEnabled" xml:space="preserve"><value>تتبع المخزون مفعّل</value></data>
+  <data name="ReportsOverview" xml:space="preserve"><value>نظرة عامة على التقارير</value></data>
+  <data name="CurrentCommercialRuntimeSettings" xml:space="preserve"><value>الإعدادات التجارية الحالية في وقت التشغيل.</value></data>
 </root>
