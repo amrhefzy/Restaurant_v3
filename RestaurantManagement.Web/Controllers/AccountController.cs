@@ -88,6 +88,16 @@ public sealed class AccountController : Controller
             return Redirect(returnUrl);
         }
 
-        return RedirectToAction("Index", "Dashboard");
+        if (User.IsInRole("SuperAdmin") || User.IsInRole("Manager"))
+        {
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        if (User.IsInRole("Cashier"))
+        {
+            return RedirectToAction("Index", "POS");
+        }
+
+        return RedirectToAction(nameof(AccessDenied));
     }
 }

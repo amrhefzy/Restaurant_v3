@@ -332,4 +332,5 @@
   <data name="PasswordReset" xml:space="preserve"><value>Password reset</value></data>
   <data name="ResetThisPasswordNow" xml:space="preserve"><value>Reset this password now?</value></data>
   <data name="PasswordResetSuccessfully" xml:space="preserve"><value>Password reset successfully.</value></data>
+  <data name="YourCurrentAccountDoesNotHaveTheRequiredPermissions" xml:space="preserve"><value>Your current account does not have the required permissions.</value></data>
 </root>

@@ -3,6 +3,8 @@
 @{
     var current = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     var returnUrl = Context.Request.Path + Context.Request.QueryString;
+    var canManage = User.IsInRole("SuperAdmin") || User.IsInRole("Manager");
+    var canOperate = canManage || User.IsInRole("Cashier");
 }
 
 <div class="topbar-content">
@@ -12,8 +14,14 @@
     </div>
 
     <div class="topbar-actions">
-        <a class="btn btn-sm btn-outline-secondary shell-quick-link" asp-controller="Dashboard" asp-action="Index">@L["Dashboard"]</a>
-        <a class="btn btn-sm btn-outline-secondary shell-quick-link" asp-controller="POS" asp-action="Index">@L["Pos"]</a>
+        @if (canManage)
+        {
+            <a class="btn btn-sm btn-outline-secondary shell-quick-link" asp-controller="Dashboard" asp-action="Index">@L["Dashboard"]</a>
+        }
+        @if (canOperate)
+        {
+            <a class="btn btn-sm btn-outline-secondary shell-quick-link" asp-controller="POS" asp-action="Index">@L["Pos"]</a>
+        }
         <form asp-controller="Culture" asp-action="Set" method="post" class="culture-form">
             @Html.AntiForgeryToken()
             <input type="hidden" name="returnUrl" value="@returnUrl" />
@@ -34,6 +42,5 @@
         {
             <a class="btn btn-sm btn-primary shell-quick-link" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl">@L["Login"]</a>
         }
-        <button type="button" class="btn btn-sm shell-btn" data-toast="@L["QuickActionExecuted"]">@L["QuickAction"]</button>
     </div>
 </div>

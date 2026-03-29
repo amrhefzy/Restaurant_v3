@@ -1,9 +1,10 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["AccessDenied"];
+    var isAuthenticated = User.Identity?.IsAuthenticated == true;
 }
 
-<div class="widget-card form-shell mx-auto" style="max-width: 520px;">
+<div class="widget-card form-shell mx-auto" style="max-width: 560px;">
     <div class="widget-head">
         <div>
             <h5 class="mb-1">@L["AccessDenied"]</h5>
@@ -12,10 +13,19 @@
     </div>
 
     <div class="mt-3">
-        <p class="mb-3">@L["PleaseSignInWithAnAccountThatHasTheRequiredPermissions"]</p>
+        <p class="mb-3">
+            @(isAuthenticated ? L["YourCurrentAccountDoesNotHaveTheRequiredPermissions"] : L["PleaseSignInWithAnAccountThatHasTheRequiredPermissions"])
+        </p>
         <div class="d-flex gap-2 flex-wrap">
-            <a class="btn btn-primary" asp-controller="Account" asp-action="Login">@L["Login"]</a>
-            <a class="btn btn-outline-secondary" asp-controller="Dashboard" asp-action="Index">@L["Dashboard"]</a>
+            @if (!isAuthenticated)
+            {
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Login">@L["Login"]</a>
+            }
+            else
+            {
+                <a class="btn btn-primary" asp-controller="Dashboard" asp-action="Index">@L["Dashboard"]</a>
+            }
+            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Error">@L["BackToList"]</a>
         </div>
     </div>
 </div>

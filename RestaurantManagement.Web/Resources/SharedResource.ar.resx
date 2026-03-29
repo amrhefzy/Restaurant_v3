@@ -332,4 +332,5 @@
   <data name="PasswordReset" xml:space="preserve"><value>إعادة تعيين كلمة المرور</value></data>
   <data name="ResetThisPasswordNow" xml:space="preserve"><value>هل تريد إعادة تعيين كلمة المرور الآن؟</value></data>
   <data name="PasswordResetSuccessfully" xml:space="preserve"><value>تمت إعادة تعيين كلمة المرور بنجاح.</value></data>
+  <data name="YourCurrentAccountDoesNotHaveTheRequiredPermissions" xml:space="preserve"><value>الحساب الحالي لا يملك الصلاحيات المطلوبة.</value></data>
 </root>
