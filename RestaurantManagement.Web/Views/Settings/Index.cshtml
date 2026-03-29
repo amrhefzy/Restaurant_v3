@@ -1,0 +1,74 @@
+@model RestaurantManagement.Web.ViewModels.Settings.SettingsPageViewModel
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    ViewData["Title"] = L["Settings"];
+}
+
+<section class="widget-grid">
+    <article class="widget-card crud-shell">
+        <div class="crud-toolbar">
+            <div>
+                <h5 class="mb-1">@L["BusinessProfile"]</h5>
+                <small class="text-muted">@L["OperationalDefaultsAndStorefrontIdentity"]</small>
+            </div>
+            <div class="crud-toolbar-actions">
+                <span class="badge text-bg-light">@L["ReadOnlyFoundation"]</span>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-4">
+                <div class="metric-card h-100">
+                    <p class="metric-label">@L["Currency"]</p>
+                    <h3>@Model.CurrencyCode</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="metric-card h-100">
+                    <p class="metric-label">@L["TaxRate"]</p>
+                    <h3>@Model.TaxRatePercent.ToString("N0")%</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="metric-card h-100">
+                    <p class="metric-label">@L["ServiceCharge"]</p>
+                    <h3>@Model.ServiceChargePercent.ToString("N0")%</h3>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article class="widget-card crud-shell">
+        <div class="crud-toolbar">
+            <div>
+                <h5 class="mb-1">@L["BranchContext"]</h5>
+                <small class="text-muted">@L["ActiveBranchAndOperationalScope"]</small>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column gap-2 mt-3">
+            <div><strong>@L["Branch"]:</strong> @(Model.ActiveBranchId?.ToString() ?? "—")</div>
+            <div><strong>@L["Inventory"]:</strong> @(Model.TrackInventory ? L["Tracked"] : L["NotTracked"])</div>
+            <div><strong>@L["Login"]:</strong> @(Model.RequireLoginForOperations ? L["Enabled"] : L["Disabled"])</div>
+            <div><strong>@L["UsersRoles"]:</strong> @(Model.RoleAwareNavigationEnabled ? L["Enabled"] : L["Disabled"])</div>
+        </div>
+    </article>
+
+    <article class="widget-card crud-shell">
+        <div class="crud-toolbar">
+            <div>
+                <h5 class="mb-1">@L["RuntimeDeploymentNotes"]</h5>
+                <small class="text-muted">@L["CurrentEnvironmentAndOperationalReadiness"]</small>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <p class="mb-2">@Model.RuntimeNotes</p>
+            <ul class="performance-list">
+                <li><span>@L["AuthFoundation"]</span><strong>@L["Enabled"]</strong></li>
+                <li><span>@L["RoleAwareNavigation"]</span><strong>@L["Enabled"]</strong></li>
+                <li><span>@L["UsersRoles"]</span><strong>@L["Enabled"]</strong></li>
+            </ul>
+        </div>
+    </article>
+</section>

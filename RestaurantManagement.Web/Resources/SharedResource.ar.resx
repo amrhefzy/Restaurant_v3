@@ -333,4 +333,18 @@
   <data name="ResetThisPasswordNow" xml:space="preserve"><value>هل تريد إعادة تعيين كلمة المرور الآن؟</value></data>
   <data name="PasswordResetSuccessfully" xml:space="preserve"><value>تمت إعادة تعيين كلمة المرور بنجاح.</value></data>
   <data name="YourCurrentAccountDoesNotHaveTheRequiredPermissions" xml:space="preserve"><value>الحساب الحالي لا يملك الصلاحيات المطلوبة.</value></data>
+  <data name="BusinessProfile" xml:space="preserve"><value>ملف النشاط</value></data>
+  <data name="OperationalDefaultsAndStorefrontIdentity" xml:space="preserve"><value>الإعدادات التشغيلية الافتراضية وهوية واجهة النشاط.</value></data>
+  <data name="ReadOnlyFoundation" xml:space="preserve"><value>أساس للقراءة فقط</value></data>
+  <data name="Currency" xml:space="preserve"><value>العملة</value></data>
+  <data name="TaxRate" xml:space="preserve"><value>نسبة الضريبة</value></data>
+  <data name="ServiceCharge" xml:space="preserve"><value>رسوم الخدمة</value></data>
+  <data name="BranchContext" xml:space="preserve"><value>سياق الفرع</value></data>
+  <data name="ActiveBranchAndOperationalScope" xml:space="preserve"><value>الفرع النشط ونطاق التشغيل.</value></data>
+  <data name="Enabled" xml:space="preserve"><value>مفعّل</value></data>
+  <data name="Disabled" xml:space="preserve"><value>معطّل</value></data>
+  <data name="RuntimeDeploymentNotes" xml:space="preserve"><value>ملاحظات التشغيل والنشر</value></data>
+  <data name="CurrentEnvironmentAndOperationalReadiness" xml:space="preserve"><value>البيئة الحالية وجهوزية التشغيل.</value></data>
+  <data name="AuthFoundation" xml:space="preserve"><value>أساس التحقق</value></data>
+  <data name="RoleAwareNavigation" xml:space="preserve"><value>تنقل واعٍ بالأدوار</value></data>
 </root>

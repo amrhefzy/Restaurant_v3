@@ -333,4 +333,18 @@
   <data name="ResetThisPasswordNow" xml:space="preserve"><value>Reset this password now?</value></data>
   <data name="PasswordResetSuccessfully" xml:space="preserve"><value>Password reset successfully.</value></data>
   <data name="YourCurrentAccountDoesNotHaveTheRequiredPermissions" xml:space="preserve"><value>Your current account does not have the required permissions.</value></data>
+  <data name="BusinessProfile" xml:space="preserve"><value>Business profile</value></data>
+  <data name="OperationalDefaultsAndStorefrontIdentity" xml:space="preserve"><value>Operational defaults and storefront identity.</value></data>
+  <data name="ReadOnlyFoundation" xml:space="preserve"><value>Read-only foundation</value></data>
+  <data name="Currency" xml:space="preserve"><value>Currency</value></data>
+  <data name="TaxRate" xml:space="preserve"><value>Tax rate</value></data>
+  <data name="ServiceCharge" xml:space="preserve"><value>Service charge</value></data>
+  <data name="BranchContext" xml:space="preserve"><value>Branch context</value></data>
+  <data name="ActiveBranchAndOperationalScope" xml:space="preserve"><value>Active branch and operational scope.</value></data>
+  <data name="Enabled" xml:space="preserve"><value>Enabled</value></data>
+  <data name="Disabled" xml:space="preserve"><value>Disabled</value></data>
+  <data name="RuntimeDeploymentNotes" xml:space="preserve"><value>Runtime &amp; deployment notes</value></data>
+  <data name="CurrentEnvironmentAndOperationalReadiness" xml:space="preserve"><value>Current environment and operational readiness.</value></data>
+  <data name="AuthFoundation" xml:space="preserve"><value>Auth foundation</value></data>
+  <data name="RoleAwareNavigation" xml:space="preserve"><value>Role-aware navigation</value></data>
 </root>
