@@ -21,24 +21,31 @@ dotnet restore Restaurant_v3.sln
 ```
 
 ## 3) Configure Connection String
-The web project uses `RestaurantManagement.Web/appsettings.json` (and optionally `appsettings.Development.json`).
+The web project uses layered ASP.NET Core configuration:
+- `RestaurantManagement.Web/appsettings.json` → shared defaults
+- `RestaurantManagement.Web/appsettings.Development.json` → local development overrides
+- `RestaurantManagement.Web/appsettings.Production.json` → production-oriented baseline
+- environment variables / external env files → server-specific final overrides
 
 Default key:
 - `ConnectionStrings:DefaultConnection`
 
-Example SQL Server connection string:
+### Development example
 ```json
 "ConnectionStrings": {
   "DefaultConnection": "Server=localhost;Database=Restaurant_v3;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"
 }
 ```
 
-If using SQL authentication:
+### SQL authentication example
 ```json
 "ConnectionStrings": {
   "DefaultConnection": "Server=localhost;Database=Restaurant_v3;User Id=sa;Password=<PASSWORD>;TrustServerCertificate=True;MultipleActiveResultSets=true"
 }
 ```
+
+### Production/Linux note
+For Linux/server deployments, do **not** rely on LocalDB or Windows-integrated auth. Prefer SQL authentication through production config or environment overrides. If an external env file is used on the server (for example `/home/admin123/.restaurant_v3.env`), treat it as the deployment source of truth and keep secrets out of source control.
 
 ## 4) Apply Migrations
 From repository root:

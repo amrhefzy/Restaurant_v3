@@ -128,5 +128,12 @@ This repository currently contains a strong foundation with phased implementatio
 - Module foundations
 - POS-first implementation
 - Reporting and refinement
+- Runtime settings governance
+
+## Runtime / Deployment Notes
+- Development config lives in `RestaurantManagement.Web/appsettings.Development.json`.
+- Production-oriented baseline config lives in `RestaurantManagement.Web/appsettings.Production.json`.
+- Linux/server deployments should avoid LocalDB and Windows-integrated auth.
+- Prefer environment-level overrides for secrets and machine-specific connection strings.
 
 Refer to `SETUP.md` for full installation and local execution steps.
