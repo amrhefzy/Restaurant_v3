@@ -135,5 +135,8 @@ This repository currently contains a strong foundation with phased implementatio
 - Production-oriented baseline config lives in `RestaurantManagement.Web/appsettings.Production.json`.
 - Linux/server deployments should avoid LocalDB and Windows-integrated auth.
 - Prefer environment-level overrides for secrets and machine-specific connection strings.
+- Health endpoints are available at:
+  - `/health/live`
+  - `/health/ready`
 
 Refer to `SETUP.md` for full installation and local execution steps.

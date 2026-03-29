@@ -1,9 +1,12 @@
 using System.Globalization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DependencyInjection;
 using RestaurantManagement.Infrastructure.DependencyInjection;
 using RestaurantManagement.Infrastructure.Seeding;
+using RestaurantManagement.Web.Health;
 using RestaurantManagement.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,12 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ISettingsRuntimeService, SettingsRuntimeService>();
+
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseReadyHealthCheck>(
+        name: "database",
+        failureStatus: HealthStatus.Unhealthy,
+        tags: new[] { "ready" });
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -71,6 +80,16 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = _ => false
+});
+
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = registration => registration.Tags.Contains("ready")
+});
 
 app.MapControllerRoute(
     name: "default",
