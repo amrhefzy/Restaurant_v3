@@ -347,4 +347,16 @@
   <data name="CurrentEnvironmentAndOperationalReadiness" xml:space="preserve"><value>Current environment and operational readiness.</value></data>
   <data name="AuthFoundation" xml:space="preserve"><value>Auth foundation</value></data>
   <data name="RoleAwareNavigation" xml:space="preserve"><value>Role-aware navigation</value></data>
+  <data name="EditableFoundation" xml:space="preserve"><value>Editable foundation</value></data>
+  <data name="EnglishName" xml:space="preserve"><value>English name</value></data>
+  <data name="ArabicName" xml:space="preserve"><value>Arabic name</value></data>
+  <data name="Address" xml:space="preserve"><value>Address</value></data>
+  <data name="SalesDefaults" xml:space="preserve"><value>Sales defaults</value></data>
+  <data name="CoreCommercialParametersForCheckoutAndReporting" xml:space="preserve"><value>Core commercial parameters for checkout and reporting.</value></data>
+  <data name="OperationalSwitches" xml:space="preserve"><value>Operational switches</value></data>
+  <data name="OperationalBehaviorFlagsForAccessAndInventory" xml:space="preserve"><value>Operational behavior flags for access and inventory.</value></data>
+  <data name="TrackInventory" xml:space="preserve"><value>Track inventory</value></data>
+  <data name="RequireLoginForOperations" xml:space="preserve"><value>Require login for operations</value></data>
+  <data name="RuntimeNotes" xml:space="preserve"><value>Runtime notes</value></data>
+  <data name="SaveSettings" xml:space="preserve"><value>Save settings</value></data>
 </root>

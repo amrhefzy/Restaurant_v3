@@ -347,4 +347,16 @@
   <data name="CurrentEnvironmentAndOperationalReadiness" xml:space="preserve"><value>البيئة الحالية وجهوزية التشغيل.</value></data>
   <data name="AuthFoundation" xml:space="preserve"><value>أساس التحقق</value></data>
   <data name="RoleAwareNavigation" xml:space="preserve"><value>تنقل واعٍ بالأدوار</value></data>
+  <data name="EditableFoundation" xml:space="preserve"><value>أساس قابل للتعديل</value></data>
+  <data name="EnglishName" xml:space="preserve"><value>الاسم الإنجليزي</value></data>
+  <data name="ArabicName" xml:space="preserve"><value>الاسم العربي</value></data>
+  <data name="Address" xml:space="preserve"><value>العنوان</value></data>
+  <data name="SalesDefaults" xml:space="preserve"><value>إعدادات البيع الافتراضية</value></data>
+  <data name="CoreCommercialParametersForCheckoutAndReporting" xml:space="preserve"><value>المعاملات التجارية الأساسية للدفع والتقارير.</value></data>
+  <data name="OperationalSwitches" xml:space="preserve"><value>مفاتيح التشغيل</value></data>
+  <data name="OperationalBehaviorFlagsForAccessAndInventory" xml:space="preserve"><value>إشارات سلوك التشغيل للوصول والمخزون.</value></data>
+  <data name="TrackInventory" xml:space="preserve"><value>تتبع المخزون</value></data>
+  <data name="RequireLoginForOperations" xml:space="preserve"><value>يتطلب تسجيل الدخول للتشغيل</value></data>
+  <data name="RuntimeNotes" xml:space="preserve"><value>ملاحظات التشغيل</value></data>
+  <data name="SaveSettings" xml:space="preserve"><value>حفظ الإعدادات</value></data>
 </root>
