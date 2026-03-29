@@ -142,5 +142,8 @@ This repository currently contains a strong foundation with phased implementatio
 - Migration discipline helpers are available at:
   - `./scripts/update-database.sh`
   - `./scripts/generate-idempotent-migration-sql.sh`
+- Deployment/runtime helpers are available at:
+  - `./scripts/run-production.sh`
+  - `./scripts/smoke-check.sh http://localhost:5056`
 
 Refer to `SETUP.md` for full installation and local execution steps.

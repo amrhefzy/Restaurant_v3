@@ -84,11 +84,26 @@ dotnet build Restaurant_v3.sln
 ```
 
 ## 6) Run the Application
+Standard local run:
 ```bash
 dotnet run --project RestaurantManagement.Web
 ```
 
+Production-oriented run helper:
+```bash
+./scripts/run-production.sh
+```
+
 The app starts using configured ASP.NET Core launch settings or default Kestrel endpoints.
+
+## 7) Smoke Check Runtime Health
+After startup:
+```bash
+./scripts/smoke-check.sh http://localhost:5056
+```
+This verifies:
+- `/health/live`
+- `/health/ready`
 
 ## Development Mode
 To run in development mode:
