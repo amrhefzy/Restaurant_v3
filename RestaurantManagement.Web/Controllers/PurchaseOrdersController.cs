@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DTOs.Products;
 using RestaurantManagement.Application.DTOs.PurchaseOrders;
@@ -9,6 +10,8 @@ using RestaurantManagement.Application.DTOs.Suppliers;
 using RestaurantManagement.Application.Services;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Web.Controllers.Base;
+using RestaurantManagement.Web.Localization;
+using RestaurantManagement.Web.Services;
 
 namespace RestaurantManagement.Web.Controllers;
 
@@ -18,21 +21,33 @@ public sealed class PurchaseOrdersController : BranchScopedController
     private readonly IPurchaseOrderService _service;
     private readonly ISupplierService _supplierService;
     private readonly IProductService _productService;
+    private readonly ISettingsRuntimeService _settingsRuntime;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
     public PurchaseOrdersController(
         IPurchaseOrderService service,
         ISupplierService supplierService,
         IProductService productService,
+        ISettingsRuntimeService settingsRuntime,
+        IStringLocalizer<SharedResource> localizer,
         IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _service = service;
         _supplierService = supplierService;
         _productService = productService;
+        _settingsRuntime = settingsRuntime;
+        _localizer = localizer;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         var purchaseOrders = branchId == Guid.Empty
             ? Array.Empty<PurchaseOrderListItemDto>()
@@ -44,6 +59,12 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Create(CancellationToken cancellationToken)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -62,6 +83,12 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Details(Guid id, CancellationToken cancellationToken)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -83,6 +110,12 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateDraft(CreatePurchaseOrderDto request, CancellationToken cancellationToken)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -115,6 +148,12 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Submit(Guid id, CancellationToken cancellationToken)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -150,6 +189,12 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Receive(Guid id, ReceivePurchaseOrderRequestDto request, CancellationToken cancellationToken)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -179,6 +224,17 @@ public sealed class PurchaseOrdersController : BranchScopedController
             TempData["Error"] = ex.Message;
             return RedirectToAction(nameof(Index));
         }
+    }
+
+    private async Task<IActionResult?> GuardInventoryTrackingAsync(CancellationToken cancellationToken)
+    {
+        if (await _settingsRuntime.IsInventoryTrackingEnabledAsync(cancellationToken))
+        {
+            return null;
+        }
+
+        TempData["Error"] = _localizer["InventoryTrackingDisabledActionBlocked"].Value;
+        return RedirectToAction("Index", "Dashboard");
     }
 
     private async Task LoadOptionsAsync(Guid branchId, Guid? selectedSupplierId, CancellationToken cancellationToken)

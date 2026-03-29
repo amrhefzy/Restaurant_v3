@@ -374,4 +374,5 @@
   <data name="InventoryTrackingEnabled" xml:space="preserve"><value>تتبع المخزون مفعّل</value></data>
   <data name="ReportsOverview" xml:space="preserve"><value>نظرة عامة على التقارير</value></data>
   <data name="CurrentCommercialRuntimeSettings" xml:space="preserve"><value>الإعدادات التجارية الحالية في وقت التشغيل.</value></data>
+  <data name="InventoryTrackingDisabledActionBlocked" xml:space="preserve"><value>تم منع هذا الإجراء الخاص بالمخزون لأن تتبع المخزون معطّل في الإعدادات.</value></data>
 </root>

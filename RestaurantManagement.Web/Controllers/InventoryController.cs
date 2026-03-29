@@ -8,6 +8,7 @@ using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Domain.Enums;
 using RestaurantManagement.Web.Controllers.Base;
 using RestaurantManagement.Web.Localization;
+using RestaurantManagement.Web.Services;
 using RestaurantManagement.Web.ViewModels.Inventory;
 
 namespace RestaurantManagement.Web.Controllers;
@@ -17,19 +18,28 @@ public sealed class InventoryController : BranchScopedController
 {
     private readonly IInventoryService _service;
     private readonly IStringLocalizer<SharedResource> _localizer;
+    private readonly ISettingsRuntimeService _settingsRuntime;
 
     public InventoryController(
         IInventoryService service,
         IStringLocalizer<SharedResource> localizer,
+        ISettingsRuntimeService settingsRuntime,
         IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _service = service;
         _localizer = localizer;
+        _settingsRuntime = settingsRuntime;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
 
         if (branchId == Guid.Empty)
@@ -50,6 +60,12 @@ public sealed class InventoryController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> StockOnHand(bool lowStockOnly = false, CancellationToken cancellationToken = default)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -76,6 +92,12 @@ public sealed class InventoryController : BranchScopedController
         int take = 100,
         CancellationToken cancellationToken = default)
     {
+        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        if (inventoryGuard is not null)
+        {
+            return inventoryGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -96,5 +118,16 @@ public sealed class InventoryController : BranchScopedController
 
         var history = await _service.GetMovementHistoryAsync(request, cancellationToken);
         return Ok(history);
+    }
+
+    private async Task<IActionResult?> GuardInventoryTrackingAsync(CancellationToken cancellationToken)
+    {
+        if (await _settingsRuntime.IsInventoryTrackingEnabledAsync(cancellationToken))
+        {
+            return null;
+        }
+
+        TempData["Error"] = _localizer["InventoryTrackingDisabledActionBlocked"].Value;
+        return RedirectToAction("Index", "Dashboard");
     }
 }

@@ -374,4 +374,5 @@
   <data name="InventoryTrackingEnabled" xml:space="preserve"><value>Inventory tracking enabled</value></data>
   <data name="ReportsOverview" xml:space="preserve"><value>Reports overview</value></data>
   <data name="CurrentCommercialRuntimeSettings" xml:space="preserve"><value>Current commercial runtime settings.</value></data>
+  <data name="InventoryTrackingDisabledActionBlocked" xml:space="preserve"><value>This inventory action is blocked because inventory tracking is disabled in settings.</value></data>
 </root>
