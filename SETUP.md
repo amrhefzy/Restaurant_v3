@@ -173,3 +173,6 @@ dotnet dev-certs https --trust
 4. Build solution.
 5. Run web project.
 6. Validate module pages and POS/reporting flows.
+
+## Deployment Reference
+For production-oriented deployment order, health checks, and smoke validation, refer to `DEPLOYMENT.md`.

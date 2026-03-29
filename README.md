@@ -147,3 +147,4 @@ This repository currently contains a strong foundation with phased implementatio
   - `./scripts/smoke-check.sh http://localhost:5056`
 
 Refer to `SETUP.md` for full installation and local execution steps.
+For deployment flow, smoke checks, and runtime validation, see `DEPLOYMENT.md`.
