@@ -92,6 +92,25 @@ public abstract class BranchScopedController : Controller
         return RedirectToAction("Index", "Dashboard");
     }
 
+    protected async Task<IActionResult?> GuardOperationalLoginRequirementAsync(
+        ISettingsRuntimeService settingsRuntime,
+        string blockedMessage,
+        CancellationToken cancellationToken)
+    {
+        if (!await settingsRuntime.IsLoginRequiredForOperationsAsync(cancellationToken))
+        {
+            return null;
+        }
+
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            return null;
+        }
+
+        TempData["Error"] = blockedMessage;
+        return RedirectToAction("Login", "Account", new { returnUrl = Request.Path + Request.QueryString });
+    }
+
     private static bool TryReadBranchId(string? input, out Guid branchId)
     {
         if (string.IsNullOrWhiteSpace(input))

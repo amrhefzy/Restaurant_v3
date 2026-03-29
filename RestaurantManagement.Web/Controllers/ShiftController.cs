@@ -8,6 +8,7 @@ using RestaurantManagement.Application.Services;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Web.Controllers.Base;
 using RestaurantManagement.Web.Localization;
+using RestaurantManagement.Web.Services;
 
 namespace RestaurantManagement.Web.Controllers;
 
@@ -17,21 +18,33 @@ public sealed class ShiftController : BranchScopedController
     private readonly IShiftService _shiftService;
     private readonly ICurrentUserService _currentUserService;
     private readonly IStringLocalizer<SharedResource> _localizer;
+    private readonly ISettingsRuntimeService _settingsRuntime;
 
     public ShiftController(
         IShiftService shiftService,
         ICurrentUserService currentUserService,
         IStringLocalizer<SharedResource> localizer,
+        ISettingsRuntimeService settingsRuntime,
         IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _shiftService = shiftService;
         _currentUserService = currentUserService;
         _localizer = localizer;
+        _settingsRuntime = settingsRuntime;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         var current = branchId == Guid.Empty
             ? null
@@ -41,8 +54,17 @@ public sealed class ShiftController : BranchScopedController
     }
 
     [HttpGet]
-    public IActionResult Open()
+    public async Task<IActionResult> Open(CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         return View(new OpenShiftRequestDto());
     }
 
@@ -50,6 +72,15 @@ public sealed class ShiftController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Open(OpenShiftRequestDto request, CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         try
         {
             request.BranchId = await GetBranchIdAsync(cancellationToken);
@@ -69,6 +100,15 @@ public sealed class ShiftController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Close(CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         var current = await _shiftService.GetCurrentAsync(branchId, cancellationToken);
         if (current is null)
@@ -86,6 +126,15 @@ public sealed class ShiftController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Close(CloseShiftRequestDto request, CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         try
         {
             request.BranchId = await GetBranchIdAsync(cancellationToken);
