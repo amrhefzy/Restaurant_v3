@@ -5,6 +5,7 @@
     var current = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     var returnUrl = Context.Request.Path + Context.Request.QueryString;
     var roleAwareNavigationEnabled = await SettingsRuntime.IsRoleAwareNavigationEnabledAsync();
+    var currencyCode = await SettingsRuntime.GetCurrencyCodeAsync();
     var canManage = !roleAwareNavigationEnabled || User.IsInRole("SuperAdmin") || User.IsInRole("Manager");
     var canOperate = !roleAwareNavigationEnabled || canManage || User.IsInRole("Cashier");
 }
@@ -12,7 +13,7 @@
 <div class="topbar-content">
     <div>
         <div class="page-title">@L["RestaurantOperations"]</div>
-        <div class="page-subtitle">@L["OperationalControlCenter"]</div>
+        <div class="page-subtitle">@L["OperationalControlCenter"] · @currencyCode</div>
     </div>
 
     <div class="topbar-actions">

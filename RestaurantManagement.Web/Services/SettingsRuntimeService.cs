@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace RestaurantManagement.Web.Services;
 
@@ -28,6 +28,9 @@ public sealed class SettingsRuntimeService : ISettingsRuntimeService
     public async Task<bool> IsLoginRequiredForOperationsAsync(CancellationToken cancellationToken = default)
         => await GetBoolSettingAsync("RequireLoginForOperations", true, cancellationToken);
 
+    public async Task<string> GetCurrencyCodeAsync(CancellationToken cancellationToken = default)
+        => await GetStringSettingAsync("CurrencyCode", "EGP", cancellationToken);
+
     private async Task<bool> GetBoolSettingAsync(string key, bool fallback, CancellationToken cancellationToken)
     {
         var branchId = await GetCurrentBranchIdAsync(cancellationToken);
@@ -41,6 +44,21 @@ public sealed class SettingsRuntimeService : ISettingsRuntimeService
             .FirstOrDefaultAsync(x => x.BranchId == branchId && x.Key == key, cancellationToken);
 
         return bool.TryParse(setting?.Value, out var parsed) ? parsed : fallback;
+    }
+
+    private async Task<string> GetStringSettingAsync(string key, string fallback, CancellationToken cancellationToken)
+    {
+        var branchId = await GetCurrentBranchIdAsync(cancellationToken);
+        if (branchId is null || branchId == Guid.Empty)
+        {
+            return fallback;
+        }
+
+        var setting = await _settingsRepository.Query()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.BranchId == branchId && x.Key == key, cancellationToken);
+
+        return string.IsNullOrWhiteSpace(setting?.Value) ? fallback : setting.Value;
     }
 
     private async Task<Guid?> GetCurrentBranchIdAsync(CancellationToken cancellationToken)
