@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.DTOs.Customers;
 using RestaurantManagement.Application.DTOs.Orders;
@@ -10,6 +11,8 @@ using RestaurantManagement.Application.Services;
 using RestaurantManagement.Application.DTOs.Tables;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Web.Controllers.Base;
+using RestaurantManagement.Web.Localization;
+using RestaurantManagement.Web.Services;
 
 namespace RestaurantManagement.Web.Controllers;
 
@@ -20,23 +23,38 @@ public sealed class OrdersController : BranchScopedController
     private readonly ICustomerService _customerService;
     private readonly ITableService _tableService;
     private readonly IProductService _productService;
+    private readonly ISettingsRuntimeService _settingsRuntime;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
     public OrdersController(
         IOrderService service,
         ICustomerService customerService,
         ITableService tableService,
         IProductService productService,
+        ISettingsRuntimeService settingsRuntime,
+        IStringLocalizer<SharedResource> localizer,
         IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _service = service;
         _customerService = customerService;
         _tableService = tableService;
         _productService = productService;
+        _settingsRuntime = settingsRuntime;
+        _localizer = localizer;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         var orders = branchId == Guid.Empty
             ? Array.Empty<OrderDto>()
@@ -48,6 +66,15 @@ public sealed class OrdersController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Create(CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -69,6 +96,15 @@ public sealed class OrdersController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateOrderDto request, CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         request.BranchId = await GetBranchIdAsync(cancellationToken);
         request.Items = request.Items.Where(x => x.ProductId != Guid.Empty && x.Quantity > 0).ToList();
 
@@ -94,6 +130,15 @@ public sealed class OrdersController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         var model = await _service.GetForEditAsync(branchId, id, cancellationToken);
         if (model is null)
@@ -115,6 +160,15 @@ public sealed class OrdersController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Guid id, UpdateOrderDto request, CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         request.Id = id;
         request.BranchId = await GetBranchIdAsync(cancellationToken);
         request.Items = request.Items.Where(x => x.ProductId != Guid.Empty && x.Quantity > 0).ToList();

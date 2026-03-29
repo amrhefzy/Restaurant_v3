@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Application.Services;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Web.Controllers.Base;
+using RestaurantManagement.Web.Localization;
+using RestaurantManagement.Web.Services;
 
 namespace RestaurantManagement.Web.Controllers;
 
@@ -11,15 +14,32 @@ namespace RestaurantManagement.Web.Controllers;
 public sealed class KitchenController : BranchScopedController
 {
     private readonly IKitchenService _kitchenService;
+    private readonly ISettingsRuntimeService _settingsRuntime;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public KitchenController(IKitchenService kitchenService, IRepository<Branch> branchRepository) : base(branchRepository)
+    public KitchenController(
+        IKitchenService kitchenService,
+        ISettingsRuntimeService settingsRuntime,
+        IStringLocalizer<SharedResource> localizer,
+        IRepository<Branch> branchRepository) : base(branchRepository)
     {
         _kitchenService = kitchenService;
+        _settingsRuntime = settingsRuntime;
+        _localizer = localizer;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         ViewData["Title"] = "Kitchen";
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
@@ -34,6 +54,15 @@ public sealed class KitchenController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Feed(CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         if (branchId == Guid.Empty)
         {
@@ -48,6 +77,15 @@ public sealed class KitchenController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Start([FromBody] Guid salesOrderId, CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         var ok = await _kitchenService.StartOrderAsync(branchId, salesOrderId, cancellationToken);
         if (!ok)
@@ -62,6 +100,15 @@ public sealed class KitchenController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Ready([FromBody] Guid salesOrderId, CancellationToken cancellationToken)
     {
+        var loginGuard = await GuardOperationalLoginRequirementAsync(
+            _settingsRuntime,
+            _localizer["OperationalLoginRequiredActionBlocked"].Value,
+            cancellationToken);
+        if (loginGuard is not null)
+        {
+            return loginGuard;
+        }
+
         var branchId = await GetBranchIdAsync(cancellationToken);
         var ok = await _kitchenService.MarkReadyAsync(branchId, salesOrderId, cancellationToken);
         if (!ok)
