@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Domain.Entities;
+using RestaurantManagement.Web.Configuration;
 using RestaurantManagement.Web.Controllers.Base;
 using RestaurantManagement.Web.Localization;
 using RestaurantManagement.Web.ViewModels.Settings;
@@ -13,17 +14,6 @@ namespace RestaurantManagement.Web.Controllers;
 [Authorize(Roles = "SuperAdmin,Manager")]
 public sealed class SettingsController : BranchScopedController
 {
-    private static class SettingKeys
-    {
-        public const string CurrencyCode = nameof(CurrencyCode);
-        public const string TaxRatePercent = nameof(TaxRatePercent);
-        public const string ServiceChargePercent = nameof(ServiceChargePercent);
-        public const string TrackInventory = nameof(TrackInventory);
-        public const string RequireLoginForOperations = nameof(RequireLoginForOperations);
-        public const string RoleAwareNavigationEnabled = nameof(RoleAwareNavigationEnabled);
-        public const string RuntimeNotes = nameof(RuntimeNotes);
-    }
-
     private readonly IRepository<Branch> _branchRepository;
     private readonly IRepository<AppSetting> _settingsRepository;
     private readonly IStringLocalizer<SharedResource> _localizer;
@@ -74,13 +64,13 @@ public sealed class SettingsController : BranchScopedController
         _branchRepository.Update(branch);
 
         var settings = await _settingsRepository.ListAsync(x => x.BranchId == branchId, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingKeys.CurrencyCode, model.CurrencyCode, _localizer["DisplayCurrencyCode"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingKeys.TaxRatePercent, model.TaxRatePercent.ToString(CultureInfo.InvariantCulture), _localizer["SalesTaxPercent"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingKeys.ServiceChargePercent, model.ServiceChargePercent.ToString(CultureInfo.InvariantCulture), _localizer["ServiceChargePercentSetting"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingKeys.TrackInventory, model.TrackInventory.ToString(), _localizer["TrackInventoryDescription"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingKeys.RequireLoginForOperations, model.RequireLoginForOperations.ToString(), _localizer["RequireLoginForOperationsDescription"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingKeys.RoleAwareNavigationEnabled, model.RoleAwareNavigationEnabled.ToString(), _localizer["RoleAwareNavigationDescription"].Value, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, SettingKeys.RuntimeNotes, model.RuntimeNotes ?? string.Empty, _localizer["RuntimeAndDeploymentNotesDescription"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.CurrencyCode, model.CurrencyCode, _localizer["DisplayCurrencyCode"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.TaxRatePercent, model.TaxRatePercent.ToString(CultureInfo.InvariantCulture), _localizer["SalesTaxPercent"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.ServiceChargePercent, model.ServiceChargePercent.ToString(CultureInfo.InvariantCulture), _localizer["ServiceChargePercentSetting"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.TrackInventory, model.TrackInventory.ToString(), _localizer["TrackInventoryDescription"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RequireLoginForOperations, model.RequireLoginForOperations.ToString(), _localizer["RequireLoginForOperationsDescription"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RoleAwareNavigationEnabled, model.RoleAwareNavigationEnabled.ToString(), _localizer["RoleAwareNavigationDescription"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingsCatalog.Keys.RuntimeNotes, model.RuntimeNotes ?? string.Empty, _localizer["RuntimeAndDeploymentNotesDescription"].Value, cancellationToken);
 
         TempData["Success"] = _localizer["SettingsSavedSuccessfully"].Value;
         return RedirectToAction(nameof(Index));
@@ -102,13 +92,13 @@ public sealed class SettingsController : BranchScopedController
             BranchNameAr = branch?.NameAr ?? string.Empty,
             BranchAddress = branch?.Address,
             BranchPhone = branch?.Phone,
-            CurrencyCode = Get(SettingKeys.CurrencyCode, "EGP"),
-            TaxRatePercent = GetDecimal(SettingKeys.TaxRatePercent, 14m),
-            ServiceChargePercent = GetDecimal(SettingKeys.ServiceChargePercent, 0m),
-            TrackInventory = GetBool(SettingKeys.TrackInventory, true),
-            RequireLoginForOperations = GetBool(SettingKeys.RequireLoginForOperations, true),
-            RoleAwareNavigationEnabled = GetBool(SettingKeys.RoleAwareNavigationEnabled, true),
-            RuntimeNotes = Get(SettingKeys.RuntimeNotes, _localizer["DefaultRuntimeNotes"].Value)
+            CurrencyCode = Get(SettingsCatalog.Keys.CurrencyCode, SettingsCatalog.Defaults.CurrencyCode),
+            TaxRatePercent = GetDecimal(SettingsCatalog.Keys.TaxRatePercent, SettingsCatalog.Defaults.TaxRatePercent),
+            ServiceChargePercent = GetDecimal(SettingsCatalog.Keys.ServiceChargePercent, SettingsCatalog.Defaults.ServiceChargePercent),
+            TrackInventory = GetBool(SettingsCatalog.Keys.TrackInventory, SettingsCatalog.Defaults.TrackInventory),
+            RequireLoginForOperations = GetBool(SettingsCatalog.Keys.RequireLoginForOperations, SettingsCatalog.Defaults.RequireLoginForOperations),
+            RoleAwareNavigationEnabled = GetBool(SettingsCatalog.Keys.RoleAwareNavigationEnabled, SettingsCatalog.Defaults.RoleAwareNavigationEnabled),
+            RuntimeNotes = Get(SettingsCatalog.Keys.RuntimeNotes, _localizer["DefaultRuntimeNotes"].Value)
         };
     }
 

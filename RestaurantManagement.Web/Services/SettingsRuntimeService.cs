@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Infrastructure.Identity;
+using RestaurantManagement.Web.Configuration;
 
 namespace RestaurantManagement.Web.Services;
 
@@ -24,22 +25,22 @@ public sealed class SettingsRuntimeService : ISettingsRuntimeService
     }
 
     public async Task<bool> IsRoleAwareNavigationEnabledAsync(CancellationToken cancellationToken = default)
-        => await GetBoolSettingAsync("RoleAwareNavigationEnabled", true, cancellationToken);
+        => await GetBoolSettingAsync(SettingsCatalog.Keys.RoleAwareNavigationEnabled, SettingsCatalog.Defaults.RoleAwareNavigationEnabled, cancellationToken);
 
     public async Task<bool> IsLoginRequiredForOperationsAsync(CancellationToken cancellationToken = default)
-        => await GetBoolSettingAsync("RequireLoginForOperations", true, cancellationToken);
+        => await GetBoolSettingAsync(SettingsCatalog.Keys.RequireLoginForOperations, SettingsCatalog.Defaults.RequireLoginForOperations, cancellationToken);
 
     public async Task<bool> IsInventoryTrackingEnabledAsync(CancellationToken cancellationToken = default)
-        => await GetBoolSettingAsync("TrackInventory", true, cancellationToken);
+        => await GetBoolSettingAsync(SettingsCatalog.Keys.TrackInventory, SettingsCatalog.Defaults.TrackInventory, cancellationToken);
 
     public async Task<string> GetCurrencyCodeAsync(CancellationToken cancellationToken = default)
-        => await GetStringSettingAsync("CurrencyCode", "EGP", cancellationToken);
+        => await GetStringSettingAsync(SettingsCatalog.Keys.CurrencyCode, SettingsCatalog.Defaults.CurrencyCode, cancellationToken);
 
     public async Task<decimal> GetTaxRatePercentAsync(CancellationToken cancellationToken = default)
-        => await GetDecimalSettingAsync("TaxRatePercent", 14m, cancellationToken);
+        => await GetDecimalSettingAsync(SettingsCatalog.Keys.TaxRatePercent, SettingsCatalog.Defaults.TaxRatePercent, cancellationToken);
 
     public async Task<decimal> GetServiceChargePercentAsync(CancellationToken cancellationToken = default)
-        => await GetDecimalSettingAsync("ServiceChargePercent", 0m, cancellationToken);
+        => await GetDecimalSettingAsync(SettingsCatalog.Keys.ServiceChargePercent, SettingsCatalog.Defaults.ServiceChargePercent, cancellationToken);
 
     private async Task<bool> GetBoolSettingAsync(string key, bool fallback, CancellationToken cancellationToken)
     {
