@@ -21,6 +21,33 @@
             </div>
 
             <div class="row g-3 mt-2">
+                <div class="col-md-3 col-sm-6">
+                    <div class="metric-card h-100">
+                        <p class="metric-label">@L["Branch"]</p>
+                        <h3>@(Model.ActiveBranchId?.ToString() ?? "—")</h3>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="metric-card h-100">
+                        <p class="metric-label">@L["Currency"]</p>
+                        <h3>@Model.CurrencyCode</h3>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="metric-card h-100">
+                        <p class="metric-label">@L["TaxRate"]</p>
+                        <h3>@Model.TaxRatePercent.ToString("N0")%</h3>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="metric-card h-100">
+                        <p class="metric-label">@L["ServiceCharge"]</p>
+                        <h3>@Model.ServiceChargePercent.ToString("N0")%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-2">
                 <div class="col-md-6">
                     <label asp-for="BranchNameEn" class="form-label">@L["EnglishName"]</label>
                     <input asp-for="BranchNameEn" class="form-control" />

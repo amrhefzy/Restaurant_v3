@@ -359,4 +359,13 @@
   <data name="RequireLoginForOperations" xml:space="preserve"><value>يتطلب تسجيل الدخول للتشغيل</value></data>
   <data name="RuntimeNotes" xml:space="preserve"><value>ملاحظات التشغيل</value></data>
   <data name="SaveSettings" xml:space="preserve"><value>حفظ الإعدادات</value></data>
+  <data name="SettingsSavedSuccessfully" xml:space="preserve"><value>تم حفظ الإعدادات بنجاح.</value></data>
+  <data name="DisplayCurrencyCode" xml:space="preserve"><value>رمز عملة العرض</value></data>
+  <data name="SalesTaxPercent" xml:space="preserve"><value>نسبة ضريبة المبيعات</value></data>
+  <data name="ServiceChargePercentSetting" xml:space="preserve"><value>نسبة رسوم الخدمة</value></data>
+  <data name="TrackInventoryDescription" xml:space="preserve"><value>هل تتبع المخزون مفعّل</value></data>
+  <data name="RequireLoginForOperationsDescription" xml:space="preserve"><value>هل يتطلب التشغيل تسجيل الدخول</value></data>
+  <data name="RoleAwareNavigationDescription" xml:space="preserve"><value>هل التنقل الواعي بالأدوار مفعّل</value></data>
+  <data name="RuntimeAndDeploymentNotesDescription" xml:space="preserve"><value>ملاحظات التشغيل والنشر</value></data>
+  <data name="DefaultRuntimeNotes" xml:space="preserve"><value>بيئة لينكس نشطة، وSQL Server تعمل عبر Docker، والتحقق والتنقل المعتمد على الأدوار مفعّلان.</value></data>
 </root>

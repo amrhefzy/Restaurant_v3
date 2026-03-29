@@ -1,8 +1,11 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Domain.Entities;
 using RestaurantManagement.Web.Controllers.Base;
+using RestaurantManagement.Web.Localization;
 using RestaurantManagement.Web.ViewModels.Settings;
 
 namespace RestaurantManagement.Web.Controllers;
@@ -10,15 +13,29 @@ namespace RestaurantManagement.Web.Controllers;
 [Authorize(Roles = "SuperAdmin,Manager")]
 public sealed class SettingsController : BranchScopedController
 {
+    private static class SettingKeys
+    {
+        public const string CurrencyCode = nameof(CurrencyCode);
+        public const string TaxRatePercent = nameof(TaxRatePercent);
+        public const string ServiceChargePercent = nameof(ServiceChargePercent);
+        public const string TrackInventory = nameof(TrackInventory);
+        public const string RequireLoginForOperations = nameof(RequireLoginForOperations);
+        public const string RoleAwareNavigationEnabled = nameof(RoleAwareNavigationEnabled);
+        public const string RuntimeNotes = nameof(RuntimeNotes);
+    }
+
     private readonly IRepository<Branch> _branchRepository;
     private readonly IRepository<AppSetting> _settingsRepository;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
     public SettingsController(
         IRepository<Branch> branchRepository,
-        IRepository<AppSetting> settingsRepository) : base(branchRepository)
+        IRepository<AppSetting> settingsRepository,
+        IStringLocalizer<SharedResource> localizer) : base(branchRepository)
     {
         _branchRepository = branchRepository;
         _settingsRepository = settingsRepository;
+        _localizer = localizer;
     }
 
     [HttpGet]
@@ -46,7 +63,7 @@ public sealed class SettingsController : BranchScopedController
         var branch = branchId == Guid.Empty ? null : await _branchRepository.GetByIdAsync(branchId, cancellationToken);
         if (branch is null)
         {
-            TempData["Error"] = "No branch is configured.";
+            TempData["Error"] = _localizer["NoBranchConfigured"].Value;
             return RedirectToAction(nameof(Index));
         }
 
@@ -57,15 +74,15 @@ public sealed class SettingsController : BranchScopedController
         _branchRepository.Update(branch);
 
         var settings = await _settingsRepository.ListAsync(x => x.BranchId == branchId, cancellationToken);
-        await UpsertSettingAsync(settings, branchId, "CurrencyCode", model.CurrencyCode, "Display currency code", cancellationToken);
-        await UpsertSettingAsync(settings, branchId, "TaxRatePercent", model.TaxRatePercent.ToString(System.Globalization.CultureInfo.InvariantCulture), "Sales tax percent", cancellationToken);
-        await UpsertSettingAsync(settings, branchId, "ServiceChargePercent", model.ServiceChargePercent.ToString(System.Globalization.CultureInfo.InvariantCulture), "Service charge percent", cancellationToken);
-        await UpsertSettingAsync(settings, branchId, "TrackInventory", model.TrackInventory.ToString(), "Whether inventory tracking is enabled", cancellationToken);
-        await UpsertSettingAsync(settings, branchId, "RequireLoginForOperations", model.RequireLoginForOperations.ToString(), "Whether login is required for operations", cancellationToken);
-        await UpsertSettingAsync(settings, branchId, "RoleAwareNavigationEnabled", model.RoleAwareNavigationEnabled.ToString(), "Whether role-aware navigation is enabled", cancellationToken);
-        await UpsertSettingAsync(settings, branchId, "RuntimeNotes", model.RuntimeNotes ?? string.Empty, "Runtime and deployment notes", cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingKeys.CurrencyCode, model.CurrencyCode, _localizer["DisplayCurrencyCode"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingKeys.TaxRatePercent, model.TaxRatePercent.ToString(CultureInfo.InvariantCulture), _localizer["SalesTaxPercent"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingKeys.ServiceChargePercent, model.ServiceChargePercent.ToString(CultureInfo.InvariantCulture), _localizer["ServiceChargePercentSetting"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingKeys.TrackInventory, model.TrackInventory.ToString(), _localizer["TrackInventoryDescription"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingKeys.RequireLoginForOperations, model.RequireLoginForOperations.ToString(), _localizer["RequireLoginForOperationsDescription"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingKeys.RoleAwareNavigationEnabled, model.RoleAwareNavigationEnabled.ToString(), _localizer["RoleAwareNavigationDescription"].Value, cancellationToken);
+        await UpsertSettingAsync(settings, branchId, SettingKeys.RuntimeNotes, model.RuntimeNotes ?? string.Empty, _localizer["RuntimeAndDeploymentNotesDescription"].Value, cancellationToken);
 
-        TempData["Success"] = "Settings saved successfully.";
+        TempData["Success"] = _localizer["SettingsSavedSuccessfully"].Value;
         return RedirectToAction(nameof(Index));
     }
 
@@ -73,7 +90,10 @@ public sealed class SettingsController : BranchScopedController
     {
         string Get(string key, string fallback = "") => settings.FirstOrDefault(x => x.Key == key)?.Value ?? fallback;
         bool GetBool(string key, bool fallback) => bool.TryParse(Get(key), out var value) ? value : fallback;
-        decimal GetDecimal(string key, decimal fallback) => decimal.TryParse(Get(key, fallback.ToString(System.Globalization.CultureInfo.InvariantCulture)), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var value) ? value : fallback;
+        decimal GetDecimal(string key, decimal fallback)
+            => decimal.TryParse(Get(key, fallback.ToString(CultureInfo.InvariantCulture)), NumberStyles.Any, CultureInfo.InvariantCulture, out var value)
+                ? value
+                : fallback;
 
         return new SettingsPageViewModel
         {
@@ -82,13 +102,13 @@ public sealed class SettingsController : BranchScopedController
             BranchNameAr = branch?.NameAr ?? string.Empty,
             BranchAddress = branch?.Address,
             BranchPhone = branch?.Phone,
-            CurrencyCode = Get("CurrencyCode", "EGP"),
-            TaxRatePercent = GetDecimal("TaxRatePercent", 14m),
-            ServiceChargePercent = GetDecimal("ServiceChargePercent", 0m),
-            TrackInventory = GetBool("TrackInventory", true),
-            RequireLoginForOperations = GetBool("RequireLoginForOperations", true),
-            RoleAwareNavigationEnabled = GetBool("RoleAwareNavigationEnabled", true),
-            RuntimeNotes = Get("RuntimeNotes", "Linux runtime active, SQL Server runs via Docker, auth and role-aware navigation are enabled.")
+            CurrencyCode = Get(SettingKeys.CurrencyCode, "EGP"),
+            TaxRatePercent = GetDecimal(SettingKeys.TaxRatePercent, 14m),
+            ServiceChargePercent = GetDecimal(SettingKeys.ServiceChargePercent, 0m),
+            TrackInventory = GetBool(SettingKeys.TrackInventory, true),
+            RequireLoginForOperations = GetBool(SettingKeys.RequireLoginForOperations, true),
+            RoleAwareNavigationEnabled = GetBool(SettingKeys.RoleAwareNavigationEnabled, true),
+            RuntimeNotes = Get(SettingKeys.RuntimeNotes, _localizer["DefaultRuntimeNotes"].Value)
         };
     }
 

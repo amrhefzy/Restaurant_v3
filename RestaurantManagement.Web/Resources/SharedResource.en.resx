@@ -359,4 +359,13 @@
   <data name="RequireLoginForOperations" xml:space="preserve"><value>Require login for operations</value></data>
   <data name="RuntimeNotes" xml:space="preserve"><value>Runtime notes</value></data>
   <data name="SaveSettings" xml:space="preserve"><value>Save settings</value></data>
+  <data name="SettingsSavedSuccessfully" xml:space="preserve"><value>Settings saved successfully.</value></data>
+  <data name="DisplayCurrencyCode" xml:space="preserve"><value>Display currency code</value></data>
+  <data name="SalesTaxPercent" xml:space="preserve"><value>Sales tax percent</value></data>
+  <data name="ServiceChargePercentSetting" xml:space="preserve"><value>Service charge percent</value></data>
+  <data name="TrackInventoryDescription" xml:space="preserve"><value>Whether inventory tracking is enabled</value></data>
+  <data name="RequireLoginForOperationsDescription" xml:space="preserve"><value>Whether login is required for operations</value></data>
+  <data name="RoleAwareNavigationDescription" xml:space="preserve"><value>Whether role-aware navigation is enabled</value></data>
+  <data name="RuntimeAndDeploymentNotesDescription" xml:space="preserve"><value>Runtime and deployment notes</value></data>
+  <data name="DefaultRuntimeNotes" xml:space="preserve"><value>Linux runtime active, SQL Server runs via Docker, auth and role-aware navigation are enabled.</value></data>
 </root>
