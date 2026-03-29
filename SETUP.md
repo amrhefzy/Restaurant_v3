@@ -48,9 +48,14 @@ Default key:
 For Linux/server deployments, do **not** rely on LocalDB or Windows-integrated auth. Prefer SQL authentication through production config or environment overrides. If an external env file is used on the server (for example `/home/admin123/.restaurant_v3.env`), treat it as the deployment source of truth and keep secrets out of source control.
 
 ## 4) Apply Migrations
-From repository root:
+From repository root, prefer the scripted path:
 ```bash
-dotnet dotnet-ef database update \
+./scripts/update-database.sh
+```
+
+Equivalent manual command:
+```bash
+dotnet ef database update \
   --project RestaurantManagement.Infrastructure/RestaurantManagement.Infrastructure.csproj \
   --startup-project RestaurantManagement.Web/RestaurantManagement.Web.csproj
 ```
@@ -59,7 +64,19 @@ If `dotnet-ef` is not available:
 ```bash
 dotnet tool restore
 ```
-Then rerun migration command.
+Then rerun the migration command.
+
+### Generate idempotent SQL for controlled deployments
+```bash
+./scripts/generate-idempotent-migration-sql.sh
+```
+This generates:
+- `artifacts/sql/migrations-idempotent.sql`
+
+Recommended production rule:
+- prefer reviewing generated SQL before sensitive server changes
+- avoid editing production schema manually outside controlled migration flow
+- avoid adding new migrations until the working tree is clean and current branch intent is clear
 
 ## 5) Build the Solution
 ```bash

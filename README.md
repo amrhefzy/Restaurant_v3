@@ -138,5 +138,8 @@ This repository currently contains a strong foundation with phased implementatio
 - Health endpoints are available at:
   - `/health/live`
   - `/health/ready`
+- Migration discipline helpers are available at:
+  - `./scripts/update-database.sh`
+  - `./scripts/generate-idempotent-migration-sql.sh`
 
 Refer to `SETUP.md` for full installation and local execution steps.
