@@ -1,8 +1,9 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantManagement.Application.Common.Interfaces;
 using RestaurantManagement.Domain.Entities;
-using FluentValidation;
+using RestaurantManagement.Web.Services;
 
 namespace RestaurantManagement.Web.Controllers.Base;
 
@@ -75,6 +76,20 @@ public abstract class BranchScopedController : Controller
     {
         TempData["Error"] = exception.Message;
         return RedirectToAction(actionName);
+    }
+
+    protected async Task<IActionResult?> GuardInventoryTrackingAsync(
+        ISettingsRuntimeService settingsRuntime,
+        string blockedMessage,
+        CancellationToken cancellationToken)
+    {
+        if (await settingsRuntime.IsInventoryTrackingEnabledAsync(cancellationToken))
+        {
+            return null;
+        }
+
+        TempData["Error"] = blockedMessage;
+        return RedirectToAction("Index", "Dashboard");
     }
 
     private static bool TryReadBranchId(string? input, out Guid branchId)

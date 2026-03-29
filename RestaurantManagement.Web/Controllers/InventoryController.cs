@@ -34,7 +34,10 @@ public sealed class InventoryController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -60,7 +63,10 @@ public sealed class InventoryController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> StockOnHand(bool lowStockOnly = false, CancellationToken cancellationToken = default)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -92,7 +98,10 @@ public sealed class InventoryController : BranchScopedController
         int take = 100,
         CancellationToken cancellationToken = default)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -118,16 +127,5 @@ public sealed class InventoryController : BranchScopedController
 
         var history = await _service.GetMovementHistoryAsync(request, cancellationToken);
         return Ok(history);
-    }
-
-    private async Task<IActionResult?> GuardInventoryTrackingAsync(CancellationToken cancellationToken)
-    {
-        if (await _settingsRuntime.IsInventoryTrackingEnabledAsync(cancellationToken))
-        {
-            return null;
-        }
-
-        TempData["Error"] = _localizer["InventoryTrackingDisabledActionBlocked"].Value;
-        return RedirectToAction("Index", "Dashboard");
     }
 }

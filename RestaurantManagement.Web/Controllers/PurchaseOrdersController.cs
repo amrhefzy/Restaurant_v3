@@ -42,7 +42,10 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -59,7 +62,10 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Create(CancellationToken cancellationToken)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -83,7 +89,10 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [HttpGet]
     public async Task<IActionResult> Details(Guid id, CancellationToken cancellationToken)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -110,7 +119,10 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateDraft(CreatePurchaseOrderDto request, CancellationToken cancellationToken)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -148,7 +160,10 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Submit(Guid id, CancellationToken cancellationToken)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -189,7 +204,10 @@ public sealed class PurchaseOrdersController : BranchScopedController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Receive(Guid id, ReceivePurchaseOrderRequestDto request, CancellationToken cancellationToken)
     {
-        var inventoryGuard = await GuardInventoryTrackingAsync(cancellationToken);
+        var inventoryGuard = await GuardInventoryTrackingAsync(
+            _settingsRuntime,
+            _localizer["InventoryTrackingDisabledActionBlocked"].Value,
+            cancellationToken);
         if (inventoryGuard is not null)
         {
             return inventoryGuard;
@@ -224,17 +242,6 @@ public sealed class PurchaseOrdersController : BranchScopedController
             TempData["Error"] = ex.Message;
             return RedirectToAction(nameof(Index));
         }
-    }
-
-    private async Task<IActionResult?> GuardInventoryTrackingAsync(CancellationToken cancellationToken)
-    {
-        if (await _settingsRuntime.IsInventoryTrackingEnabledAsync(cancellationToken))
-        {
-            return null;
-        }
-
-        TempData["Error"] = _localizer["InventoryTrackingDisabledActionBlocked"].Value;
-        return RedirectToAction("Index", "Dashboard");
     }
 
     private async Task LoadOptionsAsync(Guid branchId, Guid? selectedSupplierId, CancellationToken cancellationToken)
