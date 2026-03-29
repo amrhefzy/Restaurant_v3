@@ -282,4 +282,20 @@
   <data name="AccountCredentials" xml:space="preserve"><value>بيانات الحساب</value></data>
   <data name="YouDoNotHavePermissionToAccessThisPage" xml:space="preserve"><value>ليس لديك صلاحية الوصول إلى هذه الصفحة.</value></data>
   <data name="PleaseSignInWithAnAccountThatHasTheRequiredPermissions" xml:space="preserve"><value>يرجى تسجيل الدخول بحساب يمتلك الصلاحيات المطلوبة.</value></data>
+  <data name="Users" xml:space="preserve"><value>المستخدمون</value></data>
+  <data name="User" xml:space="preserve"><value>المستخدم</value></data>
+  <data name="Role" xml:space="preserve"><value>الدور</value></data>
+  <data name="CreateUser" xml:space="preserve"><value>إضافة مستخدم</value></data>
+  <data name="UsersDirectory" xml:space="preserve"><value>دليل المستخدمين</value></data>
+  <data name="UserRecordsCount" xml:space="preserve"><value>{0} سجل مستخدمين</value></data>
+  <data name="SearchUsersPlaceholder" xml:space="preserve"><value>ابحث بالاسم أو البريد الإلكتروني أو الدور أو الهاتف</value></data>
+  <data name="NoUsersCreatedYet" xml:space="preserve"><value>لا يوجد مستخدمون مضافون بعد.</value></data>
+  <data name="NoRoleAssigned" xml:space="preserve"><value>لا يوجد دور مخصص</value></data>
+  <data name="CreateThisUserNow" xml:space="preserve"><value>هل تريد إنشاء هذا المستخدم الآن؟</value></data>
+  <data name="UserAccountInformation" xml:space="preserve"><value>معلومات حساب المستخدم</value></data>
+  <data name="AddUserAccountAndAssignOperationalRole" xml:space="preserve"><value>أضف حساب مستخدم وعيّن له دورًا تشغيليًا.</value></data>
+  <data name="UserCreatedSuccessfully" xml:space="preserve"><value>تم إنشاء المستخدم بنجاح.</value></data>
+  <data name="EmailAlreadyExists" xml:space="preserve"><value>يوجد حساب مسجل بهذا البريد الإلكتروني بالفعل.</value></data>
+  <data name="FullName" xml:space="preserve"><value>الاسم الكامل</value></data>
+  <data name="Branch" xml:space="preserve"><value>الفرع</value></data>
 </root>

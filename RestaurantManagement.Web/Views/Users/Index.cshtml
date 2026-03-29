@@ -1,0 +1,78 @@
+@model IReadOnlyCollection<RestaurantManagement.Web.ViewModels.Users.UserListItemViewModel>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    ViewData["Title"] = L["Users"];
+    ViewData["PageActions"] = $"<a class='btn btn-primary' href='/Users/Create'>{L["CreateUser"]}</a>";
+}
+
+<div class="widget-card crud-shell">
+    <div class="crud-toolbar">
+        <div>
+            <h5 class="mb-1">@L["UsersDirectory"]</h5>
+            <small class="text-muted">@string.Format(L["UserRecordsCount"], Model.Count)</small>
+        </div>
+        <div class="crud-toolbar-actions">
+            <div class="crud-search">
+                <input type="search" class="form-control" id="usersTableSearch" placeholder="@L["SearchUsersPlaceholder"]" />
+            </div>
+            <a class="btn btn-primary" asp-action="Create">@L["CreateUser"]</a>
+        </div>
+    </div>
+
+    <div class="table-responsive mt-3 table-wrapper">
+        <table class="table shell-table align-middle mb-0" id="usersTable">
+            <thead>
+                <tr>
+                    <th>@L["User"]</th>
+                    <th>@L["Role"]</th>
+                    <th>@L["Phone"]</th>
+                    <th>@L["Status"]</th>
+                    <th>@L["Branch"]</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Any())
+            {
+                foreach (var row in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="table-title">@row.FullName</div>
+                            <div class="table-subtitle">@row.Email</div>
+                        </td>
+                        <td><span class="badge text-bg-light">@row.RoleName</span></td>
+                        <td>@(string.IsNullOrWhiteSpace(row.PhoneNumber) ? "—" : row.PhoneNumber)</td>
+                        <td>
+                            <span class="badge @(row.IsActive ? "text-bg-success" : "text-bg-secondary")">
+                                @(row.IsActive ? L["Active"] : L["Inactive"])
+                            </span>
+                        </td>
+                        <td>@(row.DefaultBranchId?.ToString() ?? "—")</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5" class="empty-state">@L["NoUsersCreatedYet"]</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("usersTableSearch");
+            const table = document.getElementById("usersTable");
+            if (!searchInput || !table) return;
+            searchInput.addEventListener("input", function () {
+                const value = this.value.trim().toLowerCase();
+                table.querySelectorAll("tbody tr").forEach((row) => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(value) ? "" : "none";
+                });
+            });
+        });
+    </script>
+}

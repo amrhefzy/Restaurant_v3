@@ -26,7 +26,7 @@
     <a class="menu-link @(controller == "PurchaseOrders" ? "active" : string.Empty)" asp-controller="PurchaseOrders" asp-action="Index">@L["Purchases"]</a>
     <a class="menu-link @(controller == "Returns" ? "active" : string.Empty)" asp-controller="Returns" asp-action="Index">@L["Returns"]</a>
     <a class="menu-link @(controller == "Reports" ? "active" : string.Empty)" asp-controller="Reports" asp-action="Index">@L["Reports"]</a>
-    <a class="menu-link disabled" href="#" aria-disabled="true">@L["UsersRoles"]</a>
+    <a class="menu-link @(controller == "Users" ? "active" : string.Empty)" asp-controller="Users" asp-action="Index">@L["UsersRoles"]</a>
     <a class="menu-link disabled" href="#" aria-disabled="true">@L["Settings"]</a>
 </nav>
 

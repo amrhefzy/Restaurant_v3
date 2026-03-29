@@ -282,4 +282,20 @@
   <data name="AccountCredentials" xml:space="preserve"><value>Account credentials</value></data>
   <data name="YouDoNotHavePermissionToAccessThisPage" xml:space="preserve"><value>You do not have permission to access this page.</value></data>
   <data name="PleaseSignInWithAnAccountThatHasTheRequiredPermissions" xml:space="preserve"><value>Please sign in with an account that has the required permissions.</value></data>
+  <data name="Users" xml:space="preserve"><value>Users</value></data>
+  <data name="User" xml:space="preserve"><value>User</value></data>
+  <data name="Role" xml:space="preserve"><value>Role</value></data>
+  <data name="CreateUser" xml:space="preserve"><value>Create user</value></data>
+  <data name="UsersDirectory" xml:space="preserve"><value>Users directory</value></data>
+  <data name="UserRecordsCount" xml:space="preserve"><value>{0} user records</value></data>
+  <data name="SearchUsersPlaceholder" xml:space="preserve"><value>Search by name, email, role, or phone</value></data>
+  <data name="NoUsersCreatedYet" xml:space="preserve"><value>No users created yet.</value></data>
+  <data name="NoRoleAssigned" xml:space="preserve"><value>No role assigned</value></data>
+  <data name="CreateThisUserNow" xml:space="preserve"><value>Create this user now?</value></data>
+  <data name="UserAccountInformation" xml:space="preserve"><value>User account information</value></data>
+  <data name="AddUserAccountAndAssignOperationalRole" xml:space="preserve"><value>Add a user account and assign an operational role.</value></data>
+  <data name="UserCreatedSuccessfully" xml:space="preserve"><value>User created successfully.</value></data>
+  <data name="EmailAlreadyExists" xml:space="preserve"><value>An account with this email already exists.</value></data>
+  <data name="FullName" xml:space="preserve"><value>Full name</value></data>
+  <data name="Branch" xml:space="preserve"><value>Branch</value></data>
 </root>
