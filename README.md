@@ -138,6 +138,7 @@ This repository currently contains a strong foundation with phased implementatio
 - Health endpoints are available at:
   - `/health/live`
   - `/health/ready`
+- Request diagnostics now include lightweight HTTP logging for method/path/status/duration.
 - Migration discipline helpers are available at:
   - `./scripts/update-database.sh`
   - `./scripts/generate-idempotent-migration-sql.sh`

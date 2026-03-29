@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using RestaurantManagement.Application.Common.Interfaces;
@@ -17,6 +18,15 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ISettingsRuntimeService, SettingsRuntimeService>();
+
+builder.Services.AddHttpLogging(options =>
+{
+    options.LoggingFields = HttpLoggingFields.RequestMethod
+        | HttpLoggingFields.RequestPath
+        | HttpLoggingFields.ResponseStatusCode
+        | HttpLoggingFields.Duration;
+    options.CombineLogs = true;
+});
 
 builder.Services.AddHealthChecks()
     .AddCheck<DatabaseReadyHealthCheck>(
@@ -78,6 +88,7 @@ app.UseRequestLocalization(localizationOptions.Value);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseHttpLogging();
 app.UseAuthentication();
 app.UseAuthorization();
 
