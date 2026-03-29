@@ -298,4 +298,21 @@
   <data name="EmailAlreadyExists" xml:space="preserve"><value>يوجد حساب مسجل بهذا البريد الإلكتروني بالفعل.</value></data>
   <data name="FullName" xml:space="preserve"><value>الاسم الكامل</value></data>
   <data name="Branch" xml:space="preserve"><value>الفرع</value></data>
+  <data name="Roles" xml:space="preserve"><value>الأدوار</value></data>
+  <data name="RolesDirectory" xml:space="preserve"><value>دليل الأدوار</value></data>
+  <data name="RoleRecordsCount" xml:space="preserve"><value>{0} سجل أدوار</value></data>
+  <data name="NoRolesAvailable" xml:space="preserve"><value>لا توجد أدوار متاحة.</value></data>
+  <data name="Description" xml:space="preserve"><value>الوصف</value></data>
+  <data name="EditUser" xml:space="preserve"><value>تعديل المستخدم</value></data>
+  <data name="UpdateUser" xml:space="preserve"><value>تحديث المستخدم</value></data>
+  <data name="UpdateUserProfileRoleAndAccessState" xml:space="preserve"><value>حدّث ملف المستخدم ودوره وحالة الوصول.</value></data>
+  <data name="SaveUpdatesToThisUser" xml:space="preserve"><value>هل تريد حفظ التعديلات على هذا المستخدم؟</value></data>
+  <data name="UserUpdatedSuccessfully" xml:space="preserve"><value>تم تحديث المستخدم بنجاح.</value></data>
+  <data name="UserWasNotFound" xml:space="preserve"><value>تعذر العثور على المستخدم.</value></data>
+  <data name="Activate" xml:space="preserve"><value>تفعيل</value></data>
+  <data name="Deactivate" xml:space="preserve"><value>تعطيل</value></data>
+  <data name="ConfirmActivateUser" xml:space="preserve"><value>هل تريد تفعيل هذا المستخدم الآن؟</value></data>
+  <data name="ConfirmDeactivateUser" xml:space="preserve"><value>هل تريد تعطيل هذا المستخدم الآن؟</value></data>
+  <data name="UserActivatedSuccessfully" xml:space="preserve"><value>تم تفعيل المستخدم بنجاح.</value></data>
+  <data name="UserDeactivatedSuccessfully" xml:space="preserve"><value>تم تعطيل المستخدم بنجاح.</value></data>
 </root>

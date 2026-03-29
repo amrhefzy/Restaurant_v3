@@ -298,4 +298,21 @@
   <data name="EmailAlreadyExists" xml:space="preserve"><value>An account with this email already exists.</value></data>
   <data name="FullName" xml:space="preserve"><value>Full name</value></data>
   <data name="Branch" xml:space="preserve"><value>Branch</value></data>
+  <data name="Roles" xml:space="preserve"><value>Roles</value></data>
+  <data name="RolesDirectory" xml:space="preserve"><value>Roles directory</value></data>
+  <data name="RoleRecordsCount" xml:space="preserve"><value>{0} role records</value></data>
+  <data name="NoRolesAvailable" xml:space="preserve"><value>No roles available.</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="EditUser" xml:space="preserve"><value>Edit user</value></data>
+  <data name="UpdateUser" xml:space="preserve"><value>Update user</value></data>
+  <data name="UpdateUserProfileRoleAndAccessState" xml:space="preserve"><value>Update user profile, role, and access state.</value></data>
+  <data name="SaveUpdatesToThisUser" xml:space="preserve"><value>Save updates to this user?</value></data>
+  <data name="UserUpdatedSuccessfully" xml:space="preserve"><value>User updated successfully.</value></data>
+  <data name="UserWasNotFound" xml:space="preserve"><value>User was not found.</value></data>
+  <data name="Activate" xml:space="preserve"><value>Activate</value></data>
+  <data name="Deactivate" xml:space="preserve"><value>Deactivate</value></data>
+  <data name="ConfirmActivateUser" xml:space="preserve"><value>Activate this user now?</value></data>
+  <data name="ConfirmDeactivateUser" xml:space="preserve"><value>Deactivate this user now?</value></data>
+  <data name="UserActivatedSuccessfully" xml:space="preserve"><value>User activated successfully.</value></data>
+  <data name="UserDeactivatedSuccessfully" xml:space="preserve"><value>User deactivated successfully.</value></data>
 </root>

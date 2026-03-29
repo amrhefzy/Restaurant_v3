@@ -1,0 +1,47 @@
+@model IReadOnlyCollection<RestaurantManagement.Web.ViewModels.Users.RoleListItemViewModel>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    ViewData["Title"] = L["Roles"];
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Users'>{L["Users"]}</a>";
+}
+
+<div class="widget-card crud-shell">
+    <div class="crud-toolbar">
+        <div>
+            <h5 class="mb-1">@L["RolesDirectory"]</h5>
+            <small class="text-muted">@string.Format(L["RoleRecordsCount"], Model.Count)</small>
+        </div>
+        <div class="crud-toolbar-actions">
+            <a class="btn btn-outline-secondary" asp-action="Index">@L["Users"]</a>
+        </div>
+    </div>
+
+    <div class="table-responsive mt-3 table-wrapper">
+        <table class="table shell-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>@L["Role"]</th>
+                    <th>@L["Description"]</th>
+                    <th class="text-end">@L["Users"]</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Any())
+            {
+                foreach (var row in Model)
+                {
+                    <tr>
+                        <td><span class="badge text-bg-light">@row.Name</span></td>
+                        <td>@(string.IsNullOrWhiteSpace(row.Description) ? "—" : row.Description)</td>
+                        <td class="text-end">@row.UsersCount</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="3" class="empty-state">@L["NoRolesAvailable"]</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

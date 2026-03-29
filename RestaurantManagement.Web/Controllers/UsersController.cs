@@ -50,7 +50,7 @@ public sealed class UsersController : BranchScopedController
                 Email = user.Email ?? string.Empty,
                 PhoneNumber = user.PhoneNumber,
                 RoleName = roles.FirstOrDefault() ?? _localizer["NoRoleAssigned"].Value,
-                IsActive = !user.LockoutEnabled || user.LockoutEnd is null || user.LockoutEnd <= DateTimeOffset.UtcNow,
+                IsActive = user.LockoutEnd is null || user.LockoutEnd <= DateTimeOffset.UtcNow,
                 DefaultBranchId = user.DefaultBranchId
             });
         }
@@ -103,7 +103,8 @@ public sealed class UsersController : BranchScopedController
             PhoneNumber = model.PhoneNumber,
             DefaultBranchId = model.DefaultBranchId,
             EmailConfirmed = true,
-            LockoutEnabled = !model.IsActive
+            LockoutEnabled = true,
+            LockoutEnd = model.IsActive ? null : DateTimeOffset.MaxValue
         };
 
         var createResult = await _userManager.CreateAsync(user, model.Password);
@@ -130,7 +131,166 @@ public sealed class UsersController : BranchScopedController
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        if (user is null)
+        {
+            TempData["Error"] = _localizer["UserWasNotFound"].Value;
+            return RedirectToAction(nameof(Index));
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        var model = new EditUserViewModel
+        {
+            Id = user.Id,
+            FullName = user.FullName,
+            Email = user.Email ?? string.Empty,
+            PhoneNumber = user.PhoneNumber,
+            RoleName = roles.FirstOrDefault() ?? string.Empty,
+            IsActive = user.LockoutEnd is null || user.LockoutEnd <= DateTimeOffset.UtcNow,
+            DefaultBranchId = user.DefaultBranchId
+        };
+
+        await LoadRoleOptionsAsync(model, cancellationToken);
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(Guid id, EditUserViewModel model, CancellationToken cancellationToken)
+    {
+        model.Id = id;
+        await LoadRoleOptionsAsync(model, cancellationToken);
+
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        if (user is null)
+        {
+            TempData["Error"] = _localizer["UserWasNotFound"].Value;
+            return RedirectToAction(nameof(Index));
+        }
+
+        var existingByEmail = await _userManager.FindByEmailAsync(model.Email);
+        if (existingByEmail is not null && existingByEmail.Id != id)
+        {
+            ModelState.AddModelError(nameof(model.Email), _localizer["EmailAlreadyExists"].Value);
+            return View(model);
+        }
+
+        user.FullName = model.FullName;
+        user.Email = model.Email;
+        user.UserName = model.Email;
+        user.PhoneNumber = model.PhoneNumber;
+        user.DefaultBranchId = model.DefaultBranchId;
+        user.LockoutEnabled = true;
+        user.LockoutEnd = model.IsActive ? null : DateTimeOffset.MaxValue;
+
+        var updateResult = await _userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
+        {
+            foreach (var error in updateResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View(model);
+        }
+
+        var currentRoles = await _userManager.GetRolesAsync(user);
+        if (currentRoles.Any())
+        {
+            var removeRoles = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (!removeRoles.Succeeded)
+            {
+                foreach (var error in removeRoles.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View(model);
+            }
+        }
+
+        var addRole = await _userManager.AddToRoleAsync(user, model.RoleName);
+        if (!addRole.Succeeded)
+        {
+            foreach (var error in addRole.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View(model);
+        }
+
+        TempData["Success"] = _localizer["UserUpdatedSuccessfully"].Value;
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ToggleStatus(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        if (user is null)
+        {
+            TempData["Error"] = _localizer["UserWasNotFound"].Value;
+            return RedirectToAction(nameof(Index));
+        }
+
+        var isCurrentlyActive = user.LockoutEnd is null || user.LockoutEnd <= DateTimeOffset.UtcNow;
+        user.LockoutEnabled = true;
+        user.LockoutEnd = isCurrentlyActive ? DateTimeOffset.MaxValue : null;
+
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+        {
+            TempData["Error"] = string.Join("; ", result.Errors.Select(x => x.Description));
+            return RedirectToAction(nameof(Index));
+        }
+
+        TempData["Success"] = isCurrentlyActive
+            ? _localizer["UserDeactivatedSuccessfully"].Value
+            : _localizer["UserActivatedSuccessfully"].Value;
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Roles(CancellationToken cancellationToken)
+    {
+        var roles = await _roleManager.Roles
+            .OrderBy(x => x.Name)
+            .ToListAsync(cancellationToken);
+
+        var model = new List<RoleListItemViewModel>(roles.Count);
+        foreach (var role in roles)
+        {
+            var userCount = await _userManager.GetUsersInRoleAsync(role.Name!);
+            model.Add(new RoleListItemViewModel
+            {
+                Name = role.Name ?? string.Empty,
+                Description = role.Description,
+                UsersCount = userCount.Count
+            });
+        }
+
+        return View(model);
+    }
+
     private async Task LoadRoleOptionsAsync(CreateUserViewModel model, CancellationToken cancellationToken)
+    {
+        var roles = await _roleManager.Roles
+            .OrderBy(x => x.Name)
+            .Select(x => new SelectListItem(x.Name!, x.Name!))
+            .ToListAsync(cancellationToken);
+
+        model.RoleOptions = roles;
+    }
+
+    private async Task LoadRoleOptionsAsync(EditUserViewModel model, CancellationToken cancellationToken)
     {
         var roles = await _roleManager.Roles
             .OrderBy(x => x.Name)

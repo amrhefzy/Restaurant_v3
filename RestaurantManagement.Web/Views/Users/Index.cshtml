@@ -2,7 +2,7 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
 @{
     ViewData["Title"] = L["Users"];
-    ViewData["PageActions"] = $"<a class='btn btn-primary' href='/Users/Create'>{L["CreateUser"]}</a>";
+    ViewData["PageActions"] = $"<a class='btn btn-outline-secondary' href='/Users/Roles'>{L["Roles"]}</a><a class='btn btn-primary ms-2' href='/Users/Create'>{L["CreateUser"]}</a>";
 }
 
 <div class="widget-card crud-shell">
@@ -15,6 +15,7 @@
             <div class="crud-search">
                 <input type="search" class="form-control" id="usersTableSearch" placeholder="@L["SearchUsersPlaceholder"]" />
             </div>
+            <a class="btn btn-outline-secondary" asp-action="Roles">@L["Roles"]</a>
             <a class="btn btn-primary" asp-action="Create">@L["CreateUser"]</a>
         </div>
     </div>
@@ -28,6 +29,7 @@
                     <th>@L["Phone"]</th>
                     <th>@L["Status"]</th>
                     <th>@L["Branch"]</th>
+                    <th class="text-end">@L["Actions"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,12 +50,24 @@
                             </span>
                         </td>
                         <td>@(row.DefaultBranchId?.ToString() ?? "—")</td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+                                <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@row.Id">@L["Edit"]</a>
+                                <form asp-action="ToggleStatus" method="post" data-confirm="@(row.IsActive ? L["ConfirmDeactivateUser"] : L["ConfirmActivateUser"] )" data-confirm-text="@(row.IsActive ? L["Deactivate"] : L["Activate"] )" data-confirm-class="@(row.IsActive ? "btn-danger" : "btn-success")">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@row.Id" />
+                                    <button type="submit" class="btn btn-sm @(row.IsActive ? "btn-outline-danger" : "btn-outline-success")">
+                                        @(row.IsActive ? L["Deactivate"] : L["Activate"])
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                 }
             }
             else
             {
-                <tr><td colspan="5" class="empty-state">@L["NoUsersCreatedYet"]</td></tr>
+                <tr><td colspan="6" class="empty-state">@L["NoUsersCreatedYet"]</td></tr>
             }
             </tbody>
         </table>
