@@ -6,6 +6,8 @@
     ViewData["Title"] = L["Pos"];
     var dataJson = JsonSerializer.Serialize(Model);
     var currencyCode = await SettingsRuntime.GetCurrencyCodeAsync();
+    var taxRatePercent = await SettingsRuntime.GetTaxRatePercentAsync();
+    var serviceChargePercent = await SettingsRuntime.GetServiceChargePercentAsync();
 }
 
 <div class="pos-shell" id="posApp"
@@ -14,7 +16,9 @@
      data-msg-select-table="@L["SelectTableForDineIn"]"
      data-msg-cart-empty="@L["CartEmptyValidation"]"
      data-msg-select-payment="@L["SelectPaymentType"]"
-     data-currency-code="@currencyCode">
+     data-currency-code="@currencyCode"
+     data-tax-rate="@taxRatePercent.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+     data-service-charge-rate="@serviceChargePercent.ToString(System.Globalization.CultureInfo.InvariantCulture)">
     @Html.AntiForgeryToken()
     <section class="pos-catalog" aria-label="Product catalog panel">
         <header class="pos-header">
@@ -99,6 +103,7 @@
         <div class="pos-totals">
             <div><span>@L["Subtotal"] (@currencyCode)</span><strong id="subtotalValue">0.00</strong></div>
             <div><span>@L["Tax"] (@currencyCode)</span><strong id="taxValue">0.00</strong></div>
+            <div><span>@L["ServiceCharge"] (@currencyCode)</span><strong id="serviceChargeValue">0.00</strong></div>
             <div class="grand"><span>@L["Total"] (@currencyCode)</span><strong id="totalValue">0.00</strong></div>
         </div>
 

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RestaurantManagement.Application.Common.Interfaces;
@@ -31,6 +32,12 @@ public sealed class SettingsRuntimeService : ISettingsRuntimeService
     public async Task<string> GetCurrencyCodeAsync(CancellationToken cancellationToken = default)
         => await GetStringSettingAsync("CurrencyCode", "EGP", cancellationToken);
 
+    public async Task<decimal> GetTaxRatePercentAsync(CancellationToken cancellationToken = default)
+        => await GetDecimalSettingAsync("TaxRatePercent", 14m, cancellationToken);
+
+    public async Task<decimal> GetServiceChargePercentAsync(CancellationToken cancellationToken = default)
+        => await GetDecimalSettingAsync("ServiceChargePercent", 0m, cancellationToken);
+
     private async Task<bool> GetBoolSettingAsync(string key, bool fallback, CancellationToken cancellationToken)
     {
         var branchId = await GetCurrentBranchIdAsync(cancellationToken);
@@ -59,6 +66,23 @@ public sealed class SettingsRuntimeService : ISettingsRuntimeService
             .FirstOrDefaultAsync(x => x.BranchId == branchId && x.Key == key, cancellationToken);
 
         return string.IsNullOrWhiteSpace(setting?.Value) ? fallback : setting.Value;
+    }
+
+    private async Task<decimal> GetDecimalSettingAsync(string key, decimal fallback, CancellationToken cancellationToken)
+    {
+        var branchId = await GetCurrentBranchIdAsync(cancellationToken);
+        if (branchId is null || branchId == Guid.Empty)
+        {
+            return fallback;
+        }
+
+        var setting = await _settingsRepository.Query()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.BranchId == branchId && x.Key == key, cancellationToken);
+
+        return decimal.TryParse(setting?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsed)
+            ? parsed
+            : fallback;
     }
 
     private async Task<Guid?> GetCurrentBranchIdAsync(CancellationToken cancellationToken)
