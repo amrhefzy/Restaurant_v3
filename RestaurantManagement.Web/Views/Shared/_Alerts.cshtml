@@ -1,4 +1,10 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+@{
+    var blockedBySettings = TempData["BlockedBySettings"] as string;
+    var blockedSettingsHint = TempData["BlockedSettingsHint"] as string;
+    var blockedSettingsActionText = TempData["BlockedSettingsActionText"] as string;
+    var blockedSettingsActionUrl = TempData["BlockedSettingsActionUrl"] as string;
+}
 
 <div class="alert-grid">
     @if (TempData["Success"] is string success)
@@ -19,6 +25,25 @@
                 <strong>@L["Error"]</strong>
                 <span>@error</span>
             </div>
+            @if (!string.IsNullOrWhiteSpace(blockedBySettings) || !string.IsNullOrWhiteSpace(blockedSettingsHint) || !string.IsNullOrWhiteSpace(blockedSettingsActionUrl))
+            {
+                <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
+                    @if (!string.IsNullOrWhiteSpace(blockedBySettings))
+                    {
+                        <span class="badge text-bg-light">@blockedBySettings</span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(blockedSettingsHint))
+                    {
+                        <small class="text-muted">@blockedSettingsHint</small>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(blockedSettingsActionUrl))
+                    {
+                        <a class="btn btn-sm btn-outline-danger" href="@blockedSettingsActionUrl">
+                            @(string.IsNullOrWhiteSpace(blockedSettingsActionText) ? L["OpenSettings"] : blockedSettingsActionText)
+                        </a>
+                    }
+                </div>
+            }
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }

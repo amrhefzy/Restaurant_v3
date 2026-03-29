@@ -14,7 +14,12 @@
 <div class="topbar-content">
     <div>
         <div class="page-title">@L["RestaurantOperations"]</div>
-        <div class="page-subtitle">@L["OperationalControlCenter"] · @currencyCode · @(loginRequiredForOperations ? L["LoginRequired"] : L["LoginOptional"])</div>
+        <div class="page-subtitle">
+            @L["OperationalControlCenter"] · @currencyCode ·
+            <span class="badge @(loginRequiredForOperations ? "text-bg-dark" : "text-bg-light")">
+                @(loginRequiredForOperations ? L["LoginRequired"] : L["LoginOptional"])
+            </span>
+        </div>
     </div>
 
     <div class="topbar-actions">

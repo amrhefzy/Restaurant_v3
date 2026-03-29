@@ -89,6 +89,10 @@ public abstract class BranchScopedController : Controller
         }
 
         TempData["Error"] = blockedMessage;
+        TempData["BlockedBySettings"] = "TrackInventory";
+        TempData["BlockedSettingsHint"] = "Inventory-sensitive workflows are disabled at runtime for this branch.";
+        TempData["BlockedSettingsActionText"] = "Open settings";
+        TempData["BlockedSettingsActionUrl"] = Url.Action("Index", "Settings");
         return RedirectToAction("Index", "Dashboard");
     }
 
@@ -108,6 +112,10 @@ public abstract class BranchScopedController : Controller
         }
 
         TempData["Error"] = blockedMessage;
+        TempData["BlockedBySettings"] = "RequireLoginForOperations";
+        TempData["BlockedSettingsHint"] = "Operational entry points require an authenticated session under the current branch settings.";
+        TempData["BlockedSettingsActionText"] = "Sign in";
+        TempData["BlockedSettingsActionUrl"] = Url.Action("Login", "Account", new { returnUrl = Request.Path + Request.QueryString });
         return RedirectToAction("Login", "Account", new { returnUrl = Request.Path + Request.QueryString });
     }
 
