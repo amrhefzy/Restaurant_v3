@@ -368,4 +368,7 @@
   <data name="RoleAwareNavigationDescription" xml:space="preserve"><value>هل التنقل الواعي بالأدوار مفعّل</value></data>
   <data name="RuntimeAndDeploymentNotesDescription" xml:space="preserve"><value>ملاحظات التشغيل والنشر</value></data>
   <data name="DefaultRuntimeNotes" xml:space="preserve"><value>بيئة لينكس نشطة، وSQL Server تعمل عبر Docker، والتحقق والتنقل المعتمد على الأدوار مفعّلان.</value></data>
+  <data name="InventoryTrackingDisabled" xml:space="preserve"><value>تتبع المخزون معطّل</value></data>
+  <data name="LoginRequired" xml:space="preserve"><value>تسجيل الدخول مطلوب</value></data>
+  <data name="LoginOptional" xml:space="preserve"><value>تسجيل الدخول اختياري</value></data>
 </root>

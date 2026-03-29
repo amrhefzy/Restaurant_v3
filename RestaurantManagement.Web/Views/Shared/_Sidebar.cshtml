@@ -3,6 +3,7 @@
 @{
     var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
     var roleAwareNavigationEnabled = await SettingsRuntime.IsRoleAwareNavigationEnabledAsync();
+    var inventoryTrackingEnabled = await SettingsRuntime.IsInventoryTrackingEnabledAsync();
     var canManage = !roleAwareNavigationEnabled || User.IsInRole("SuperAdmin") || User.IsInRole("Manager");
     var canOperate = !roleAwareNavigationEnabled || canManage || User.IsInRole("Cashier");
 }
@@ -37,10 +38,13 @@
     {
         <a class="menu-link @(controller == "Categories" ? "active" : string.Empty)" asp-controller="Categories" asp-action="Index">@L["Categories"]</a>
         <a class="menu-link @(controller == "Products" ? "active" : string.Empty)" asp-controller="Products" asp-action="Index">@L["Products"]</a>
-        <a class="menu-link @(controller == "Suppliers" ? "active" : string.Empty)" asp-controller="Suppliers" asp-action="Index">@L["Suppliers"]</a>
-        <a class="menu-link @(controller == "PurchaseOrders" ? "active" : string.Empty)" asp-controller="PurchaseOrders" asp-action="Index">@L["Purchases"]</a>
-        <a class="menu-link @(controller == "Inventory" ? "active" : string.Empty)" asp-controller="Inventory" asp-action="Index">@L["Inventory"]</a>
-        <a class="menu-link @(controller == "Returns" ? "active" : string.Empty)" asp-controller="Returns" asp-action="Index">@L["Returns"]</a>
+        @if (inventoryTrackingEnabled)
+        {
+            <a class="menu-link @(controller == "Suppliers" ? "active" : string.Empty)" asp-controller="Suppliers" asp-action="Index">@L["Suppliers"]</a>
+            <a class="menu-link @(controller == "PurchaseOrders" ? "active" : string.Empty)" asp-controller="PurchaseOrders" asp-action="Index">@L["Purchases"]</a>
+            <a class="menu-link @(controller == "Inventory" ? "active" : string.Empty)" asp-controller="Inventory" asp-action="Index">@L["Inventory"]</a>
+            <a class="menu-link @(controller == "Returns" ? "active" : string.Empty)" asp-controller="Returns" asp-action="Index">@L["Returns"]</a>
+        }
         <a class="menu-link @(controller == "Reports" ? "active" : string.Empty)" asp-controller="Reports" asp-action="Index">@L["Reports"]</a>
         <a class="menu-link @(controller == "Users" ? "active" : string.Empty)" asp-controller="Users" asp-action="Index">@L["UsersRoles"]</a>
         <a class="menu-link @(controller == "Settings" ? "active" : string.Empty)" asp-controller="Settings" asp-action="Index">@L["Settings"]</a>
@@ -49,5 +53,5 @@
 
 <div class="sidebar-footer">
     <span class="status-dot"></span>
-    <span>@L["SystemReady"]</span>
+    <span>@(inventoryTrackingEnabled ? L["SystemReady"] : L["InventoryTrackingDisabled"])</span>
 </div>

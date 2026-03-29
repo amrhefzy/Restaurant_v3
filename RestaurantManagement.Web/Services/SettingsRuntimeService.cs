@@ -29,6 +29,9 @@ public sealed class SettingsRuntimeService : ISettingsRuntimeService
     public async Task<bool> IsLoginRequiredForOperationsAsync(CancellationToken cancellationToken = default)
         => await GetBoolSettingAsync("RequireLoginForOperations", true, cancellationToken);
 
+    public async Task<bool> IsInventoryTrackingEnabledAsync(CancellationToken cancellationToken = default)
+        => await GetBoolSettingAsync("TrackInventory", true, cancellationToken);
+
     public async Task<string> GetCurrencyCodeAsync(CancellationToken cancellationToken = default)
         => await GetStringSettingAsync("CurrencyCode", "EGP", cancellationToken);
 

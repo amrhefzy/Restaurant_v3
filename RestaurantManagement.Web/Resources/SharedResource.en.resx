@@ -368,4 +368,7 @@
   <data name="RoleAwareNavigationDescription" xml:space="preserve"><value>Whether role-aware navigation is enabled</value></data>
   <data name="RuntimeAndDeploymentNotesDescription" xml:space="preserve"><value>Runtime and deployment notes</value></data>
   <data name="DefaultRuntimeNotes" xml:space="preserve"><value>Linux runtime active, SQL Server runs via Docker, auth and role-aware navigation are enabled.</value></data>
+  <data name="InventoryTrackingDisabled" xml:space="preserve"><value>Inventory tracking disabled</value></data>
+  <data name="LoginRequired" xml:space="preserve"><value>Login required</value></data>
+  <data name="LoginOptional" xml:space="preserve"><value>Login optional</value></data>
 </root>
